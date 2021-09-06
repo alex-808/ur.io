@@ -1,0 +1,11 @@
+import React from 'react'
+
+interface Props {
+  tiles: Tile[]
+}
+
+const Board: React.FC<Props> = ({ tiles }) => {
+  return tiles.map(tile => <Tile occupation={tile} />)
+}
+
+export { Board }
