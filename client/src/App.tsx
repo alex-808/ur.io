@@ -10,6 +10,7 @@ function App() {
   const game = new Game()
   game.addPlayer()
   game.addPlayer()
+  console.log(game.rollDice())
   return (
     <div className="App">
       <header className="App-header">

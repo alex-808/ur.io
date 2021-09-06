@@ -3,12 +3,12 @@ class Game {
   phase: GamePhase = 'rolling'
   activePlayer: number | null = null
   board: Tile[] = [
+    0,
     null,
     1,
+    0,
     null,
-    null,
-    null,
-    null,
+    1,
     null,
     null,
     null,
@@ -25,6 +25,7 @@ class Game {
     null,
     null,
   ]
+  rollVal: number | null = null
   checkForNoMoves() {
     //TODO
   }
@@ -39,11 +40,37 @@ class Game {
       // TODO emit 'too many players'
     }
   }
+  rollDice() {
+    const val1 = Math.floor(Math.random() * 3)
+    const val2 = Math.floor(Math.random() * 3)
+    this.rollVal = val1 + val2
+    return [val1, val2]
+  }
+  updateBoard() {
+    for (let player of this.players) {
+      for (let token of player.tokens) {
+        console.log(token)
+      }
+    }
+  }
 }
-
+const player0Path = {
+  '0': 9,
+  '1': 6,
+  '2': 3,
+  '4': 0,
+  '5': 1,
+  '6': 4,
+  '7': 7,
+  '8': 10,
+  '9': 13,
+  '10': 16,
+  '11': 19,
+}
+console.log(player0Path['0'])
 class Player implements PlayerI {
   constructor(public id: number) {}
-  tokens: number[] = [0, 0, 0, 0, 0, 0, 0]
+  tokens: number[] = [0, 10, 0, 7, 0, 0, 0]
   score: number = 0
   incrementScore() {
     this.score++
