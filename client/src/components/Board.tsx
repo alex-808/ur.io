@@ -1,16 +1,23 @@
 import React from 'react'
 import { Tile } from './Tile'
+import Grid from '@material-ui/core/Grid'
+import { makeStyles, createStyles, Theme } from '@material-ui/core'
 
 interface Props {
   tiles: Tile[]
 }
 
-const Board: React.FC<Props> = props => {
+const Board: React.FC<Props> = ({ tiles }) => {
   return (
     <>
-      {props.tiles.map(tile => (
-        <Tile oc={tile} />
-      ))}
+      <Grid container direction="column"></Grid>
+      <Grid container>
+        {tiles.map((tile, i) => (
+          <Grid item xs={4} key={i}>
+            <Tile oc={tile} key={i} />
+          </Grid>
+        ))}
+      </Grid>
     </>
   )
 }
