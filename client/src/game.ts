@@ -45,7 +45,6 @@ class Game {
     const val2 = Math.floor(Math.random() * 3)
 
     this.rollVal = val1 + val2
-    console.log('Dice rolled')
     return [val1, val2]
   }
   updateBoard() {

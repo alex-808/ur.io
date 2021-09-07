@@ -8,21 +8,22 @@ import { PlayerStart } from './components/PlayerStart'
 
 function App() {
   const game = useRef(new Game())
-  const [gameState, setGameState] = useState(game.current)
+  const [gameState, setGameState] = useState({ ...game.current })
   game.current.addPlayer()
   game.current.addPlayer()
-  console.log('Render')
 
   useEffect(() => {
     game.current.players[0].moveToken(0, 4)
     game.current.updateBoard()
     console.dir(game.current)
     console.dir(gameState)
-    setGameState(game.current)
-  }, [game.current])
+    setGameState({ ...game.current })
+  }, [])
 
   const onClick = () => {
-    gameState.rollDice()
+    const [val1, val2] = game.current.rollDice()
+    console.log(game.current.rollVal)
+    setGameState({ ...game.current })
   }
   return (
     <div className="App">
