@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid'
 //import { makeStyles, createStyles, Theme } from '@material-ui/core'
 
 interface Props {
-  tiles: Tile[]
+  tiles: PlayerID[]
 }
 
 const Board: React.FC<Props> = ({ tiles }) => {

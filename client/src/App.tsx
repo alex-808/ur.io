@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import logo from './logo.svg'
 import './App.css'
 import { Button, Grid } from '@material-ui/core'
@@ -7,14 +7,22 @@ import { Game } from './game'
 import { PlayerStart } from './components/PlayerStart'
 
 function App() {
-  const game = new Game()
-  game.addPlayer()
-  game.addPlayer()
-  game.updateBoard()
-  game.rollDice()
+  const game = useRef(new Game())
+  const [gameState, setGameState] = useState(game.current)
+  game.current.addPlayer()
+  game.current.addPlayer()
+  console.log('Render')
+
+  useEffect(() => {
+    game.current.players[0].moveToken(0, 4)
+    game.current.updateBoard()
+    console.dir(game.current)
+    console.dir(gameState)
+    setGameState(game.current)
+  }, [game.current])
 
   const onClick = () => {
-    game.rollDice()
+    gameState.rollDice()
   }
   return (
     <div className="App">
@@ -22,19 +30,19 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <Grid container>
           <Grid item xs={3}>
-            <PlayerStart player={game.players[0]} />
+            <PlayerStart player={gameState.players[0]} />
           </Grid>
           <Grid item xs={6}>
-            <Board tiles={game.board} />
+            <Board tiles={gameState.board} />
           </Grid>
           <Grid item xs={3}>
-            <PlayerStart player={game.players[1]} />
+            <PlayerStart player={gameState.players[1]} />
           </Grid>
         </Grid>
         <Button color="primary" onClick={onClick}>
           Roll
         </Button>
-        <div>{game.rollVal}</div>
+        <div>{gameState.rollVal}</div>
       </header>
     </div>
   )

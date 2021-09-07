@@ -1,7 +1,7 @@
 import React from 'react'
 
 interface Props {
-  oc: Tile
+  oc: PlayerID
 }
 
 // Possible states:
@@ -13,14 +13,10 @@ interface Props {
 // isStart
 
 const Tile: React.FC<Props> = ({ oc }) => {
-  switch (oc) {
-    case null:
-      return <p>Nothing</p>
-    case 0:
-      return <p>0</p>
-    case 1:
-      return <p> 1 </p>
+  const handleClick = () => {
+    console.log('click')
   }
+  return <p onClick={handleClick}>{oc ? oc : 'Nothing'}</p>
 }
 
 export { Tile }
