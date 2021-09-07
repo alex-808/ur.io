@@ -5,12 +5,13 @@ interface Props {
 }
 
 const PlayerStart: React.FC<Props> = ({ player }) => {
-  console.log(player.id)
   return (
     <>
-      {player.tokens.map(token => (
-        <p>{player.id}</p>
-      ))}
+      {player.tokens
+        .filter(token => !token)
+        .map(token => (
+          <p>{player.id}</p>
+        ))}
     </>
   )
 }
