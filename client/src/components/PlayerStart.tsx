@@ -8,7 +8,7 @@ const PlayerStart: React.FC<Props> = ({ player }) => {
   return (
     <>
       {player.tokens
-        .filter(token => !token)
+        .filter(token => token === -1)
         .map(token => (
           <p>{player.id}</p>
         ))}

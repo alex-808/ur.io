@@ -16,7 +16,7 @@ const Tile: React.FC<Props> = ({ oc }) => {
   const handleClick = () => {
     console.log('click')
   }
-  return <p onClick={handleClick}>{oc ? oc : 'Nothing'}</p>
+  return <p onClick={handleClick}>{oc !== null ? oc : 'Nothing'}</p>
 }
 
 export { Tile }
