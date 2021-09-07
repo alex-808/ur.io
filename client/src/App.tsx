@@ -1,7 +1,7 @@
 import React from 'react'
 import logo from './logo.svg'
 import './App.css'
-import { Grid } from '@material-ui/core'
+import { Button, Grid } from '@material-ui/core'
 import { Board } from './components/Board'
 import { Game } from './game'
 import { PlayerStart } from './components/PlayerStart'
@@ -10,7 +10,12 @@ function App() {
   const game = new Game()
   game.addPlayer()
   game.addPlayer()
-  console.log(game.rollDice())
+  game.updateBoard()
+  game.rollDice()
+
+  const onClick = () => {
+    game.rollDice()
+  }
   return (
     <div className="App">
       <header className="App-header">
@@ -26,9 +31,10 @@ function App() {
             <PlayerStart player={game.players[1]} />
           </Grid>
         </Grid>
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
+        <Button color="primary" onClick={onClick}>
+          Roll
+        </Button>
+        <div>{game.rollVal}</div>
       </header>
     </div>
   )

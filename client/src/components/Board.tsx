@@ -1,7 +1,7 @@
 import React from 'react'
 import { Tile } from './Tile'
 import Grid from '@material-ui/core/Grid'
-import { makeStyles, createStyles, Theme } from '@material-ui/core'
+//import { makeStyles, createStyles, Theme } from '@material-ui/core'
 
 interface Props {
   tiles: Tile[]
