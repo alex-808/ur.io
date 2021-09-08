@@ -1,6 +1,5 @@
 import React from 'react'
 import { Card } from '@material-ui/core'
-import './Tile.css'
 
 interface Props extends TileI {
   handleTokenClick: (token: number | null, oc: PlayerID) => void

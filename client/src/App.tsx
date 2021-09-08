@@ -24,10 +24,17 @@ function App() {
   const handleTokenClick = (token: number | null, oc: PlayerID) => {
     console.log({ token })
     console.log({ oc })
-    if (oc !== null && token !== null && game.current.rollVal) {
+    if (
+      oc === game.current.activePlayer &&
+      token !== null &&
+      game.current.rollVal
+    ) {
       console.log('moving')
-      game.current.players[`${oc}`].moveToken(token, game.current.rollVal)
-      game.current.updateBoard()
+      if (game.current.phase === 'movement') {
+        game.current.players[`${oc}`].moveToken(token, game.current.rollVal)
+        game.current.updateBoard()
+        game.current.changeTurn()
+      }
     }
     setGameState({ ...game.current })
   }
@@ -43,7 +50,10 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <Grid container>
           <Grid item xs={3}>
-            <PlayerStart player={gameState.players[0]} />
+            <PlayerStart
+              player={gameState.players[0]}
+              activePlayer={gameState.activePlayer}
+            />
           </Grid>
           <Grid item xs={6}>
             <Board
@@ -52,7 +62,10 @@ function App() {
             />
           </Grid>
           <Grid item xs={3}>
-            <PlayerStart player={gameState.players[1]} />
+            <PlayerStart
+              player={gameState.players[1]}
+              activePlayer={gameState.activePlayer}
+            />
           </Grid>
         </Grid>
         <Button color="primary" onClick={onClick}>

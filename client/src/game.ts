@@ -6,7 +6,17 @@ class Game {
     {
       oc: null,
       token: null,
+      type: 'rosette',
+    },
+    {
+      oc: null,
+      token: null,
       type: 'normal',
+    },
+    {
+      oc: null,
+      token: null,
+      type: 'rosette',
     },
     {
       oc: null,
@@ -46,7 +56,7 @@ class Game {
     {
       oc: null,
       token: null,
-      type: 'normal',
+      type: 'rosette',
     },
     {
       oc: null,
@@ -56,7 +66,7 @@ class Game {
     {
       oc: null,
       token: null,
-      type: 'normal',
+      type: 'goal',
     },
     {
       oc: null,
@@ -66,17 +76,7 @@ class Game {
     {
       oc: null,
       token: null,
-      type: 'normal',
-    },
-    {
-      oc: null,
-      token: null,
-      type: 'normal',
-    },
-    {
-      oc: null,
-      token: null,
-      type: 'normal',
+      type: 'goal',
     },
     {
       oc: null,
@@ -125,6 +125,7 @@ class Game {
     }
   }
   rollDice() {
+    console.log(this.phase)
     if (this.phase !== 'rolling') return
     const val1 = Math.floor(Math.random() * 3)
     const val2 = Math.floor(Math.random() * 3)
@@ -132,6 +133,8 @@ class Game {
     this.rollVal = val1 + val2
     if (this.rollVal !== 0) {
       this.phase = 'movement'
+    } else {
+      this.changeTurn()
     }
     return [val1, val2]
   }
@@ -140,17 +143,26 @@ class Game {
       tile.oc = null
       tile.token = null
     }
+
     for (let player of this.players) {
       const path = player.id === 0 ? player0Path : player1Path
+
       for (let tokenPos of player.tokens) {
         if (tokenPos === -1) continue
         const boardVal = path.get(tokenPos)
+
         if (boardVal !== undefined) {
           this.board[boardVal].oc = player.id
           this.board[boardVal].token = player.tokens.indexOf(tokenPos)
         }
       }
     }
+  }
+  changeTurn() {
+    console.log('turn changed')
+    if (this.activePlayer === 0) this.activePlayer = 1
+    else this.activePlayer = 0
+    this.phase = 'rolling'
   }
 }
 
@@ -197,11 +209,6 @@ class Player implements PlayerI {
   moveToken(tokenIndex: number, rollVal: number) {
     this.tokens[tokenIndex] += rollVal
     console.log(this.tokens)
-  }
-  getTokenIndex(tile: number) {
-    const path = this.id === 0 ? player0Path : player1Path
-    let tiles = path.entries()
-    console.log(tiles)
   }
 }
 
