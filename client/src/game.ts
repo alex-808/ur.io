@@ -1,7 +1,7 @@
 class Game {
   players: Player[] = []
   phase: GamePhase = 'rolling'
-  activePlayer: number = 0
+  activePlayer: Player | null = null
   board: TileI[] = [
     {
       oc: null,
@@ -113,6 +113,7 @@ class Game {
   checkForNoMoves() {
     //TODO
   }
+
   reset() {
     //TODO
   }
@@ -120,6 +121,7 @@ class Game {
     if (this.players.length < 2) {
       const player = new Player(this.players.length as PlayerID)
       this.players.push(player)
+      this.activePlayer = player
     } else {
       // TODO emit 'too many players'
     }
@@ -160,8 +162,9 @@ class Game {
   }
   changeTurn() {
     console.log('turn changed')
-    if (this.activePlayer === 0) this.activePlayer = 1
-    else this.activePlayer = 0
+    if (this.activePlayer === this.players[0])
+      this.activePlayer = this.players[1]
+    else this.activePlayer = this.players[0]
     this.phase = 'rolling'
   }
 }

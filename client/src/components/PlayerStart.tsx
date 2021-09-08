@@ -3,14 +3,14 @@ import { Badge } from '@material-ui/core'
 
 interface Props {
   player: PlayerI
-  activePlayer: number
+  activePlayer: PlayerI | null
   onClick: (playerID: PlayerID) => void
 }
 
 const PlayerStart: React.FC<Props> = ({ player, activePlayer, onClick }) => {
   return (
     <div onClick={onClick.bind(null, player.id)}>
-      {player.id === activePlayer && (
+      {player?.id === activePlayer?.id && (
         <Badge badgeContent=" " color="secondary"></Badge>
       )}
       {player.tokens

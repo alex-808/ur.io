@@ -25,13 +25,13 @@ function App() {
     console.log({ token })
     console.log({ oc })
     if (
-      oc === game.current.activePlayer &&
+      oc === game.current.activePlayer?.id &&
       token !== null &&
       game.current.rollVal
     ) {
       console.log('moving')
-      if (game.current.phase === 'movement') {
-        game.current.players[`${oc}`].moveToken(token, game.current.rollVal)
+      if (game.current.phase === 'movement' && game.current.activePlayer) {
+        game.current.activePlayer.moveToken(token, game.current.rollVal)
         game.current.updateBoard()
         game.current.changeTurn()
       }
@@ -40,20 +40,19 @@ function App() {
   }
 
   const handlePlayerStartClick = (playerID: PlayerID) => {
+    console.log(playerID)
+    console.log(game.current.activePlayer?.id)
     if (
-      playerID === game.current.players[game.current.activePlayer].id &&
+      playerID === game.current.activePlayer?.id &&
       game.current.phase === 'movement'
     ) {
-      const token = game.current.players[
-        game.current.activePlayer
-      ].tokens.findIndex(tokenPos => tokenPos === -1)
+      const token = game.current.activePlayer?.tokens.findIndex(
+        tokenPos => tokenPos === -1
+      )
       console.log(token)
 
       if (token !== undefined && token !== -1 && game.current.rollVal) {
-        game.current.players[game.current.activePlayer].moveToken(
-          token,
-          game.current.rollVal
-        )
+        game.current.activePlayer.moveToken(token, game.current.rollVal)
         console.log('start clic')
         game.current.updateBoard()
         game.current.changeTurn()
