@@ -1,4 +1,6 @@
 import React from 'react'
+import { Card } from '@material-ui/core'
+import './Tile.css'
 
 interface Props extends TileI {
   handleTokenClick: (token: number | null, oc: PlayerID) => void
@@ -11,17 +13,29 @@ interface Props extends TileI {
 // isRosette
 // isFinish
 // isStart
+//
 
 const Tile: React.FC<Props> = ({ oc, token, type, handleTokenClick }) => {
-  const handleClick = () => {
-    console.log('click')
-    console.log({ token })
-    console.log({ oc })
+  let bgColor = 'red'
+  switch (type) {
+    case 'normal':
+      bgColor = 'white'
+      break
+    case 'rosette':
+      bgColor = 'grey'
+      break
+    case 'goal':
+      bgColor = 'black'
+      break
   }
   return (
-    <p onClick={handleTokenClick.bind(null, token, oc)}>
-      {oc !== null ? oc : 'Nothing'}
-    </p>
+    <Card
+      style={{ backgroundColor: `${bgColor}` }}
+      elevation={5}
+      onClick={handleTokenClick.bind(null, token, oc)}
+    >
+      <p>{oc !== null ? oc : 'x'}</p>
+    </Card>
   )
 }
 

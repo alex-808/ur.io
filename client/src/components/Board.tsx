@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid'
 
 interface Props {
   tiles: TileI[]
+  //TODO make type in d.ts for this
   handleTokenClick: (token: number | null, oc: PlayerID) => void
 }
 
@@ -12,7 +13,7 @@ const Board: React.FC<Props> = ({ tiles, handleTokenClick }) => {
   return (
     <>
       <Grid container direction="column"></Grid>
-      <Grid container>
+      <Grid container spacing={5}>
         {tiles.map((tile, i) => (
           <Grid item xs={4} key={i}>
             <Tile
