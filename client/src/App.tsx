@@ -13,6 +13,7 @@ function App() {
   game.current.addPlayer()
 
   useEffect(() => {
+    game.current.players[1].moveToken(0, 4)
     game.current.players[0].moveToken(0, 4)
     game.current.updateBoard()
     console.dir(game.current)
@@ -20,8 +21,19 @@ function App() {
     setGameState({ ...game.current })
   }, [])
 
+  const handleTokenClick = (token: number | null, oc: PlayerID) => {
+    console.log({ token })
+    console.log({ oc })
+    if (oc !== null && token !== null && game.current.rollVal) {
+      console.log('moving')
+      game.current.players[`${oc}`].moveToken(token, game.current.rollVal)
+      game.current.updateBoard()
+    }
+    setGameState({ ...game.current })
+  }
+
   const onClick = () => {
-    const [val1, val2] = game.current.rollDice()
+    game.current.rollDice()
     console.log(game.current.rollVal)
     setGameState({ ...game.current })
   }
@@ -34,7 +46,10 @@ function App() {
             <PlayerStart player={gameState.players[0]} />
           </Grid>
           <Grid item xs={6}>
-            <Board tiles={gameState.board} />
+            <Board
+              tiles={gameState.board}
+              handleTokenClick={handleTokenClick}
+            />
           </Grid>
           <Grid item xs={3}>
             <PlayerStart player={gameState.players[1]} />

@@ -4,17 +4,24 @@ import Grid from '@material-ui/core/Grid'
 //import { makeStyles, createStyles, Theme } from '@material-ui/core'
 
 interface Props {
-  tiles: PlayerID[]
+  tiles: TileI[]
+  handleTokenClick: (token: number | null, oc: PlayerID) => void
 }
 
-const Board: React.FC<Props> = ({ tiles }) => {
+const Board: React.FC<Props> = ({ tiles, handleTokenClick }) => {
   return (
     <>
       <Grid container direction="column"></Grid>
       <Grid container>
         {tiles.map((tile, i) => (
           <Grid item xs={4} key={i}>
-            <Tile oc={tile} key={i} />
+            <Tile
+              oc={tile.oc}
+              type={tile.type}
+              token={tile.token}
+              key={i}
+              handleTokenClick={handleTokenClick}
+            />
           </Grid>
         ))}
       </Grid>

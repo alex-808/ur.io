@@ -1,7 +1,7 @@
 import React from 'react'
 
-interface Props {
-  oc: PlayerID
+interface Props extends TileI {
+  handleTokenClick: (token: number | null, oc: PlayerID) => void
 }
 
 // Possible states:
@@ -12,11 +12,17 @@ interface Props {
 // isFinish
 // isStart
 
-const Tile: React.FC<Props> = ({ oc }) => {
+const Tile: React.FC<Props> = ({ oc, token, type, handleTokenClick }) => {
   const handleClick = () => {
     console.log('click')
+    console.log({ token })
+    console.log({ oc })
   }
-  return <p onClick={handleClick}>{oc !== null ? oc : 'Nothing'}</p>
+  return (
+    <p onClick={handleTokenClick.bind(null, token, oc)}>
+      {oc !== null ? oc : 'Nothing'}
+    </p>
+  )
 }
 
 export { Tile }

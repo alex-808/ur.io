@@ -10,7 +10,7 @@ const PlayerStart: React.FC<Props> = ({ player }) => {
       {player.tokens
         .filter(token => token === -1)
         .map(token => (
-          <p>{player.id}</p>
+          <p key={Math.random()}>{player.id}</p>
         ))}
     </>
   )

@@ -1,29 +1,113 @@
 class Game {
   players: Player[] = []
   phase: GamePhase = 'rolling'
-  activePlayer: number | null = null
-  board: PlayerID[] = [
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
+  activePlayer: number = 0
+  board: TileI[] = [
+    {
+      oc: null,
+      token: null,
+      type: 'normal',
+    },
+    {
+      oc: null,
+      token: null,
+      type: 'normal',
+    },
+    {
+      oc: null,
+      token: null,
+      type: 'normal',
+    },
+    {
+      oc: null,
+      token: null,
+      type: 'normal',
+    },
+    {
+      oc: null,
+      token: null,
+      type: 'normal',
+    },
+    {
+      oc: null,
+      token: null,
+      type: 'normal',
+    },
+    {
+      oc: null,
+      token: null,
+      type: 'normal',
+    },
+    {
+      oc: null,
+      token: null,
+      type: 'normal',
+    },
+    {
+      oc: null,
+      token: null,
+      type: 'normal',
+    },
+    {
+      oc: null,
+      token: null,
+      type: 'normal',
+    },
+    {
+      oc: null,
+      token: null,
+      type: 'normal',
+    },
+    {
+      oc: null,
+      token: null,
+      type: 'normal',
+    },
+    {
+      oc: null,
+      token: null,
+      type: 'normal',
+    },
+    {
+      oc: null,
+      token: null,
+      type: 'normal',
+    },
+    {
+      oc: null,
+      token: null,
+      type: 'normal',
+    },
+    {
+      oc: null,
+      token: null,
+      type: 'normal',
+    },
+    {
+      oc: null,
+      token: null,
+      type: 'normal',
+    },
+    {
+      oc: null,
+      token: null,
+      type: 'normal',
+    },
+    {
+      oc: null,
+      token: null,
+      type: 'normal',
+    },
+    {
+      oc: null,
+      token: null,
+      type: 'normal',
+    },
+    {
+      oc: null,
+      token: null,
+      type: 'normal',
+    },
   ]
   rollVal: number | null = 0
   checkForNoMoves() {
@@ -41,20 +125,29 @@ class Game {
     }
   }
   rollDice() {
+    if (this.phase !== 'rolling') return
     const val1 = Math.floor(Math.random() * 3)
     const val2 = Math.floor(Math.random() * 3)
 
     this.rollVal = val1 + val2
+    if (this.rollVal !== 0) {
+      this.phase = 'movement'
+    }
     return [val1, val2]
   }
   updateBoard() {
+    for (let tile of this.board) {
+      tile.oc = null
+      tile.token = null
+    }
     for (let player of this.players) {
       const path = player.id === 0 ? player0Path : player1Path
       for (let tokenPos of player.tokens) {
         if (tokenPos === -1) continue
         const boardVal = path.get(tokenPos)
         if (boardVal !== undefined) {
-          this.board[boardVal] = player.id
+          this.board[boardVal].oc = player.id
+          this.board[boardVal].token = player.tokens.indexOf(tokenPos)
         }
       }
     }
@@ -96,7 +189,7 @@ const player1Path = new Map([
 ])
 class Player implements PlayerI {
   constructor(public id: PlayerID) {}
-  tokens = [-1, 10, -1, 7, -1, -1, -1]
+  tokens = [-1, -1, -1, -1, -1, -1, -1]
   score: number = 0
   incrementScore() {
     this.score++
@@ -104,6 +197,11 @@ class Player implements PlayerI {
   moveToken(tokenIndex: number, rollVal: number) {
     this.tokens[tokenIndex] += rollVal
     console.log(this.tokens)
+  }
+  getTokenIndex(tile: number) {
+    const path = this.id === 0 ? player0Path : player1Path
+    let tiles = path.entries()
+    console.log(tiles)
   }
 }
 
