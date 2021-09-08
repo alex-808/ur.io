@@ -39,6 +39,28 @@ function App() {
     setGameState({ ...game.current })
   }
 
+  const handlePlayerStartClick = (playerID: PlayerID) => {
+    if (
+      playerID === game.current.players[game.current.activePlayer].id &&
+      game.current.phase === 'movement'
+    ) {
+      const token = game.current.players[
+        game.current.activePlayer
+      ].tokens.findIndex(tokenPos => tokenPos === -1)
+      console.log(token)
+
+      if (token !== undefined && token !== -1 && game.current.rollVal) {
+        game.current.players[game.current.activePlayer].moveToken(
+          token,
+          game.current.rollVal
+        )
+        console.log('start clic')
+        game.current.updateBoard()
+        game.current.changeTurn()
+      }
+    }
+    setGameState({ ...game.current })
+  }
   const onClick = () => {
     game.current.rollDice()
     console.log(game.current.rollVal)
@@ -53,6 +75,7 @@ function App() {
             <PlayerStart
               player={gameState.players[0]}
               activePlayer={gameState.activePlayer}
+              onClick={handlePlayerStartClick}
             />
           </Grid>
           <Grid item xs={6}>
@@ -65,6 +88,7 @@ function App() {
             <PlayerStart
               player={gameState.players[1]}
               activePlayer={gameState.activePlayer}
+              onClick={handlePlayerStartClick}
             />
           </Grid>
         </Grid>
