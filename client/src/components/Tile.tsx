@@ -24,7 +24,7 @@ const Tile: React.FC<Props> = ({ oc, token, type, handleTokenClick }) => {
       bgColor = 'grey'
       break
     case 'goal':
-      bgColor = 'black'
+      bgColor = 'brown'
       break
   }
   return (

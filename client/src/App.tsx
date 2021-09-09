@@ -13,8 +13,6 @@ function App() {
   game.current.addPlayer()
 
   useEffect(() => {
-    game.current.players[1].moveToken(0, 4)
-    game.current.players[0].moveToken(0, 4)
     game.current.updateBoard()
     console.dir(game.current)
     console.dir(gameState)
@@ -31,7 +29,15 @@ function App() {
     ) {
       console.log('moving')
       if (game.current.phase === 'movement' && game.current.activePlayer) {
-        game.current.activePlayer.moveToken(token, game.current.rollVal)
+        const newPos = game.current.activePlayer.moveToken(
+          token,
+          game.current.rollVal
+        )
+        console.log(newPos)
+        // working on scoring here
+        if (newPos === 13) {
+          game.current.activePlayer.scoreGoal()
+        }
         game.current.updateBoard()
         game.current.changeTurn()
       }
