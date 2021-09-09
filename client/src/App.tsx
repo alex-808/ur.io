@@ -20,34 +20,30 @@ function App() {
   }, [])
 
   const handleTokenClick = (token: number | null, oc: PlayerID) => {
-    console.log({ token })
-    console.log({ oc })
     if (
       oc === game.current.activePlayer?.id &&
       token !== null &&
       game.current.rollVal
     ) {
-      console.log('moving')
       if (game.current.phase === 'movement' && game.current.activePlayer) {
         const newPos = game.current.activePlayer.moveToken(
           token,
           game.current.rollVal
         )
-        console.log(newPos)
-        // working on scoring here
         if (newPos === 13) {
           game.current.activePlayer.scoreGoal()
         }
         game.current.updateBoard()
-        game.current.changeTurn()
+        if (newPos !== 3 && newPos !== 7 && newPos !== 11) {
+          game.current.changeTurn()
+        } else {
+        }
       }
     }
     setGameState({ ...game.current })
   }
-
+  //TODO merge these two functions since they do similar things
   const handlePlayerStartClick = (playerID: PlayerID) => {
-    console.log(playerID)
-    console.log(game.current.activePlayer?.id)
     if (
       playerID === game.current.activePlayer?.id &&
       game.current.phase === 'movement'
@@ -55,20 +51,20 @@ function App() {
       const token = game.current.activePlayer?.tokens.findIndex(
         tokenPos => tokenPos === -1
       )
-      console.log(token)
 
       if (token !== undefined && token !== -1 && game.current.rollVal) {
         game.current.activePlayer.moveToken(token, game.current.rollVal)
-        console.log('start clic')
         game.current.updateBoard()
-        game.current.changeTurn()
+        if (game.current.rollVal !== 4) {
+          game.current.changeTurn()
+        } else {
+        }
       }
     }
     setGameState({ ...game.current })
   }
   const onClick = () => {
     game.current.rollDice()
-    console.log(game.current.rollVal)
     setGameState({ ...game.current })
   }
   return (

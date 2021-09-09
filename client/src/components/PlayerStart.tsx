@@ -18,6 +18,7 @@ const PlayerStart: React.FC<Props> = ({ player, activePlayer, onClick }) => {
         .map(token => (
           <p key={Math.random()}>{player.id}</p>
         ))}
+      <b style={{ color: 'black', fontSize: '30px' }}>{player.score}</b>
     </div>
   )
 }

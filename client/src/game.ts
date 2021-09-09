@@ -96,7 +96,7 @@ class Game {
     {
       oc: null,
       token: null,
-      type: 'normal',
+      type: 'rosette',
     },
     {
       oc: null,
@@ -106,7 +106,7 @@ class Game {
     {
       oc: null,
       token: null,
-      type: 'normal',
+      type: 'rosette',
     },
   ]
   rollVal: number | null = 0
@@ -133,7 +133,7 @@ class Game {
     const val2 = Math.floor(Math.random() * 3)
 
     //this.rollVal = val1 + val2
-    this.rollVal = 1
+    this.rollVal = 4
     if (this.rollVal !== 0) {
       this.phase = 'movement'
     } else {
@@ -214,7 +214,7 @@ class Player implements PlayerI {
   }
   moveToken(tokenIndex: number, rollVal: number) {
     this.tokens[tokenIndex] += rollVal
-    console.log(this.tokens)
+    console.log(this.tokens[tokenIndex])
     return this.tokens[tokenIndex]
   }
 }
