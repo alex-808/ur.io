@@ -20,52 +20,38 @@ function App() {
     setGameState({ ...game.current })
   }, [])
 
-  const handleTokenClick = (token: number | null, oc: PlayerID) => {
+  const handleTokenClick: handleTokenClick = (playerID, token) => {
     if (
-      oc === game.current.activePlayer?.id &&
-      token !== null &&
-      game.current.rollVal
+      playerID !== game.current.activePlayer?.id ||
+      !game.current.rollVal ||
+      token === null ||
+      game.current.phase !== 'movement' ||
+      !game.current.activePlayer
     ) {
-      if (game.current.phase === 'movement' && game.current.activePlayer) {
-        const newPos = game.current.activePlayer.moveToken(
-          token,
-          game.current.rollVal
-        )
-        if (newPos === constants.GOAL_TILE && newPos !== null) {
-          game.current.activePlayer.scoreGoal()
-          game.current.updateBoard()
-          if (!constants.ROSETTE_TILES.includes(newPos)) {
-            game.current.changeTurn()
-          }
-        }
-      }
+      return
     }
-    setGameState({ ...game.current })
-  }
-  //TODO merge these two functions since they do similar things
-  const handlePlayerStartClick = (playerID: PlayerID) => {
-    if (
-      playerID === game.current.activePlayer?.id &&
-      game.current.phase === 'movement'
-    ) {
-      const token = game.current.activePlayer?.tokens.findIndex(
+    if (token === constants.PLAYER_START) {
+      token = game.current.activePlayer?.tokens.findIndex(
         tokenPos => tokenPos === constants.PLAYER_START
       )
-
-      if (
-        token !== undefined &&
-        token !== constants.PLAYER_START &&
-        game.current.rollVal
-      ) {
-        game.current.activePlayer.moveToken(token, game.current.rollVal)
-        game.current.updateBoard()
-        if (!constants.ROSETTE_TILES.includes(game.current.rollVal)) {
-          game.current.changeTurn()
-        }
-      }
     }
+    const newPos = game.current.activePlayer.moveToken(
+      token,
+      game.current.rollVal
+    )
+    if (newPos !== null) {
+      if (newPos === constants.GOAL_TILE) {
+        game.current.activePlayer.scoreGoal()
+      }
+      if (!constants.ROSETTE_TILES.includes(newPos)) {
+        game.current.changeTurn()
+      }
+      game.current.updateBoard()
+    }
+
     setGameState({ ...game.current })
   }
+
   const rollDice = () => {
     game.current.rollDice()
     setGameState({ ...game.current })
@@ -79,7 +65,7 @@ function App() {
             <PlayerStart
               player={gameState.players[0]}
               activePlayer={gameState.activePlayer}
-              onClick={handlePlayerStartClick}
+              onClick={handleTokenClick}
             />
           </Grid>
           <Grid item xs={6}>
@@ -92,7 +78,7 @@ function App() {
             <PlayerStart
               player={gameState.players[1]}
               activePlayer={gameState.activePlayer}
-              onClick={handlePlayerStartClick}
+              onClick={handleTokenClick}
             />
           </Grid>
         </Grid>

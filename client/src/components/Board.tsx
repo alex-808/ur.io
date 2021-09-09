@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid'
 interface Props {
   tiles: TileI[]
   //TODO make type in d.ts for this
-  handleTokenClick: (token: number | null, oc: PlayerID) => void
+  handleTokenClick: handleTokenClick
 }
 
 const Board: React.FC<Props> = ({ tiles, handleTokenClick }) => {

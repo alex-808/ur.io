@@ -141,6 +141,19 @@ class Game {
     }
     return [val1, val2]
   }
+  //TODO try to get this to be used in handleTokenClick
+  isMovePossible(playerID: PlayerID, token: number | null) {
+    if (
+      playerID !== this.activePlayer?.id ||
+      !this.rollVal ||
+      token === null ||
+      this.phase !== 'movement' ||
+      !this.activePlayer
+    ) {
+      return false
+    }
+    return true
+  }
   updateBoard() {
     for (let tile of this.board) {
       tile.oc = null

@@ -2,7 +2,7 @@ import React from 'react'
 import { Card } from '@material-ui/core'
 
 interface Props extends TileI {
-  handleTokenClick: (token: number | null, oc: PlayerID) => void
+  handleTokenClick: handleTokenClick
 }
 
 // Possible states:
@@ -31,7 +31,7 @@ const Tile: React.FC<Props> = ({ oc, token, type, handleTokenClick }) => {
     <Card
       style={{ backgroundColor: `${bgColor}` }}
       elevation={5}
-      onClick={handleTokenClick.bind(null, token, oc)}
+      onClick={handleTokenClick.bind(null, oc, token)}
     >
       <p>{oc !== null ? oc : 'x'}</p>
     </Card>
