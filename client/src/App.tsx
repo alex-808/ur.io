@@ -39,15 +39,17 @@ function App() {
       token,
       game.current.rollVal
     )
-    if (newPos !== null) {
-      if (newPos === constants.GOAL_TILE) {
-        game.current.activePlayer.scoreGoal()
-      }
-      if (!constants.ROSETTE_TILES.includes(newPos)) {
-        game.current.changeTurn()
-      }
-      game.current.updateBoard()
+    game.current.checkForCaptures()
+    if (newPos === null) return
+    if (newPos === constants.GOAL_TILE) {
+      game.current.activePlayer.scoreGoal()
     }
+    if (!constants.ROSETTE_TILES.includes(newPos)) {
+      game.current.changeTurn()
+    } else {
+      game.current.phase = 'rolling'
+    }
+    game.current.updateBoard()
 
     setGameState({ ...game.current })
   }

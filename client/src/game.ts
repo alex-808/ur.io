@@ -134,6 +134,7 @@ class Game {
     const val2 = Math.floor(Math.random() * 3)
 
     this.rollVal = val1 + val2
+    //this.rollVal = 1
     if (this.rollVal !== 0) {
       this.phase = 'movement'
     } else {
@@ -174,6 +175,25 @@ class Game {
       }
     }
   }
+  checkForCaptures() {
+    if (!this.activePlayer || !this.activePlayer.tokens) return
+    const opponent =
+      this.activePlayer.id === 0 ? this.players[1] : this.players[0]
+
+    for (let i = 0; i < this.activePlayer.tokens.length; i++) {
+      const match = opponent.tokens.findIndex(
+        tokenPos =>
+          tokenPos >= constants.MIDLANE_START &&
+          tokenPos <= constants.MIDLANE_END &&
+          tokenPos === this.activePlayer!.tokens[i]
+      )
+
+      if (match !== -1) {
+        opponent.tokens[match] = constants.PLAYER_START
+      }
+    }
+  }
+
   changeTurn() {
     console.log('turn changed')
     if (this.activePlayer === this.players[0])
@@ -219,7 +239,7 @@ const player1Path = new Map([
 class Player implements PlayerI {
   constructor(public id: PlayerID) {}
   tokens = [
-    constants.PLAYER_START,
+    3,
     constants.PLAYER_START,
     constants.PLAYER_START,
     constants.PLAYER_START,
@@ -232,7 +252,6 @@ class Player implements PlayerI {
     this.tokens = this.tokens.filter(
       tokenPos => tokenPos !== constants.GOAL_TILE
     )
-    console.log(this.tokens)
     this.score++
   }
   moveToken(tokenIndex: number, rollVal: number) {
@@ -240,7 +259,6 @@ class Player implements PlayerI {
     if (this.tokens.includes(newPos) || newPos > constants.GOAL_TILE)
       return null
     this.tokens[tokenIndex] = newPos
-    console.log(this.tokens[tokenIndex])
     return newPos
   }
 }
