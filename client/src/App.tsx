@@ -43,6 +43,13 @@ function App() {
     if (newPos === null) return
     if (newPos === constants.GOAL_TILE) {
       game.current.activePlayer.scoreGoal()
+      if (game.current.activePlayer.tokens.length === 0) {
+        game.current.phase = 'gameOver'
+        console.log('gameOver')
+        game.current.updateBoard()
+        setGameState({ ...game.current })
+        return
+      }
     }
     if (!constants.ROSETTE_TILES.includes(newPos)) {
       game.current.changeTurn()
@@ -58,10 +65,15 @@ function App() {
     game.current.rollDice()
     setGameState({ ...game.current })
   }
+
+  const resetGame = () => {
+    console.log('new game')
+  }
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
+        <p>{game.current.phase.toUpperCase()}</p>
         <Grid container>
           <Grid item xs={3}>
             <PlayerStart
@@ -86,6 +98,9 @@ function App() {
         </Grid>
         <Button color="primary" onClick={rollDice}>
           Roll
+        </Button>
+        <Button color="secondary" onClick={resetGame}>
+          New Game
         </Button>
         <div>{gameState.rollVal}</div>
       </header>

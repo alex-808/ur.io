@@ -144,8 +144,8 @@ class Game {
     const val1 = Math.floor(Math.random() * 3)
     const val2 = Math.floor(Math.random() * 3)
 
-    //this.rollVal = val1 + val2
-    this.rollVal = 4
+    this.rollVal = val1 + val2
+    //this.rollVal = 4
     if (this.rollVal !== 0 && !this.AreNoMoves()) {
       this.phase = 'movement'
     } else {
@@ -249,15 +249,7 @@ const player1Path = new Map([
 ])
 class Player implements PlayerI {
   constructor(public id: PlayerID) {}
-  tokens = [
-    3,
-    constants.PLAYER_START,
-    constants.PLAYER_START,
-    constants.PLAYER_START,
-    constants.PLAYER_START,
-    constants.PLAYER_START,
-    constants.PLAYER_START,
-  ]
+  tokens = [3]
   score: number = 0
   scoreGoal() {
     this.tokens = this.tokens.filter(
