@@ -34,9 +34,8 @@ function App() {
           game.current.activePlayer.scoreGoal()
         }
         game.current.updateBoard()
-        if (newPos !== 3 && newPos !== 7 && newPos !== 11) {
+        if (newPos !== 3 && newPos !== 7 && newPos !== 11 && newPos !== null) {
           game.current.changeTurn()
-        } else {
         }
       }
     }
@@ -57,13 +56,12 @@ function App() {
         game.current.updateBoard()
         if (game.current.rollVal !== 4) {
           game.current.changeTurn()
-        } else {
         }
       }
     }
     setGameState({ ...game.current })
   }
-  const onClick = () => {
+  const rollDice = () => {
     game.current.rollDice()
     setGameState({ ...game.current })
   }
@@ -93,7 +91,7 @@ function App() {
             />
           </Grid>
         </Grid>
-        <Button color="primary" onClick={onClick}>
+        <Button color="primary" onClick={rollDice}>
           Roll
         </Button>
         <div>{gameState.rollVal}</div>

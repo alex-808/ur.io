@@ -213,9 +213,11 @@ class Player implements PlayerI {
     this.score++
   }
   moveToken(tokenIndex: number, rollVal: number) {
-    this.tokens[tokenIndex] += rollVal
+    const newPos = this.tokens[tokenIndex] + rollVal
+    if (this.tokens.includes(newPos)) return null
+    this.tokens[tokenIndex] = newPos
     console.log(this.tokens[tokenIndex])
-    return this.tokens[tokenIndex]
+    return newPos
   }
 }
 
