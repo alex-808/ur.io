@@ -132,8 +132,7 @@ class Game {
     const val1 = Math.floor(Math.random() * 3)
     const val2 = Math.floor(Math.random() * 3)
 
-    //this.rollVal = val1 + val2
-    this.rollVal = 4
+    this.rollVal = val1 + val2
     if (this.rollVal !== 0) {
       this.phase = 'movement'
     } else {
@@ -214,7 +213,7 @@ class Player implements PlayerI {
   }
   moveToken(tokenIndex: number, rollVal: number) {
     const newPos = this.tokens[tokenIndex] + rollVal
-    if (this.tokens.includes(newPos)) return null
+    if (this.tokens.includes(newPos) || newPos > 13) return null
     this.tokens[tokenIndex] = newPos
     console.log(this.tokens[tokenIndex])
     return newPos
