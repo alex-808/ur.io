@@ -111,10 +111,21 @@ class Game {
     },
   ]
   rollVal: number | null = 0
-  checkForNoMoves() {
-    //TODO
+  AreNoMoves() {
+    if (!this.activePlayer || !this.rollVal) return
+    let immovableTokens = 0
+    this.activePlayer.tokens.forEach(tokenPos => {
+      if (
+        tokenPos + this.rollVal! > constants.GOAL_TILE ||
+        this.activePlayer!.tokens.includes(tokenPos + this.rollVal!)
+      ) {
+        immovableTokens++
+      }
+    })
+    console.log(immovableTokens)
+    if (immovableTokens === this.activePlayer.tokens.length) return true
+    return false
   }
-
   reset() {
     //TODO
   }
@@ -133,9 +144,9 @@ class Game {
     const val1 = Math.floor(Math.random() * 3)
     const val2 = Math.floor(Math.random() * 3)
 
-    this.rollVal = val1 + val2
-    //this.rollVal = 1
-    if (this.rollVal !== 0) {
+    //this.rollVal = val1 + val2
+    this.rollVal = 4
+    if (this.rollVal !== 0 && !this.AreNoMoves()) {
       this.phase = 'movement'
     } else {
       this.changeTurn()
