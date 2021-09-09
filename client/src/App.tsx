@@ -5,6 +5,7 @@ import { Button, Grid } from '@material-ui/core'
 import { Board } from './components/Board'
 import { Game } from './game'
 import { PlayerStart } from './components/PlayerStart'
+import * as constants from './constants'
 
 function App() {
   const game = useRef(new Game())
@@ -30,12 +31,12 @@ function App() {
           token,
           game.current.rollVal
         )
-        if (newPos === 13) {
+        if (newPos === constants.GOAL_TILE && newPos !== null) {
           game.current.activePlayer.scoreGoal()
-        }
-        game.current.updateBoard()
-        if (newPos !== 3 && newPos !== 7 && newPos !== 11 && newPos !== null) {
-          game.current.changeTurn()
+          game.current.updateBoard()
+          if (!constants.ROSETTE_TILES.includes(newPos)) {
+            game.current.changeTurn()
+          }
         }
       }
     }
@@ -48,13 +49,17 @@ function App() {
       game.current.phase === 'movement'
     ) {
       const token = game.current.activePlayer?.tokens.findIndex(
-        tokenPos => tokenPos === -1
+        tokenPos => tokenPos === constants.PLAYER_START
       )
 
-      if (token !== undefined && token !== -1 && game.current.rollVal) {
+      if (
+        token !== undefined &&
+        token !== constants.PLAYER_START &&
+        game.current.rollVal
+      ) {
         game.current.activePlayer.moveToken(token, game.current.rollVal)
         game.current.updateBoard()
-        if (game.current.rollVal !== 4) {
+        if (!constants.ROSETTE_TILES.includes(game.current.rollVal)) {
           game.current.changeTurn()
         }
       }

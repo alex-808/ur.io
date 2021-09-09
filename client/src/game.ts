@@ -1,3 +1,4 @@
+import * as constants from './constants'
 class Game {
   players: Player[] = []
   phase: GamePhase = 'rolling'
@@ -150,7 +151,7 @@ class Game {
       const path = player.id === 0 ? player0Path : player1Path
 
       for (let tokenPos of player.tokens) {
-        if (tokenPos === -1) continue
+        if (tokenPos === constants.PLAYER_START) continue
         const boardVal = path.get(tokenPos)
 
         if (boardVal !== undefined) {
@@ -204,16 +205,27 @@ const player1Path = new Map([
 ])
 class Player implements PlayerI {
   constructor(public id: PlayerID) {}
-  tokens = [12, -1, -1, -1, -1, -1, -1]
+  tokens = [
+    constants.PLAYER_START,
+    constants.PLAYER_START,
+    constants.PLAYER_START,
+    constants.PLAYER_START,
+    constants.PLAYER_START,
+    constants.PLAYER_START,
+    constants.PLAYER_START,
+  ]
   score: number = 0
   scoreGoal() {
-    this.tokens = this.tokens.filter(tokenPos => tokenPos !== 13)
+    this.tokens = this.tokens.filter(
+      tokenPos => tokenPos !== constants.GOAL_TILE
+    )
     console.log(this.tokens)
     this.score++
   }
   moveToken(tokenIndex: number, rollVal: number) {
     const newPos = this.tokens[tokenIndex] + rollVal
-    if (this.tokens.includes(newPos) || newPos > 13) return null
+    if (this.tokens.includes(newPos) || newPos > constants.GOAL_TILE)
+      return null
     this.tokens[tokenIndex] = newPos
     console.log(this.tokens[tokenIndex])
     return newPos

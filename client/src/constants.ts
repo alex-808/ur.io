@@ -1,0 +1,5 @@
+const GOAL_TILE = 13
+const ROSETTE_TILES = [3, 7, 11]
+const PLAYER_START = -1
+
+export { GOAL_TILE, ROSETTE_TILES, PLAYER_START }
