@@ -127,7 +127,11 @@ class Game {
     return false
   }
   reset() {
-    //TODO
+    this.players[0] = new Player(0)
+    this.players[1] = new Player(1)
+    this.activePlayer = this.players[1]
+    this.rollVal = 0
+    this.phase = 'rolling'
   }
   addPlayer() {
     if (this.players.length < 2) {
@@ -249,7 +253,15 @@ const player1Path = new Map([
 ])
 class Player implements PlayerI {
   constructor(public id: PlayerID) {}
-  tokens = [3]
+  tokens = [
+    constants.PLAYER_START,
+    constants.PLAYER_START,
+    constants.PLAYER_START,
+    constants.PLAYER_START,
+    constants.PLAYER_START,
+    constants.PLAYER_START,
+    constants.PLAYER_START,
+  ]
   score: number = 0
   scoreGoal() {
     this.tokens = this.tokens.filter(

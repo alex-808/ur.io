@@ -15,8 +15,6 @@ function App() {
 
   useEffect(() => {
     game.current.updateBoard()
-    console.dir(game.current)
-    console.dir(gameState)
     setGameState({ ...game.current })
   }, [])
 
@@ -68,6 +66,9 @@ function App() {
 
   const resetGame = () => {
     console.log('new game')
+    game.current.reset()
+    game.current.updateBoard()
+    setGameState({ ...game.current })
   }
   return (
     <div className="App">
