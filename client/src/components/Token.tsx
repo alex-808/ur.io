@@ -6,7 +6,7 @@ interface Props {
 }
 
 const Token: React.FC<Props> = ({ playerID }) => {
-  return <div className={`player-${playerID}-token`}>{playerID}</div>
+  return <div className={`player-${playerID}-token`}></div>
 }
 
 export { Token }

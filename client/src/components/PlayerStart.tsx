@@ -2,6 +2,7 @@ import React from 'react'
 import { Badge, Grid } from '@material-ui/core'
 import * as constants from '../constants'
 import { Token } from './Token'
+import './PlayerStart.scss'
 
 interface Props {
   player: PlayerI
@@ -14,6 +15,8 @@ const PlayerStart: React.FC<Props> = ({ player, activePlayer, onClick }) => {
     <Grid
       container
       direction="column"
+      alignContent="center"
+      justifyContent="space-around"
       onClick={onClick.bind(null, player.id, constants.PLAYER_START)}
     >
       {player?.id === activePlayer?.id && (

@@ -75,39 +75,36 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>{game.current.phase.toUpperCase()}</p>
-        <Grid container>
-          <Grid item xs={3}>
-            <PlayerStart
-              player={gameState.players[0]}
-              activePlayer={gameState.activePlayer}
-              onClick={handleTokenClick}
-            />
-            <PlayerScore score={gameState.players[0].score} />
-          </Grid>
-          <Grid item xs={6}>
-            <Board
-              tiles={gameState.board}
-              handleTokenClick={handleTokenClick}
-            />
-          </Grid>
-          <Grid item xs={3}>
-            <PlayerStart
-              player={gameState.players[1]}
-              activePlayer={gameState.activePlayer}
-              onClick={handleTokenClick}
-            />
-            <PlayerScore score={gameState.players[1].score} />
-          </Grid>
-        </Grid>
-        <Button color="primary" onClick={rollDice}>
-          Roll
-        </Button>
-        <Button color="secondary" onClick={resetGame}>
-          New Game
-        </Button>
-        <div>{gameState.rollVal}</div>
       </header>
+      <p>{game.current.phase.toUpperCase()}</p>
+      <Grid container>
+        <Grid item xs={3}>
+          <PlayerStart
+            player={gameState.players[0]}
+            activePlayer={gameState.activePlayer}
+            onClick={handleTokenClick}
+          />
+          <PlayerScore score={gameState.players[0].score} />
+        </Grid>
+        <Grid item xs={6}>
+          <Board tiles={gameState.board} handleTokenClick={handleTokenClick} />
+        </Grid>
+        <Grid item xs={3}>
+          <PlayerStart
+            player={gameState.players[1]}
+            activePlayer={gameState.activePlayer}
+            onClick={handleTokenClick}
+          />
+          <PlayerScore score={gameState.players[1].score} />
+        </Grid>
+      </Grid>
+      <Button color="primary" onClick={rollDice}>
+        Roll
+      </Button>
+      <Button color="secondary" onClick={resetGame}>
+        New Game
+      </Button>
+      <div>{gameState.rollVal}</div>
     </div>
   )
 }

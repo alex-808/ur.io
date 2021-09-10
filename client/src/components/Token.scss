@@ -1,15 +1,22 @@
+$player0Color: #ffffff;
+$player1Color: #302f31;
+:root {
+  font-size: 16px;
+}
+
 .token {
-  padding: 5vh;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 50%;
+  filter: drop-shadow(6px 4px 0px rgba(0, 0, 0, 0.25));
 }
 
 .player-0-token {
   @extend .token;
-  background-color: blue;
-  height: 50%;
-  width: 50%;
-  border-radius: 50%;
+  background-color: $player0Color;
 }
 
 .player-1-token {
   @extend .token;
+  background-color: $player1Color;
 }
