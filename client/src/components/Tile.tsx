@@ -1,5 +1,6 @@
 import React from 'react'
 import { Card } from '@material-ui/core'
+import { Token } from './Token'
 
 interface Props extends TileI {
   handleTokenClick: handleTokenClick
@@ -33,7 +34,7 @@ const Tile: React.FC<Props> = ({ oc, token, type, handleTokenClick }) => {
       elevation={5}
       onClick={handleTokenClick.bind(null, oc, token)}
     >
-      <p>{oc !== null ? oc : 'x'}</p>
+      <p>{oc !== null ? <Token playerID={oc} /> : ''}</p>
     </Card>
   )
 }

@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react'
 import logo from './logo.svg'
-import './App.css'
+import './App.scss'
 import { Button, Grid } from '@material-ui/core'
 import { Board } from './components/Board'
 import { Game } from './game'
 import { PlayerStart } from './components/PlayerStart'
+import { PlayerScore } from './components/PlayerScore'
 import * as constants from './constants'
 
 function App() {
@@ -82,6 +83,7 @@ function App() {
               activePlayer={gameState.activePlayer}
               onClick={handleTokenClick}
             />
+            <PlayerScore score={gameState.players[0].score} />
           </Grid>
           <Grid item xs={6}>
             <Board
@@ -95,6 +97,7 @@ function App() {
               activePlayer={gameState.activePlayer}
               onClick={handleTokenClick}
             />
+            <PlayerScore score={gameState.players[1].score} />
           </Grid>
         </Grid>
         <Button color="primary" onClick={rollDice}>

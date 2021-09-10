@@ -1,0 +1,15 @@
+.token {
+  padding: 5vh;
+}
+
+.player-0-token {
+  @extend .token;
+  background-color: blue;
+  height: 50%;
+  width: 50%;
+  border-radius: 50%;
+}
+
+.player-1-token {
+  @extend .token;
+}
