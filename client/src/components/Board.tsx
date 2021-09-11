@@ -1,21 +1,29 @@
 import React from 'react'
 import { Tile } from './Tile'
 import Grid from '@material-ui/core/Grid'
-//import { makeStyles, createStyles, Theme } from '@material-ui/core'
 
 interface Props {
   tiles: TileI[]
-  //TODO make type in d.ts for this
   handleTokenClick: handleTokenClick
 }
 
 const Board: React.FC<Props> = ({ tiles, handleTokenClick }) => {
   return (
-    <>
-      <Grid container direction="column"></Grid>
-      <Grid container spacing={5}>
+    <div className="board">
+      <Grid
+        container
+        justify-content="space-between"
+        align-content="space-around"
+      >
         {tiles.map((tile, i) => (
-          <Grid item xs={4} key={i}>
+          <Grid
+            item
+            container
+            xs={4}
+            justify-content="space-around"
+            alignContent="space-between"
+            key={i}
+          >
             <Tile
               oc={tile.oc}
               type={tile.type}
@@ -26,7 +34,7 @@ const Board: React.FC<Props> = ({ tiles, handleTokenClick }) => {
           </Grid>
         ))}
       </Grid>
-    </>
+    </div>
   )
 }
 

@@ -73,11 +73,7 @@ function App() {
   }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-      </header>
-      <p>{game.current.phase.toUpperCase()}</p>
-      <Grid container>
+      <Grid container alignContent="center">
         <Grid item xs={3}>
           <PlayerStart
             player={gameState.players[0]}
@@ -87,7 +83,15 @@ function App() {
           <PlayerScore score={gameState.players[0].score} />
         </Grid>
         <Grid item xs={6}>
+          <p>{game.current.phase.toUpperCase()}</p>
           <Board tiles={gameState.board} handleTokenClick={handleTokenClick} />
+          <div>{gameState.rollVal}</div>
+          <Button color="primary" onClick={rollDice}>
+            Roll
+          </Button>
+          <Button color="secondary" onClick={resetGame}>
+            New Game
+          </Button>
         </Grid>
         <Grid item xs={3}>
           <PlayerStart
@@ -98,13 +102,6 @@ function App() {
           <PlayerScore score={gameState.players[1].score} />
         </Grid>
       </Grid>
-      <Button color="primary" onClick={rollDice}>
-        Roll
-      </Button>
-      <Button color="secondary" onClick={resetGame}>
-        New Game
-      </Button>
-      <div>{gameState.rollVal}</div>
     </div>
   )
 }

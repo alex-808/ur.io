@@ -1,6 +1,7 @@
 import React from 'react'
 import { Card } from '@material-ui/core'
 import { Token } from './Token'
+import './Tile.scss'
 
 interface Props extends TileI {
   handleTokenClick: handleTokenClick
@@ -16,26 +17,25 @@ interface Props extends TileI {
 //
 
 const Tile: React.FC<Props> = ({ oc, token, type, handleTokenClick }) => {
-  let bgColor = 'red'
+  let className = 'red'
   switch (type) {
     case 'normal':
-      bgColor = 'white'
+      className = 'tile-style-0'
       break
     case 'rosette':
-      bgColor = 'grey'
+      className = 'rosette'
       break
     case 'goal':
-      bgColor = 'brown'
+      className = 'goal'
       break
   }
   return (
-    <Card
-      style={{ backgroundColor: `${bgColor}` }}
-      elevation={5}
+    <div
+      className={`${className}`}
       onClick={handleTokenClick.bind(null, oc, token)}
     >
-      <p>{oc !== null ? <Token playerID={oc} /> : ''}</p>
-    </Card>
+      {oc !== null ? <Token playerID={oc} /> : <Token playerID={oc} />}
+    </div>
   )
 }
 

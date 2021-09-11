@@ -5,8 +5,8 @@ $player1Color: #302f31;
 }
 
 .token {
-  padding: 1rem;
-  margin: 1rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
   filter: drop-shadow(6px 4px 0px rgba(0, 0, 0, 0.25));
 }
@@ -19,4 +19,8 @@ $player1Color: #302f31;
 .player-1-token {
   @extend .token;
   background-color: $player1Color;
+}
+
+.player-null-token {
+  @extend .token;
 }
