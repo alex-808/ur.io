@@ -14,6 +14,7 @@ const Board: React.FC<Props> = ({ tiles, handleTokenClick }) => {
         <Tile
           oc={tile.oc}
           type={tile.type}
+          index={i}
           token={tile.token}
           key={i}
           handleTokenClick={handleTokenClick}

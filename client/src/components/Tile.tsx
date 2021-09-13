@@ -1,10 +1,10 @@
 import React from 'react'
-import { Card } from '@material-ui/core'
 import { Token } from './Token'
 import './Tile.scss'
 
 interface Props extends TileI {
   handleTokenClick: handleTokenClick
+  index: number
 }
 
 // Possible states:
@@ -16,11 +16,21 @@ interface Props extends TileI {
 // isStart
 //
 
-const Tile: React.FC<Props> = ({ oc, token, type, handleTokenClick }) => {
+const Tile: React.FC<Props> = ({
+  oc,
+  token,
+  type,
+  index,
+  handleTokenClick,
+}) => {
   let className = 'red'
   switch (type) {
     case 'normal':
-      className = 'tile-style-0'
+      if (index % 2 === 0) {
+        className = 'tile-style-1'
+      } else {
+        className = 'tile-style-0'
+      }
       break
     case 'rosette':
       className = 'rosette'

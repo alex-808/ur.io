@@ -9,12 +9,13 @@ interface Props {
 const PlayerScore: React.FC<Props> = ({ player, activePlayer }) => {
   return (
     <div
-      className={`player${player.id}Score ${
-        player.id === activePlayer?.id ? 'active' : ''
-      }`}
+      className={`player${player.id}Score
+      `}
       style={{ color: 'black', fontSize: '30px' }}
     >
-      <div>{player.score}</div>
+      <div className={`${player.id === activePlayer?.id ? 'active' : ''}`}>
+        {player.score}
+      </div>
     </div>
   )
 }
