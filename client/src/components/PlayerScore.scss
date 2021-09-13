@@ -1,0 +1,19 @@
+.playerScore {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.player0Score {
+  @extend .playerScore;
+  grid-area: player0score;
+}
+
+.player1Score {
+  @extend .playerScore;
+  grid-area: player1score;
+}
+
+.active {
+  background-color: red;
+}

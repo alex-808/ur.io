@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
 import './App.scss'
-import { Button } from '@material-ui/core'
 import { Board } from './components/Board'
 import { Game } from './game'
 import { PlayerStart } from './components/PlayerStart'
@@ -72,31 +71,32 @@ function App() {
   }
   return (
     <div className="App">
-      <div className="player0Start">
-        <PlayerStart
-          player={gameState.players[0]}
-          activePlayer={gameState.activePlayer}
-          onClick={handleTokenClick}
-        />
-      </div>
-      <PlayerScore score={gameState.players[0].score} />
-      <p>{game.current.phase.toUpperCase()}</p>
+      <PlayerStart player={gameState.players[0]} onClick={handleTokenClick} />
+      <PlayerScore
+        activePlayer={gameState.activePlayer}
+        player={gameState.players[0]}
+      />
+      <p className="game-phase">{game.current.phase.toUpperCase()}</p>
       <Board tiles={gameState.board} handleTokenClick={handleTokenClick} />
-      <div>{gameState.rollVal}</div>
-      <Button color="primary" onClick={rollDice}>
-        Roll
-      </Button>
-      <Button color="secondary" onClick={resetGame}>
-        New Game
-      </Button>
-      <div className="player1Start">
-        <PlayerStart
-          player={gameState.players[1]}
-          activePlayer={gameState.activePlayer}
-          onClick={handleTokenClick}
-        />
-        <PlayerScore score={gameState.players[1].score} />
+      <div className="buttons">
+        <div>{gameState.rollVal}</div>
+        <button color="primary" onClick={rollDice}>
+          Roll
+        </button>
+        <button
+          className={gameState.phase !== 'gameOver' ? 'invisible' : 'invisible'}
+          color="secondary"
+          onClick={resetGame}
+        >
+          New Game
+        </button>
       </div>
+
+      <PlayerStart player={gameState.players[1]} onClick={handleTokenClick} />
+      <PlayerScore
+        activePlayer={gameState.activePlayer}
+        player={gameState.players[1]}
+      />
     </div>
   )
 }

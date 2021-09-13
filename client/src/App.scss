@@ -3,14 +3,19 @@
   height: 100%;
   background-color: #9d695a;
   display: grid;
-  grid-template-columns: 1fr 50% 1fr;
-  grid-template-areas: 'Player0Start Board Player1Start';
+  grid-template-columns: 1fr 40% 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: '. game-phase .' 'Player0Start Board Player1Start' 'player0score buttons player1score';
 }
 
-.player1Start {
-  grid-area: Player1Start;
+.buttons {
+  grid-area: buttons;
 }
 
-.player0Start {
-  grid-area: Player0Start;
+.invisible {
+  display: none;
+}
+
+.game-phase {
+  grid-area: game-phase;
 }

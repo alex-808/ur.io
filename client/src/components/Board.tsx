@@ -1,6 +1,5 @@
 import React from 'react'
 import { Tile } from './Tile'
-import Grid from '@material-ui/core/Grid'
 import './Board.scss'
 
 interface Props {
