@@ -2,34 +2,15 @@
   text-align: center;
   height: 100%;
   background-color: #9d695a;
+  display: grid;
+  grid-template-columns: 1fr 50% 1fr;
+  grid-template-areas: 'Player0Start Board Player1Start';
 }
 
-.App-logo {
-  height: 10vmin;
-  pointer-events: none;
+.player1Start {
+  grid-area: Player1Start;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.player0Start {
+  grid-area: Player0Start;
 }

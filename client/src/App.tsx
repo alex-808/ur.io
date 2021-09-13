@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
-import logo from './logo.svg'
 import './App.scss'
-import { Button, Grid } from '@material-ui/core'
+import { Button } from '@material-ui/core'
 import { Board } from './components/Board'
 import { Game } from './game'
 import { PlayerStart } from './components/PlayerStart'
@@ -73,35 +72,31 @@ function App() {
   }
   return (
     <div className="App">
-      <Grid container alignContent="center">
-        <Grid item xs={3}>
-          <PlayerStart
-            player={gameState.players[0]}
-            activePlayer={gameState.activePlayer}
-            onClick={handleTokenClick}
-          />
-          <PlayerScore score={gameState.players[0].score} />
-        </Grid>
-        <Grid item xs={6}>
-          <p>{game.current.phase.toUpperCase()}</p>
-          <Board tiles={gameState.board} handleTokenClick={handleTokenClick} />
-          <div>{gameState.rollVal}</div>
-          <Button color="primary" onClick={rollDice}>
-            Roll
-          </Button>
-          <Button color="secondary" onClick={resetGame}>
-            New Game
-          </Button>
-        </Grid>
-        <Grid item xs={3}>
-          <PlayerStart
-            player={gameState.players[1]}
-            activePlayer={gameState.activePlayer}
-            onClick={handleTokenClick}
-          />
-          <PlayerScore score={gameState.players[1].score} />
-        </Grid>
-      </Grid>
+      <div className="player0Start">
+        <PlayerStart
+          player={gameState.players[0]}
+          activePlayer={gameState.activePlayer}
+          onClick={handleTokenClick}
+        />
+      </div>
+      <PlayerScore score={gameState.players[0].score} />
+      <p>{game.current.phase.toUpperCase()}</p>
+      <Board tiles={gameState.board} handleTokenClick={handleTokenClick} />
+      <div>{gameState.rollVal}</div>
+      <Button color="primary" onClick={rollDice}>
+        Roll
+      </Button>
+      <Button color="secondary" onClick={resetGame}>
+        New Game
+      </Button>
+      <div className="player1Start">
+        <PlayerStart
+          player={gameState.players[1]}
+          activePlayer={gameState.activePlayer}
+          onClick={handleTokenClick}
+        />
+        <PlayerScore score={gameState.players[1].score} />
+      </div>
     </div>
   )
 }

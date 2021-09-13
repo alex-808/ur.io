@@ -1,3 +1,7 @@
 .board {
-  text-align: center;
+  grid-area: Board;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 0.25rem;
+  row-gap: 0.25rem;
 }
