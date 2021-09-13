@@ -80,12 +80,9 @@ function App() {
       <Board tiles={gameState.board} handleTokenClick={handleTokenClick} />
       <div className="buttons">
         <div>{gameState.rollVal}</div>
-        <button color="primary" onClick={rollDice}>
-          Roll
-        </button>
+        <button onClick={rollDice}>Roll</button>
         <button
           className={gameState.phase !== 'gameOver' ? 'invisible' : 'invisible'}
-          color="secondary"
           onClick={resetGame}
         >
           New Game
