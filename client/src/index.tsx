@@ -3,6 +3,13 @@ import ReactDOM from 'react-dom'
 import './index.scss'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
+import io from 'socket.io-client'
+
+const socket = io('http://localhost:5000')
+socket.on('connect', () => {
+  socket.send('Hello')
+  console.log('connected')
+})
 
 ReactDOM.render(
   <React.StrictMode>
