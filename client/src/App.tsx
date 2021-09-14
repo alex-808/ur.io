@@ -5,6 +5,17 @@ import { Game } from './game'
 import { PlayerStart } from './components/PlayerStart'
 import { PlayerScore } from './components/PlayerScore'
 import * as constants from './constants'
+import io from 'socket.io-client'
+
+const socket = io('http://localhost:5000')
+socket.on('connect', () => {
+  //socket.emit('newGame')
+  console.log('connected')
+})
+socket.emit('newGame')
+socket.on('roomID', roomID => {
+  console.log(roomID)
+})
 
 function App() {
   const game = useRef(new Game())

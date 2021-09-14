@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "nodemon server.ts"
+    "start": "nodemon --exec ts-node --files server.ts"
   },
   "dependencies": {
     "express": "^4.17.1",
