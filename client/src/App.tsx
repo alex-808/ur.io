@@ -4,8 +4,11 @@ import { Board } from './components/Board'
 import { Game } from './game'
 import { PlayerStart } from './components/PlayerStart'
 import { PlayerScore } from './components/PlayerScore'
+import { LandingPage } from './components/LandingPage'
+import { WaitingRoom } from './components/WaitingRoom'
 import * as constants from './constants'
 import io from 'socket.io-client'
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 
 const socket = io('http://localhost:5000')
 socket.on('connect', () => {
@@ -82,29 +85,56 @@ function App() {
   }
   return (
     <div className="App">
-      <PlayerStart player={gameState.players[0]} onClick={handleTokenClick} />
-      <PlayerScore
-        activePlayer={gameState.activePlayer}
-        player={gameState.players[0]}
-      />
-      <p className="game-phase">{game.current.phase.toUpperCase()}</p>
-      <Board tiles={gameState.board} handleTokenClick={handleTokenClick} />
-      <div className="buttons">
-        <div>{gameState.rollVal}</div>
-        <button onClick={rollDice}>Roll</button>
-        <button
-          className={gameState.phase !== 'gameOver' ? 'invisible' : 'invisible'}
-          onClick={resetGame}
-        >
-          New Game
-        </button>
-      </div>
+      <Router>
+        <Switch>
+          <Route path="/">
+            <LandingPage />
+          </Route>
+        </Switch>
+        <Switch>
+          <Route path="/waiting">
+            <WaitingRoom />
+          </Route>
+        </Switch>
+        <Switch>
+          <Route path="/game">
+            <PlayerStart
+              player={gameState.players[0]}
+              onClick={handleTokenClick}
+            />
+            <PlayerScore
+              activePlayer={gameState.activePlayer}
+              player={gameState.players[0]}
+            />
+            <p className="game-phase">{game.current.phase.toUpperCase()}</p>
+            <Board
+              tiles={gameState.board}
+              handleTokenClick={handleTokenClick}
+            />
+            <div className="buttons">
+              <div>{gameState.rollVal}</div>
+              <button onClick={rollDice}>Roll</button>
+              <button
+                className={
+                  gameState.phase !== 'gameOver' ? 'invisible' : 'invisible'
+                }
+                onClick={resetGame}
+              >
+                New Game
+              </button>
+            </div>
 
-      <PlayerStart player={gameState.players[1]} onClick={handleTokenClick} />
-      <PlayerScore
-        activePlayer={gameState.activePlayer}
-        player={gameState.players[1]}
-      />
+            <PlayerStart
+              player={gameState.players[1]}
+              onClick={handleTokenClick}
+            />
+            <PlayerScore
+              activePlayer={gameState.activePlayer}
+              player={gameState.players[1]}
+            />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   )
 }
