@@ -24,6 +24,12 @@ function App() {
     console.log(ID)
     setRoomID(ID)
   })
+  socket.on('noRoom', () => {
+    console.log('Empty room')
+  })
+  socket.on('roomFull', () => {
+    console.log('Room full')
+  })
   game.current.addPlayer()
   game.current.addPlayer()
 

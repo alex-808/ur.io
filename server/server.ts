@@ -18,7 +18,7 @@ const io = new Server(server, {
 
 const state: { [roomID: string]: GameI } = {};
 // Map of clientID to their roomID
-const clientRooms = {};
+const clientRooms: { [clientID: string]: string } = {};
 
 io.on('connection', (client: Socket) => {
   console.log('connection!');
@@ -31,11 +31,28 @@ io.on('connection', (client: Socket) => {
     const roomID = makeID(5);
     console.log(roomID);
     client.emit('roomID', roomID);
+    clientRooms[`${client.id}`] = roomID;
     state[`${roomID}`] = new Game();
+
+    client.join(roomID);
   };
 
   const handleJoinGame = (roomID: string) => {
     console.log('Someone wants to join room', roomID);
+    const room = io.sockets.adapter.rooms.get(roomID);
+    console.log(room?.size);
+    if (!room) {
+      client.emit('noRoom');
+      return;
+    }
+    if (room.size >= 2) {
+      client.emit('roomFull');
+      return;
+    }
+
+    client.join(roomID);
+    clientRooms[`${client.id}`] = roomID;
+    console.log(room.size);
   };
 });
 
