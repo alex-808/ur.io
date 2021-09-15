@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState } from 'react'
 import './App.scss'
 import { Game } from './components/Game'
 import { LandingPage } from './components/LandingPage'
@@ -12,7 +12,6 @@ socket.on('connect', () => {
 })
 
 function App() {
-  //const game = useRef(new Game())
   const [gameState, setGameState] = useState<GameI>()
   const [roomID, setRoomID] = useState('')
   socket.on('roomID', (ID: string) => {
@@ -21,7 +20,7 @@ function App() {
   })
 
   socket.on('init', (state: GameI) => {
-    init(state)
+    updateState(state)
   })
   socket.on('noRoom', () => {
     console.log('Empty room')
@@ -29,18 +28,14 @@ function App() {
   socket.on('roomFull', () => {
     console.log('Room full')
   })
-  //game.current.addPlayer()
-  //game.current.addPlayer()
+  socket.on('updateState', (state: GameI) => {
+    updateState(state)
+  })
 
-  const init = (state: GameI) => {
+  const updateState = (state: GameI) => {
     console.log('Initializing game')
     setGameState(state)
   }
-
-  useEffect(() => {
-    //game.current.updateBoard()
-    //setGameState({ ...game.current })
-  }, [])
 
   const createNewGame = () => {
     console.log('creating new game')
@@ -59,6 +54,7 @@ function App() {
 
   const rollDice = () => {
     console.log('Dice rolled')
+    socket.emit('rollDice')
   }
 
   const resetGame = () => {

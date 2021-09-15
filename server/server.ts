@@ -25,6 +25,7 @@ io.on('connection', (client: Socket) => {
   console.log(io.engine.clientsCount);
   client.on('newGame', () => handleNewGame());
   client.on('joinGame', (roomID: string) => handleJoinGame(roomID));
+  client.on('rollDice', () => handleRollDice());
 
   const handleNewGame = () => {
     // create room and pass back the uuid
@@ -62,6 +63,7 @@ io.on('connection', (client: Socket) => {
     const room = clientRooms[client.id];
     const game = state[room];
     game.rollDice();
+    io.sockets.in(room).emit('updateState', game);
   };
 
   //const handleTokenClick: handleTokenClick = (playerID, token) => {
