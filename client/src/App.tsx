@@ -57,33 +57,22 @@ function App() {
   const resetGame = () => {
     console.log('Game reset')
   }
-  if (!gameState)
-    return <LandingPage createNewGame={createNewGame} joinGame={joinGame} />
-  return (
-    <div className="App">
-      <Router>
-        <Switch>
-          <Route exact={true} path="/">
-            <LandingPage createNewGame={createNewGame} joinGame={joinGame} />
-          </Route>
-        </Switch>
-        <Switch>
-          <Route path="/waiting">
-            <WaitingRoom roomID={roomID} />
-          </Route>
-        </Switch>
-        <Switch>
-          <Route path="/game"></Route>
-          <Game
-            gameState={gameState}
-            handleTokenClick={handleTokenClick}
-            rollDice={rollDice}
-            resetGame={resetGame}
-          />
-        </Switch>
-      </Router>
-    </div>
-  )
+  let view
+  if (!gameState && !roomID) {
+    view = <LandingPage createNewGame={createNewGame} joinGame={joinGame} />
+  } else if (!gameState && roomID) {
+    view = <WaitingRoom roomID={roomID} />
+  } else {
+    view = (
+      <Game
+        gameState={gameState}
+        handleTokenClick={handleTokenClick}
+        rollDice={rollDice}
+        resetGame={resetGame}
+      />
+    )
+  }
+  return <div className="App">{view}</div>
 }
 
 export default App
