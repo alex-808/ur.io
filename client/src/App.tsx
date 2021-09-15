@@ -15,14 +15,15 @@ socket.on('connect', () => {
   //socket.emit('newGame')
   console.log('connected')
 })
-socket.emit('newGame')
-socket.on('roomID', roomID => {
-  console.log(roomID)
-})
 
 function App() {
   const game = useRef(new Game())
   const [gameState, setGameState] = useState({ ...game.current })
+  const [roomID, setRoomID] = useState('')
+  socket.on('roomID', (ID: string) => {
+    console.log(ID)
+    setRoomID(ID)
+  })
   game.current.addPlayer()
   game.current.addPlayer()
 
@@ -83,17 +84,27 @@ function App() {
     game.current.updateBoard()
     setGameState({ ...game.current })
   }
+
+  const createNewGame = () => {
+    console.log('creating new game')
+    socket.emit('newGame')
+  }
+
+  const joinGame = (roomID: string) => {
+    console.log('Joining game', roomID)
+    socket.emit('joinGame', roomID)
+  }
   return (
     <div className="App">
       <Router>
         <Switch>
-          <Route path="/">
-            <LandingPage />
+          <Route exact={true} path="/">
+            <LandingPage createNewGame={createNewGame} joinGame={joinGame} />
           </Route>
         </Switch>
         <Switch>
           <Route path="/waiting">
-            <WaitingRoom />
+            <WaitingRoom roomID={roomID} />
           </Route>
         </Switch>
         <Switch>

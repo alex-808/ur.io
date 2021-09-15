@@ -1,7 +1,11 @@
 import React from 'react'
 
-const WaitingRoom = () => {
-  return <div>Waiting Room</div>
+interface Props {
+  roomID: string
+}
+
+const WaitingRoom: React.FC<Props> = ({ roomID }) => {
+  return <div>Waiting Room {roomID}</div>
 }
 
 export { WaitingRoom }

@@ -23,7 +23,8 @@ const clientRooms = {};
 io.on('connection', (client: Socket) => {
   console.log('connection!');
   console.log(io.engine.clientsCount);
-  client.on('newGame', (data: any) => handleNewGame());
+  client.on('newGame', () => handleNewGame());
+  client.on('joinGame', (roomID: string) => handleJoinGame(roomID));
 
   const handleNewGame = () => {
     // create room and pass back the uuid
@@ -31,6 +32,10 @@ io.on('connection', (client: Socket) => {
     console.log(roomID);
     client.emit('roomID', roomID);
     state[`${roomID}`] = new Game();
+  };
+
+  const handleJoinGame = (roomID: string) => {
+    console.log('Someone wants to join room', roomID);
   };
 });
 
