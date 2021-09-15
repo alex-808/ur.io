@@ -3,6 +3,7 @@ const http = require('http');
 import { Server, Socket } from 'socket.io';
 import { makeID } from './utils';
 import { Game, GameI } from './game';
+import * as constants from './constants';
 
 const port = process.env.PORT || 5000;
 
@@ -26,6 +27,9 @@ io.on('connection', (client: Socket) => {
   client.on('newGame', () => handleNewGame());
   client.on('joinGame', (roomID: string) => handleJoinGame(roomID));
   client.on('rollDice', () => handleRollDice());
+  client.on('tokenClick', (playerID, token) =>
+    handleTokenClick(playerID, token)
+  );
 
   const handleNewGame = () => {
     // create room and pass back the uuid
@@ -66,46 +70,46 @@ io.on('connection', (client: Socket) => {
     io.sockets.in(room).emit('updateState', game);
   };
 
-  //const handleTokenClick: handleTokenClick = (playerID, token) => {
-  //if (
-  //playerID !== game.current.activePlayer?.id ||
-  //!game.current.rollVal ||
-  //token === null ||
-  //game.current.phase !== 'movement' ||
-  //!game.current.activePlayer
-  //) {
-  //return;
-  //}
-  //if (token === constants.PLAYER_START) {
-  //token = game.current.activePlayer?.tokens.findIndex(
-  //(tokenPos) => tokenPos === constants.PLAYER_START
-  //);
-  //}
-  //const newPos = game.current.activePlayer.moveToken(
-  //token,
-  //game.current.rollVal
-  //);
-  //game.current.checkForCaptures();
-  //if (newPos === null) return;
-  //if (newPos === constants.GOAL_TILE) {
-  //game.current.activePlayer.scoreGoal();
-  //if (game.current.activePlayer.tokens.length === 0) {
-  //game.current.phase = 'gameOver';
-  //console.log('gameOver');
-  //game.current.updateBoard();
-  //setGameState({ ...game.current });
-  //return;
-  //}
-  //}
-  //if (!constants.ROSETTE_TILES.includes(newPos)) {
-  //game.current.changeTurn();
-  //} else {
-  //game.current.phase = 'rolling';
-  //}
-  //game.current.updateBoard();
+  const handleTokenClick = (playerID: any, token: number) => {
+    const room = clientRooms[client.id];
+    const game = state[room];
+    if (
+      playerID !== game.activePlayer?.id ||
+      !game.rollVal ||
+      token === null ||
+      game.phase !== 'movement' ||
+      !game.activePlayer
+    ) {
+      console.log('Invalid move');
+      return;
+    }
+    if (token === constants.PLAYER_START) {
+      token = game.activePlayer?.tokens.findIndex(
+        (tokenPos) => tokenPos === constants.PLAYER_START
+      );
+    }
+    const newPos = game.activePlayer.moveToken(token, game.rollVal);
+    game.checkForCaptures();
+    if (newPos === null) return;
+    if (newPos === constants.GOAL_TILE) {
+      game.activePlayer.scoreGoal();
+      if (game.activePlayer.tokens.length === 0) {
+        game.phase = 'gameOver';
+        console.log('gameOver');
+        game.updateBoard();
+        return;
+      }
+    }
+    if (!constants.ROSETTE_TILES.includes(newPos)) {
+      game.changeTurn();
+    } else {
+      game.phase = 'rolling';
+    }
+    game.updateBoard();
+    console.log('Board updated');
 
-  //setGameState({ ...game.current });
-  ////};
+    io.sockets.in(room).emit('updateState', game);
+  };
 
   //const resetGame = () => {
   //console.log('new game');

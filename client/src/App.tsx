@@ -48,7 +48,8 @@ function App() {
     socket.emit('joinGame', roomID)
   }
 
-  const handleTokenClick = () => {
+  const handleTokenClick: handleTokenClick = (playerID, token) => {
+    socket.emit('tokenClick', playerID, token)
     console.log('token clicked')
   }
 
