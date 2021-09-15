@@ -15,9 +15,7 @@ const LandingPage: React.FC<Props> = ({ createNewGame, joinGame }) => {
   }
   return (
     <div>
-      <Link to="/waiting">
-        <button onClick={createNewGame}>New Game</button>
-      </Link>
+      <button onClick={createNewGame}>New Game</button>
       <input onChange={handleInputChange}></input>
       <button onClick={joinGame.bind(null, joinRoomID)}>Join Game</button>
     </div>

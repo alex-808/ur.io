@@ -13,7 +13,9 @@ interface PlayerI {
 interface GameI {
   players: Player[]
   phase: GamePhase
-  activePlayer: number | null
+  activePlayer: PlayerI | null
+  board: TileI[]
+  rollVal: number
   //TODO
 }
 

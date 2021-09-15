@@ -54,6 +54,60 @@ io.on('connection', (client: Socket) => {
     clientRooms[`${client.id}`] = roomID;
     console.log(room.size);
   };
+
+  const handleRollDice = () => {
+    const room = clientRooms[client.id];
+    const game = state[room];
+    game.rollDice();
+  };
+
+  //const handleTokenClick: handleTokenClick = (playerID, token) => {
+  //if (
+  //playerID !== game.current.activePlayer?.id ||
+  //!game.current.rollVal ||
+  //token === null ||
+  //game.current.phase !== 'movement' ||
+  //!game.current.activePlayer
+  //) {
+  //return;
+  //}
+  //if (token === constants.PLAYER_START) {
+  //token = game.current.activePlayer?.tokens.findIndex(
+  //(tokenPos) => tokenPos === constants.PLAYER_START
+  //);
+  //}
+  //const newPos = game.current.activePlayer.moveToken(
+  //token,
+  //game.current.rollVal
+  //);
+  //game.current.checkForCaptures();
+  //if (newPos === null) return;
+  //if (newPos === constants.GOAL_TILE) {
+  //game.current.activePlayer.scoreGoal();
+  //if (game.current.activePlayer.tokens.length === 0) {
+  //game.current.phase = 'gameOver';
+  //console.log('gameOver');
+  //game.current.updateBoard();
+  //setGameState({ ...game.current });
+  //return;
+  //}
+  //}
+  //if (!constants.ROSETTE_TILES.includes(newPos)) {
+  //game.current.changeTurn();
+  //} else {
+  //game.current.phase = 'rolling';
+  //}
+  //game.current.updateBoard();
+
+  //setGameState({ ...game.current });
+  ////};
+
+  //const resetGame = () => {
+  //console.log('new game');
+  //game.current.reset();
+  //game.current.updateBoard();
+  //setGameState({ ...game.current });
+  //};
 });
 
 server.listen(port, () => {
