@@ -1,0 +1,23 @@
+.Game {
+  display: grid;
+  grid-template-columns: 1fr 40% 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: '. game-phase .' 'Player0Start Board Player1Start' 'player0score buttons player1score';
+  height: 100%;
+}
+
+.buttons {
+  grid-area: buttons;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  font-size: 2rem;
+}
+
+.invisible {
+  display: none;
+}
+
+.game-phase {
+  grid-area: game-phase;
+}

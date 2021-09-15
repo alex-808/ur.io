@@ -2,6 +2,7 @@ import React from 'react'
 import { PlayerStart } from './PlayerStart'
 import { PlayerScore } from './PlayerScore'
 import { Board } from './Board'
+import './Game.scss'
 
 interface Props {
   gameState: GameI | null
@@ -18,7 +19,7 @@ const Game: React.FC<Props> = ({
 }) => {
   if (!gameState) return <div> No State</div>
   return (
-    <div>
+    <div className="Game">
       <PlayerStart player={gameState.players[0]} onClick={handleTokenClick} />
       <PlayerScore
         activePlayer={gameState.activePlayer}

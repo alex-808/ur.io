@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
 import './App.scss'
-//import { Game } from './game'
 import { Game } from './components/Game'
 import { LandingPage } from './components/LandingPage'
 import { WaitingRoom } from './components/WaitingRoom'
-import * as constants from './constants'
 import io from 'socket.io-client'
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 
 const socket = io('http://localhost:5000')
 socket.on('connect', () => {
