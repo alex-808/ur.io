@@ -16,11 +16,15 @@ socket.on('connect', () => {
 
 function App() {
   //const game = useRef(new Game())
-  const [gameState, setGameState] = useState(null)
+  const [gameState, setGameState] = useState<GameI>()
   const [roomID, setRoomID] = useState('')
   socket.on('roomID', (ID: string) => {
     console.log(ID)
     setRoomID(ID)
+  })
+
+  socket.on('init', (state: GameI) => {
+    init(state)
   })
   socket.on('noRoom', () => {
     console.log('Empty room')
@@ -30,6 +34,11 @@ function App() {
   })
   //game.current.addPlayer()
   //game.current.addPlayer()
+
+  const init = (state: GameI) => {
+    console.log('Initializing game')
+    setGameState(state)
+  }
 
   useEffect(() => {
     //game.current.updateBoard()
@@ -43,6 +52,7 @@ function App() {
 
   const joinGame = (roomID: string) => {
     console.log('Joining game', roomID)
+    setRoomID(roomID)
     socket.emit('joinGame', roomID)
   }
 
@@ -62,7 +72,7 @@ function App() {
     view = <LandingPage createNewGame={createNewGame} joinGame={joinGame} />
   } else if (!gameState && roomID) {
     view = <WaitingRoom roomID={roomID} />
-  } else {
+  } else if (gameState && roomID) {
     view = (
       <Game
         gameState={gameState}

@@ -33,7 +33,7 @@ io.on('connection', (client: Socket) => {
     client.emit('roomID', roomID);
     clientRooms[`${client.id}`] = roomID;
     state[`${roomID}`] = new Game();
-
+    state[roomID].addPlayer();
     client.join(roomID);
   };
 
@@ -53,6 +53,9 @@ io.on('connection', (client: Socket) => {
     client.join(roomID);
     clientRooms[`${client.id}`] = roomID;
     console.log(room.size);
+    state[roomID].addPlayer();
+
+    io.sockets.in(roomID).emit('init', state[roomID]);
   };
 
   const handleRollDice = () => {
