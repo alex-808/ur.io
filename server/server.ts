@@ -110,6 +110,7 @@ io.on('connection', (client: Socket) => {
         game.phase = 'gameOver';
         console.log('gameOver');
         game.updateBoard();
+        io.sockets.in(room).emit('updateState', game);
         return;
       }
     }
