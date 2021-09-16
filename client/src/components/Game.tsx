@@ -11,7 +11,7 @@ interface Props {
   resetGame: () => void
 }
 
-const Game: React.FC<Props> = ({
+const GameComponent: React.FC<Props> = ({
   gameState,
   handleTokenClick,
   rollDice,
@@ -29,9 +29,14 @@ const Game: React.FC<Props> = ({
       <Board tiles={gameState.board} handleTokenClick={handleTokenClick} />
       <div className="buttons">
         <div>{gameState.rollVal}</div>
-        <button onClick={rollDice}>Roll</button>
         <button
-          className={gameState.phase !== 'gameOver' ? 'invisible' : 'invisible'}
+          className={gameState.phase !== 'gameOver' ? '' : 'invisible'}
+          onClick={rollDice}
+        >
+          Roll
+        </button>
+        <button
+          className={gameState.phase !== 'gameOver' ? 'invisible' : ''}
           onClick={resetGame}
         >
           New Game
@@ -46,4 +51,4 @@ const Game: React.FC<Props> = ({
     </div>
   )
 }
-export { Game }
+export { GameComponent }

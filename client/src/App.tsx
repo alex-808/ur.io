@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import './App.scss'
-import { Game } from './components/Game'
+import { GameComponent } from './components/Game'
+import { Game } from './game'
 import { LandingPage } from './components/LandingPage'
 import { WaitingRoom } from './components/WaitingRoom'
 import io from 'socket.io-client'
@@ -12,8 +13,15 @@ socket.on('connect', () => {
 })
 
 function App() {
+  //const game = new Game()
+  //game.addPlayer()
+  //game.addPlayer()
+  //game.phase = 'gameOver'
   const [gameState, setGameState] = useState<GameI>()
+  //const [gameState, setGameState] = useState<GameI>(game as GameI)
+
   const [roomID, setRoomID] = useState('')
+  //const [roomID, setRoomID] = useState('1')
   socket.on('roomID', (ID: string) => {
     console.log(ID)
     setRoomID(ID)
@@ -62,6 +70,7 @@ function App() {
 
   const resetGame = () => {
     console.log('Game reset')
+    socket.emit('reset')
   }
   let view
   if (!gameState && !roomID) {
@@ -70,7 +79,7 @@ function App() {
     view = <WaitingRoom roomID={roomID} />
   } else if (gameState && roomID) {
     view = (
-      <Game
+      <GameComponent
         gameState={gameState}
         handleTokenClick={handleTokenClick}
         rollDice={rollDice}

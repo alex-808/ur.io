@@ -25,17 +25,18 @@ interface ClientData {
 const state: { [roomID: string]: GameI } = {};
 // Map of clientID to their roomID
 const clientData: { [clientID: string]: ClientData } = {};
-//const playerNumbers: { [clientID: string]: number } = {};
 
 io.on('connection', (client: Socket) => {
   console.log('connection!');
   console.log(io.engine.clientsCount);
+
   client.on('newGame', () => handleNewGame());
   client.on('joinGame', (roomID: string) => handleJoinGame(roomID));
   client.on('rollDice', () => handleRollDice());
   client.on('tokenClick', (playerID, token) =>
     handleTokenClick(playerID, token)
   );
+  client.on('reset', () => handleReset());
 
   const handleNewGame = () => {
     // create room and pass back the uuid
@@ -79,12 +80,13 @@ io.on('connection', (client: Socket) => {
     }
   };
 
-  const handleTokenClick = (playerID: any, token: number) => {
+  const handleTokenClick = (tokenOwnerID: any, token: number) => {
     const room = clientData[client.id].room;
     const playerNum = clientData[client.id].playerID;
     const game = state[room];
+    // I'd like to clean this up a bit
     if (
-      playerID !== game.activePlayer?.id ||
+      tokenOwnerID !== game.activePlayer?.id ||
       playerNum !== game.activePlayer?.id ||
       !game.rollVal ||
       token === null ||
@@ -122,12 +124,14 @@ io.on('connection', (client: Socket) => {
     io.sockets.in(room).emit('updateState', game);
   };
 
-  //const resetGame = () => {
-  //console.log('new game');
-  //game.current.reset();
-  //game.current.updateBoard();
-  //setGameState({ ...game.current });
-  //};
+  const handleReset = () => {
+    const room = clientData[client.id].room;
+    const game = state[room];
+    console.log('new game');
+    game.reset();
+    game.updateBoard();
+    io.sockets.in(room).emit('updateState', game);
+  };
 });
 
 server.listen(port, () => {
