@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './App.scss'
 import { GameComponent } from './components/Game'
-//import { Game } from './game'
+import { Game } from './game'
 import { LandingPage } from './components/LandingPage'
 import { WaitingRoom } from './components/WaitingRoom'
 import io from 'socket.io-client'
@@ -13,10 +13,10 @@ socket.on('connect', () => {
 })
 
 function App() {
-  //const game = new Game()
-  //game.addPlayer()
-  //game.addPlayer()
-  //game.phase = 'gameOver'
+  const game = new Game()
+  game.addPlayer()
+  game.addPlayer()
+  game.phase = 'gameOver'
   const [gameState, setGameState] = useState<GameI>()
   //const [gameState, setGameState] = useState<GameI>(game as GameI)
 

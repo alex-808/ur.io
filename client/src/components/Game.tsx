@@ -33,18 +33,18 @@ const GameComponent: React.FC<Props> = ({
       <Board tiles={gameState.board} handleTokenClick={handleTokenClick} />
       <div className="buttons">
         <div>{gameState.rollVal}</div>
-        <button
-          className={gameState.phase !== 'gameOver' ? '' : 'invisible'}
+        <div
+          className={gameState.phase !== 'gameOver' ? 'button' : 'invisible'}
           onClick={rollDice}
         >
           Roll
-        </button>
-        <button
-          className={gameState.phase !== 'gameOver' ? 'invisible' : ''}
+        </div>
+        <div
+          className={gameState.phase !== 'gameOver' ? 'invisible' : 'button'}
           onClick={resetGame}
         >
           New Game
-        </button>
+        </div>
       </div>
 
       <PlayerStart player={gameState.players[1]} onClick={handleTokenClick} />
