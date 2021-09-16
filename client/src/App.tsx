@@ -23,9 +23,11 @@ function App() {
     updateState(state)
   })
   socket.on('noRoom', () => {
+    // TODO display error message
     console.log('Empty room')
   })
   socket.on('roomFull', () => {
+    // TODO display error message
     console.log('Room full')
   })
   socket.on('updateState', (state: GameI) => {

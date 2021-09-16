@@ -17,9 +17,15 @@ const io = new Server(server, {
   },
 });
 
+interface ClientData {
+  room: string;
+  playerID: number;
+}
+
 const state: { [roomID: string]: GameI } = {};
 // Map of clientID to their roomID
-const clientRooms: { [clientID: string]: string } = {};
+const clientData: { [clientID: string]: ClientData } = {};
+//const playerNumbers: { [clientID: string]: number } = {};
 
 io.on('connection', (client: Socket) => {
   console.log('connection!');
@@ -36,7 +42,7 @@ io.on('connection', (client: Socket) => {
     const roomID = makeID(5);
     console.log(roomID);
     client.emit('roomID', roomID);
-    clientRooms[`${client.id}`] = roomID;
+    clientData[`${client.id}`] = { room: roomID, playerID: 0 };
     state[`${roomID}`] = new Game();
     state[roomID].addPlayer();
     client.join(roomID);
@@ -56,7 +62,7 @@ io.on('connection', (client: Socket) => {
     }
 
     client.join(roomID);
-    clientRooms[`${client.id}`] = roomID;
+    clientData[`${client.id}`] = { room: roomID, playerID: 1 };
     console.log(room.size);
     state[roomID].addPlayer();
 
@@ -64,17 +70,22 @@ io.on('connection', (client: Socket) => {
   };
 
   const handleRollDice = () => {
-    const room = clientRooms[client.id];
+    const room = clientData[client.id].room;
+    const playerNum = clientData[client.id].playerID;
     const game = state[room];
-    game.rollDice();
-    io.sockets.in(room).emit('updateState', game);
+    if (playerNum === game.activePlayer?.id) {
+      game.rollDice();
+      io.sockets.in(room).emit('updateState', game);
+    }
   };
 
   const handleTokenClick = (playerID: any, token: number) => {
-    const room = clientRooms[client.id];
+    const room = clientData[client.id].room;
+    const playerNum = clientData[client.id].playerID;
     const game = state[room];
     if (
       playerID !== game.activePlayer?.id ||
+      playerNum !== game.activePlayer?.id ||
       !game.rollVal ||
       token === null ||
       game.phase !== 'movement' ||
