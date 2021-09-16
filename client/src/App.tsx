@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './App.scss'
 import { GameComponent } from './components/Game'
-import { Game } from './game'
+//import { Game } from './game'
 import { LandingPage } from './components/LandingPage'
 import { WaitingRoom } from './components/WaitingRoom'
 import io from 'socket.io-client'

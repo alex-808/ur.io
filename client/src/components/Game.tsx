@@ -2,6 +2,7 @@ import React from 'react'
 import { PlayerStart } from './PlayerStart'
 import { PlayerScore } from './PlayerScore'
 import { Board } from './Board'
+import { GamePhaseDisplay } from './GamePhaseDisplay'
 import './Game.scss'
 
 interface Props {
@@ -17,7 +18,7 @@ const GameComponent: React.FC<Props> = ({
   rollDice,
   resetGame,
 }) => {
-  if (!gameState) return <div> No State</div>
+  if (!gameState) return <div>Error: No State</div>
   return (
     <div className="Game">
       <PlayerStart player={gameState.players[0]} onClick={handleTokenClick} />
@@ -25,7 +26,10 @@ const GameComponent: React.FC<Props> = ({
         activePlayer={gameState.activePlayer}
         player={gameState.players[0]}
       />
-      <p className="game-phase">{gameState.phase.toUpperCase()}</p>
+      <GamePhaseDisplay
+        gamePhase={gameState.phase}
+        activePlayer={gameState.activePlayer}
+      />
       <Board tiles={gameState.board} handleTokenClick={handleTokenClick} />
       <div className="buttons">
         <div>{gameState.rollVal}</div>

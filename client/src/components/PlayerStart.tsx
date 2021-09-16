@@ -1,5 +1,4 @@
 import React from 'react'
-import { Badge } from '@material-ui/core'
 import * as constants from '../constants'
 import { Token } from './Token'
 import './PlayerStart.scss'
