@@ -44,7 +44,7 @@ const Tile: React.FC<Props> = ({
       className={`${className}`}
       onClick={handleTokenClick.bind(null, oc, token)}
     >
-      {oc !== null ? <Token playerID={oc} /> : <Token playerID={oc} />}
+      {oc !== null ? <Token playerID={oc} /> : <div></div>}
     </div>
   )
 }

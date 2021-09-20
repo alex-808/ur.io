@@ -8,6 +8,14 @@ $rosetteColor: #ffd166;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 7vmin;
+  height: 7vmin;
+  margin: auto;
+}
+
+.tile:before {
+  content: '';
+  padding-bottom: 100%;
 }
 
 .tile:hover {
