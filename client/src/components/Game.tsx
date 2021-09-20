@@ -32,12 +32,11 @@ const GameComponent: React.FC<Props> = ({
       />
       <Board tiles={gameState.board} handleTokenClick={handleTokenClick} />
       <div className="buttons">
-        <div>{gameState.rollVal}</div>
         <div
           className={gameState.phase !== 'gameOver' ? 'button' : 'invisible'}
           onClick={rollDice}
         >
-          Roll
+          {gameState.phase !== 'rolling' ? gameState.rollVal : 'Roll'}
         </div>
         <div
           className={gameState.phase !== 'gameOver' ? 'invisible' : 'button'}
