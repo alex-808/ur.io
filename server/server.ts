@@ -137,7 +137,6 @@ io.on('connection', (client: Socket) => {
 
   const handleDisconnect = () => {
     const room = clientData[client.id].room;
-    //const game = state[room];
     io.sockets.in(room).emit('partnerDisconnect');
   };
 });

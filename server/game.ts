@@ -137,9 +137,7 @@ class Game {
     if (this.players.length < 2) {
       const player = new Player(this.players.length as PlayerID);
       this.players.push(player);
-      this.activePlayer = player;
-    } else {
-      // TODO emit 'too many players'
+      if (player.id === 0) this.activePlayer = player;
     }
   }
   rollDice() {
