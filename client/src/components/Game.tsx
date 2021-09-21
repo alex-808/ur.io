@@ -29,6 +29,7 @@ const GameComponent: React.FC<Props> = ({
       <GamePhaseDisplay
         gamePhase={gameState.phase}
         activePlayer={gameState.activePlayer}
+        rollVal={gameState.rollVal}
       />
       <Board tiles={gameState.board} handleTokenClick={handleTokenClick} />
       <div className="buttons">

@@ -110,7 +110,7 @@ class Game {
       type: 'rosette',
     },
   ]
-  rollVal: number | null = 0
+  rollVal: number | null = null
   AreNoMoves() {
     if (!this.activePlayer || !this.rollVal) return
     let immovableTokens = 0

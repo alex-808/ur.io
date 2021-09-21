@@ -13,11 +13,11 @@ socket.on('connect', () => {
 })
 
 function App() {
-  const game = new Game()
-  game.addPlayer()
-  game.addPlayer()
-  game.phase = 'gameOver'
-  console.table(game)
+  //const game = new Game()
+  //game.addPlayer()
+  //game.addPlayer()
+  //game.phase = 'gameOver'
+  //console.table(game)
   const [gameState, setGameState] = useState<GameI>()
   //const [gameState, setGameState] = useState<GameI>(game as GameI)
 

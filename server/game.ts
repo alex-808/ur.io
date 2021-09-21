@@ -110,7 +110,7 @@ class Game {
       type: 'rosette',
     },
   ];
-  rollVal: number | null = 0;
+  rollVal: number | null = null;
   AreNoMoves() {
     if (!this.activePlayer || !this.rollVal) return;
     let immovableTokens = 0;
@@ -149,7 +149,7 @@ class Game {
     const val2 = Math.floor(Math.random() * 3);
 
     this.rollVal = val1 + val2;
-    //this.rollVal = 4
+    //this.rollVal = 0;
     if (this.rollVal !== 0 && !this.AreNoMoves()) {
       this.phase = 'movement';
     } else {
