@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './App.scss'
 import { GameComponent } from './components/Game'
 import { Game } from './game'
@@ -7,10 +7,6 @@ import { WaitingRoom } from './components/WaitingRoom'
 import io from 'socket.io-client'
 
 const socket = io('http://localhost:5000')
-socket.on('connect', () => {
-  //socket.emit('newGame')
-  console.log('connected')
-})
 
 function App() {
   //const game = new Game()
@@ -23,28 +19,33 @@ function App() {
 
   const [roomID, setRoomID] = useState('')
   //const [roomID, setRoomID] = useState('1')
-  socket.on('roomID', (ID: string) => {
-    console.log(ID)
-    setRoomID(ID)
-  })
 
-  socket.on('init', (state: GameI) => {
-    updateState(state)
-  })
-  socket.on('noRoom', () => {
-    // TODO display error message
-    console.log('Empty room')
-  })
-  socket.on('roomFull', () => {
-    // TODO display error message
-    console.log('Room full')
-  })
-  socket.on('updateState', (state: GameI) => {
-    updateState(state)
-  })
+  useEffect(() => {
+    socket.on('connect', () => {
+      console.log('connected')
+    })
+    socket.on('roomID', (ID: string) => {
+      console.log(ID)
+      setRoomID(ID)
+    })
+    socket.on('init', (state: GameI) => {
+      updateState(state)
+    })
+    socket.on('noRoom', () => {
+      // TODO display error message
+      console.log('Empty room')
+    })
+    socket.on('roomFull', () => {
+      // TODO display error message
+      console.log('Room full')
+    })
+    socket.on('updateState', (state: GameI) => {
+      updateState(state)
+    })
+  }, [])
 
   const updateState = (state: GameI) => {
-    console.log('Initializing game')
+    console.log('Updating game')
     setGameState(state)
   }
 
