@@ -4,6 +4,7 @@ import { GameComponent } from './components/Game'
 import { Game } from './game'
 import { LandingPage } from './components/LandingPage'
 import { WaitingRoom } from './components/WaitingRoom'
+import { NotificationPanel } from './components/NotificationPanel'
 import io from 'socket.io-client'
 
 const socket = io('http://localhost:5000')
@@ -19,6 +20,7 @@ function App() {
 
   const [roomID, setRoomID] = useState('')
   //const [roomID, setRoomID] = useState('1')
+  const [notification, setNotification] = useState('')
 
   useEffect(() => {
     socket.on('connect', () => {
@@ -32,15 +34,20 @@ function App() {
       updateState(state)
     })
     socket.on('noRoom', () => {
-      // TODO display error message
       console.log('Empty room')
+      setNotification('This room is empty')
     })
     socket.on('roomFull', () => {
-      // TODO display error message
       console.log('Room full')
+      setNotification('Room is already full')
     })
     socket.on('updateState', (state: GameI) => {
       updateState(state)
+    })
+
+    socket.on('partnerDisconnect', () => {
+      console.log('Partner disconnected')
+      setNotification('Partner Disconnected')
     })
   }, [])
 
@@ -89,7 +96,12 @@ function App() {
       />
     )
   }
-  return <div className="App">{view}</div>
+  return (
+    <div className="App">
+      <NotificationPanel msg={notification} />
+      {view}
+    </div>
+  )
 }
 
 export default App

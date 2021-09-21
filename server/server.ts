@@ -37,6 +37,7 @@ io.on('connection', (client: Socket) => {
     handleTokenClick(playerID, token)
   );
   client.on('reset', () => handleReset());
+  client.on('disconnect', () => handleDisconnect());
 
   const handleNewGame = () => {
     // create room and pass back the uuid
@@ -132,6 +133,12 @@ io.on('connection', (client: Socket) => {
     game.reset();
     game.updateBoard();
     io.sockets.in(room).emit('updateState', game);
+  };
+
+  const handleDisconnect = () => {
+    const room = clientData[client.id].room;
+    //const game = state[room];
+    io.sockets.in(room).emit('partnerDisconnect');
   };
 });
 
