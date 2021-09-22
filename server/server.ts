@@ -37,7 +37,7 @@ io.on('connection', (client: Socket) => {
     handleTokenClick(playerID, token)
   );
   client.on('reset', () => handleReset());
-  client.on('disconnect', () => handleDisconnect());
+  client.on('disconnect', () => handleLeaveGame());
   client.on('leaveGame', () => handleLeaveGame());
 
   const handleNewGame = () => {
@@ -79,24 +79,15 @@ io.on('connection', (client: Socket) => {
 
     if (!room?.size) {
       delete state[roomID];
+      console.log('Game state deleted');
+      console.table(state);
     }
 
     delete clientData[client.id];
+    console.log('clientData deleted');
+    console.table(clientData);
     client.emit('updateState', undefined);
     io.sockets.in(roomID).emit('notification', { msg: 'Partner Left Room' });
-  };
-
-  const handleDisconnect = () => {
-    const roomID = clientData[client.id].room;
-    delete clientData[client.id];
-    var room = io.sockets.adapter.rooms.get(roomID);
-    if (!room) {
-      console.log('Game state deleted');
-      delete state[roomID];
-    }
-    console.table({ clientData });
-    io.sockets.in(roomID).emit('partnerDisconnect');
-    console.log('Player disconnected');
   };
 
   const handleRollDice = () => {
