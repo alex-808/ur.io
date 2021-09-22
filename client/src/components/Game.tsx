@@ -4,6 +4,7 @@ import { PlayerScore } from './PlayerScore'
 import { Board } from './Board'
 import { NotificationPanel } from './NotificationPanel'
 import './Game.scss'
+import { LeaveButton } from './LeaveButton'
 
 interface Props {
   gameState: GameI | null
@@ -11,6 +12,7 @@ interface Props {
   rollDice: () => void
   resetGame: () => void
   notification: string
+  leaveGame: () => void
 }
 
 const GameComponent: React.FC<Props> = ({
@@ -19,10 +21,12 @@ const GameComponent: React.FC<Props> = ({
   rollDice,
   resetGame,
   notification,
+  leaveGame,
 }) => {
   if (!gameState) return <div>Error: No State</div>
   return (
     <>
+      <LeaveButton leaveGame={leaveGame} />
       <PlayerStart player={gameState.players[0]} onClick={handleTokenClick} />
       <PlayerScore
         activePlayer={gameState.activePlayer}

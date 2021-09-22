@@ -96,7 +96,13 @@ function App() {
   if (!gameState && !roomID) {
     view = <LandingPage createNewGame={createNewGame} joinGame={joinGame} />
   } else if (!gameState && roomID) {
-    view = <WaitingRoom notification={notification} roomID={roomID} />
+    view = (
+      <WaitingRoom
+        notification={notification}
+        roomID={roomID}
+        leaveGame={leaveGame}
+      />
+    )
   } else if (gameState && roomID) {
     view = (
       <GameComponent
@@ -105,15 +111,11 @@ function App() {
         handleTokenClick={handleTokenClick}
         rollDice={rollDice}
         resetGame={resetGame}
+        leaveGame={leaveGame}
       />
     )
   }
-  return (
-    <div className="App">
-      <LeaveButton leaveGame={leaveGame} />
-      {view}
-    </div>
-  )
+  return <div className="App">{view}</div>
 }
 
 export default App
