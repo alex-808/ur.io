@@ -1,6 +1,5 @@
 import React from 'react'
 import { Tile } from './Tile'
-import './Board.scss'
 
 interface Props {
   tiles: TileI[]

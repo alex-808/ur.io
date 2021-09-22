@@ -1,5 +1,4 @@
 import React from 'react'
-import './PlayerScore.scss'
 
 interface Props {
   player: PlayerI

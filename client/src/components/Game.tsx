@@ -3,7 +3,6 @@ import { PlayerStart } from './PlayerStart'
 import { PlayerScore } from './PlayerScore'
 import { Board } from './Board'
 import { NotificationPanel } from './NotificationPanel'
-import './Game.scss'
 import { LeaveButton } from './LeaveButton'
 
 interface Props {

@@ -1,7 +1,6 @@
 import React from 'react'
 import * as constants from '../constants'
 import { Token } from './Token'
-import './PlayerStart.scss'
 
 interface Props {
   player: PlayerI

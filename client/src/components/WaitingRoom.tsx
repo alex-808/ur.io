@@ -10,11 +10,14 @@ interface Props {
 
 const WaitingRoom: React.FC<Props> = ({ roomID, notification, leaveGame }) => {
   return (
-    <div>
-      <LeaveButton leaveGame={leaveGame} />
+    <>
       <NotificationPanel notification={notification} />
-      <div>Waiting Room {roomID}</div>
-    </div>
+      <LeaveButton leaveGame={leaveGame} />
+      <span className="waiting-room">
+        <div>Waiting Room</div>
+        <span className="roomID">{roomID}</span>
+      </span>
+    </>
   )
 }
 

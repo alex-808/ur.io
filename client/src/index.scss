@@ -1,3 +1,11 @@
+@use './styles/Board.scss';
+@use './styles/Game.scss';
+@use './styles/NotificationPanel.scss';
+@use './styles/PlayerScore.scss';
+@use './styles/PlayerStart.scss';
+@use './styles/Tile.scss';
+@use './styles/Token.scss';
+@use './styles/WaitingRoom.scss';
 :root {
   font-size: 16px;
 }

@@ -1,5 +1,4 @@
 import React from 'react'
-import './Token.scss'
 
 interface Props {
   playerID: PlayerID

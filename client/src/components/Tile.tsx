@@ -1,6 +1,5 @@
 import React from 'react'
 import { Token } from './Token'
-import './Tile.scss'
 
 interface Props extends TileI {
   handleTokenClick: handleTokenClick
