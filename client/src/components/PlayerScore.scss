@@ -6,12 +6,12 @@
 
 .player0Score {
   @extend .playerScore;
-  grid-area: player0score;
+  grid-area: bottom-left;
 }
 
 .player1Score {
   @extend .playerScore;
-  grid-area: player1score;
+  grid-area: bottom-right;
 }
 
 .active {

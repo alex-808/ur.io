@@ -2,7 +2,7 @@ import React from 'react'
 import { PlayerStart } from './PlayerStart'
 import { PlayerScore } from './PlayerScore'
 import { Board } from './Board'
-import { GamePhaseDisplay } from './GamePhaseDisplay'
+import { NotificationPanel } from './NotificationPanel'
 import './Game.scss'
 
 interface Props {
@@ -10,6 +10,7 @@ interface Props {
   handleTokenClick: handleTokenClick
   rollDice: () => void
   resetGame: () => void
+  notification: string
 }
 
 const GameComponent: React.FC<Props> = ({
@@ -17,20 +18,17 @@ const GameComponent: React.FC<Props> = ({
   handleTokenClick,
   rollDice,
   resetGame,
+  notification,
 }) => {
   if (!gameState) return <div>Error: No State</div>
   return (
-    <div className="Game">
+    <>
       <PlayerStart player={gameState.players[0]} onClick={handleTokenClick} />
       <PlayerScore
         activePlayer={gameState.activePlayer}
         player={gameState.players[0]}
       />
-      <GamePhaseDisplay
-        gamePhase={gameState.phase}
-        activePlayer={gameState.activePlayer}
-        rollVal={gameState.rollVal}
-      />
+      <NotificationPanel notification={notification} />
       <Board tiles={gameState.board} handleTokenClick={handleTokenClick} />
       <div className="buttons">
         <div
@@ -52,7 +50,7 @@ const GameComponent: React.FC<Props> = ({
         activePlayer={gameState.activePlayer}
         player={gameState.players[1]}
       />
-    </div>
+    </>
   )
 }
 export { GameComponent }

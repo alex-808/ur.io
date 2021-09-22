@@ -28,7 +28,7 @@ const clientData: { [clientID: string]: ClientData } = {};
 
 io.on('connection', (client: Socket) => {
   console.log('connection!');
-  console.log(io.engine.clientsCount);
+  console.log('clients connected:', io.engine.clientsCount);
 
   client.on('newGame', () => handleNewGame());
   client.on('joinGame', (roomID: string) => handleJoinGame(roomID));
@@ -67,9 +67,11 @@ io.on('connection', (client: Socket) => {
     client.join(roomID);
     clientData[`${client.id}`] = { room: roomID, playerID: 1 };
     console.log(room.size);
-    state[roomID].addPlayer();
+    const game = state[roomID];
+    game.addPlayer();
 
     io.sockets.in(roomID).emit('init', state[roomID]);
+    updateGamePhaseNotification(game, roomID);
   };
 
   const handleLeaveGame = () => {
@@ -94,10 +96,12 @@ io.on('connection', (client: Socket) => {
     const roomID = clientData[client.id].room;
     const playerNum = clientData[client.id].playerID;
     const game = state[roomID];
-    if (playerNum === game.activePlayer?.id) {
+    let activePlayerID = game.activePlayer?.id;
+    if (playerNum === activePlayerID) {
       game.rollDice();
       io.sockets.in(roomID).emit('updateState', game);
     }
+    updateGamePhaseNotification(game, roomID);
   };
 
   const handleTokenClick = (tokenOwnerID: any, token: number) => {
@@ -131,6 +135,7 @@ io.on('connection', (client: Socket) => {
         console.log('gameOver');
         game.updateBoard();
         io.sockets.in(roomID).emit('updateState', game);
+        updateGamePhaseNotification(game, roomID);
         return;
       }
     }
@@ -143,6 +148,7 @@ io.on('connection', (client: Socket) => {
     console.log('Board updated');
 
     io.sockets.in(roomID).emit('updateState', game);
+    updateGamePhaseNotification(game, roomID);
   };
 
   const handleReset = () => {
@@ -152,8 +158,33 @@ io.on('connection', (client: Socket) => {
     game.reset();
     game.updateBoard();
     io.sockets.in(roomID).emit('updateState', game);
+    updateGamePhaseNotification(game, roomID);
   };
 });
+
+const updateGamePhaseNotification = (game: GameI, roomID: string) => {
+  if (!game?.activePlayer) return;
+  console.log(game.phase);
+  const activePlayerNum = game.activePlayer.id! + 1;
+  if (game.rollVal === 0) {
+    io.sockets.in(roomID).emit('notification', {
+      msg: `0 Rolled, Player ${activePlayerNum}'s Roll`,
+    });
+  } else if (game.phase === 'movement') {
+    io.sockets.in(roomID).emit('notification', {
+      msg: `Player ${activePlayerNum}'s Move`,
+    });
+  } else if (game.phase === 'rolling') {
+    io.sockets.in(roomID).emit('notification', {
+      msg: `Player ${activePlayerNum}'s Roll`,
+    });
+    // Not working
+  } else if (game.phase === 'gameOver') {
+    io.sockets.in(roomID).emit('notification', {
+      msg: `Player ${activePlayerNum} Wins!`,
+    });
+  }
+};
 
 server.listen(port, () => {
   console.log(`Listening on port ${port}`);

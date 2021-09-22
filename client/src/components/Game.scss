@@ -1,13 +1,8 @@
 .Game {
-  display: grid;
-  grid-template-columns: 1fr 60% 1fr;
-  grid-template-rows: 20% 60% 20%;
-  grid-template-areas: '. game-phase .' 'Player0Start Board Player1Start' 'player0score buttons player1score';
-  height: 100%;
 }
 
 .buttons {
-  grid-area: buttons;
+  grid-area: bottom-center;
   display: flex;
   flex-direction: column;
   justify-content: space-around;

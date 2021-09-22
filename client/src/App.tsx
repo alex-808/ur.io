@@ -49,7 +49,6 @@ function App() {
       console.log('notification recieved:', msg)
       setNotification(msg)
     })
-
     socket.on('partnerDisconnect', () => {
       console.log('Partner disconnected')
       setNotification('Partner Disconnected')
@@ -97,10 +96,11 @@ function App() {
   if (!gameState && !roomID) {
     view = <LandingPage createNewGame={createNewGame} joinGame={joinGame} />
   } else if (!gameState && roomID) {
-    view = <WaitingRoom roomID={roomID} />
+    view = <WaitingRoom notification={notification} roomID={roomID} />
   } else if (gameState && roomID) {
     view = (
       <GameComponent
+        notification={notification}
         gameState={gameState}
         handleTokenClick={handleTokenClick}
         rollDice={rollDice}
@@ -111,7 +111,6 @@ function App() {
   return (
     <div className="App">
       <LeaveButton leaveGame={leaveGame} />
-      <NotificationPanel msg={notification} />
       {view}
     </div>
   )

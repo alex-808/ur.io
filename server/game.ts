@@ -130,7 +130,7 @@ class Game {
     this.players[0] = new Player(0);
     this.players[1] = new Player(1);
     this.activePlayer = this.players[1];
-    this.rollVal = 0;
+    this.rollVal = null;
     this.phase = 'rolling';
   }
   addPlayer() {
@@ -147,7 +147,7 @@ class Game {
     const val2 = Math.floor(Math.random() * 3);
 
     this.rollVal = val1 + val2;
-    //this.rollVal = 0;
+    //this.rollVal = 4;
     if (this.rollVal !== 0 && !this.AreNoMoves()) {
       this.phase = 'movement';
     } else {

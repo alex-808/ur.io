@@ -1,11 +1,12 @@
 import React from 'react'
+import './NotificationPanel.scss'
 
 interface Props {
-  msg: string
+  notification: string
 }
 
-const NotificationPanel: React.FC<Props> = ({ msg }) => {
-  return <div>{msg}</div>
+const NotificationPanel: React.FC<Props> = ({ notification }) => {
+  return <div className="game-phase">{notification}</div>
 }
 
 export { NotificationPanel }

@@ -8,10 +8,10 @@
 
 .player1Start {
   @extend .playerStart;
-  grid-area: Player1Start;
+  grid-area: middle-right;
 }
 
 .player0Start {
   @extend .playerStart;
-  grid-area: Player0Start;
+  grid-area: middle-left;
 }
