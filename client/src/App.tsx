@@ -5,6 +5,7 @@ import { Game } from './game'
 import { LandingPage } from './components/LandingPage'
 import { WaitingRoom } from './components/WaitingRoom'
 import { NotificationPanel } from './components/NotificationPanel'
+import { LeaveButton } from './components/LeaveButton'
 import io from 'socket.io-client'
 
 const socket = io('http://localhost:5000')
@@ -44,6 +45,10 @@ function App() {
     socket.on('updateState', (state: GameI) => {
       updateState(state)
     })
+    socket.on('notification', ({ msg }) => {
+      console.log('notification recieved:', msg)
+      setNotification(msg)
+    })
 
     socket.on('partnerDisconnect', () => {
       console.log('Partner disconnected')
@@ -81,6 +86,12 @@ function App() {
     console.log('Game reset')
     socket.emit('reset')
   }
+
+  const leaveGame = () => {
+    setRoomID('')
+    setNotification('')
+    socket.emit('leaveGame')
+  }
   let view
   if (!gameState && !roomID) {
     view = <LandingPage createNewGame={createNewGame} joinGame={joinGame} />
@@ -98,6 +109,7 @@ function App() {
   }
   return (
     <div className="App">
+      <LeaveButton leaveGame={leaveGame} />
       <NotificationPanel msg={notification} />
       {view}
     </div>

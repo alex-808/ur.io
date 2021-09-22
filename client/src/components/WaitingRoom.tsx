@@ -5,7 +5,11 @@ interface Props {
 }
 
 const WaitingRoom: React.FC<Props> = ({ roomID }) => {
-  return <div>Waiting Room {roomID}</div>
+  return (
+    <div>
+      <div>Waiting Room {roomID}</div>
+    </div>
+  )
 }
 
 export { WaitingRoom }

@@ -38,6 +38,7 @@ io.on('connection', (client: Socket) => {
   );
   client.on('reset', () => handleReset());
   client.on('disconnect', () => handleDisconnect());
+  client.on('leaveGame', () => handleLeaveGame());
 
   const handleNewGame = () => {
     // create room and pass back the uuid
@@ -71,20 +72,36 @@ io.on('connection', (client: Socket) => {
     io.sockets.in(roomID).emit('init', state[roomID]);
   };
 
+  const handleLeaveGame = () => {
+    const roomID = clientData[client.id].room;
+    var room = io.sockets.adapter.rooms.get(roomID);
+    console.log({ roomID });
+    console.log({ room });
+    if (room?.size === 1) {
+      console.log('Game state deleted');
+      delete state[roomID];
+      console.table(state);
+    }
+    client.leave(roomID);
+    delete clientData[client.id];
+    client.emit('updateState', undefined);
+    io.sockets.in(roomID).emit('notification', { msg: 'Partner Left Room' });
+  };
+
   const handleRollDice = () => {
-    const room = clientData[client.id].room;
+    const roomID = clientData[client.id].room;
     const playerNum = clientData[client.id].playerID;
-    const game = state[room];
+    const game = state[roomID];
     if (playerNum === game.activePlayer?.id) {
       game.rollDice();
-      io.sockets.in(room).emit('updateState', game);
+      io.sockets.in(roomID).emit('updateState', game);
     }
   };
 
   const handleTokenClick = (tokenOwnerID: any, token: number) => {
-    const room = clientData[client.id].room;
+    const roomID = clientData[client.id].room;
     const playerNum = clientData[client.id].playerID;
-    const game = state[room];
+    const game = state[roomID];
     // I'd like to clean this up a bit
     if (
       tokenOwnerID !== game.activePlayer?.id ||
@@ -111,7 +128,7 @@ io.on('connection', (client: Socket) => {
         game.phase = 'gameOver';
         console.log('gameOver');
         game.updateBoard();
-        io.sockets.in(room).emit('updateState', game);
+        io.sockets.in(roomID).emit('updateState', game);
         return;
       }
     }
@@ -123,21 +140,23 @@ io.on('connection', (client: Socket) => {
     game.updateBoard();
     console.log('Board updated');
 
-    io.sockets.in(room).emit('updateState', game);
+    io.sockets.in(roomID).emit('updateState', game);
   };
 
   const handleReset = () => {
-    const room = clientData[client.id].room;
-    const game = state[room];
+    const roomID = clientData[client.id].room;
+    const game = state[roomID];
     console.log('new game');
     game.reset();
     game.updateBoard();
-    io.sockets.in(room).emit('updateState', game);
+    io.sockets.in(roomID).emit('updateState', game);
   };
 
   const handleDisconnect = () => {
-    const room = clientData[client.id].room;
-    io.sockets.in(room).emit('partnerDisconnect');
+    const roomID = clientData[client.id].room;
+    io.sockets.in(roomID).emit('partnerDisconnect');
+    console.log('Player disconnected');
+    console.table(state);
   };
 });
 
