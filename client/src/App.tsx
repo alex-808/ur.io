@@ -90,6 +90,7 @@ function App() {
   const leaveGame = () => {
     setRoomID('')
     setNotification('')
+    console.log('Leaving game')
     socket.emit('leaveGame')
   }
   let view

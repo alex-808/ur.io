@@ -73,19 +73,30 @@ io.on('connection', (client: Socket) => {
   };
 
   const handleLeaveGame = () => {
-    const roomID = clientData[client.id].room;
-    var room = io.sockets.adapter.rooms.get(roomID);
-    console.log({ roomID });
-    console.log({ room });
-    if (room?.size === 1) {
-      console.log('Game state deleted');
-      delete state[roomID];
-      console.table(state);
-    }
+    const roomID = clientData[client.id]?.room;
+    const room = io.sockets.adapter.rooms.get(roomID);
     client.leave(roomID);
+
+    if (!room?.size) {
+      delete state[roomID];
+    }
+
     delete clientData[client.id];
     client.emit('updateState', undefined);
     io.sockets.in(roomID).emit('notification', { msg: 'Partner Left Room' });
+  };
+
+  const handleDisconnect = () => {
+    const roomID = clientData[client.id].room;
+    delete clientData[client.id];
+    var room = io.sockets.adapter.rooms.get(roomID);
+    if (!room) {
+      console.log('Game state deleted');
+      delete state[roomID];
+    }
+    console.table({ clientData });
+    io.sockets.in(roomID).emit('partnerDisconnect');
+    console.log('Player disconnected');
   };
 
   const handleRollDice = () => {
@@ -150,13 +161,6 @@ io.on('connection', (client: Socket) => {
     game.reset();
     game.updateBoard();
     io.sockets.in(roomID).emit('updateState', game);
-  };
-
-  const handleDisconnect = () => {
-    const roomID = clientData[client.id].room;
-    io.sockets.in(roomID).emit('partnerDisconnect');
-    console.log('Player disconnected');
-    console.table(state);
   };
 });
 
