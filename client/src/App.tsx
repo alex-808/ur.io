@@ -4,8 +4,6 @@ import { GameComponent } from './components/Game'
 import { Game } from './game'
 import { LandingPage } from './components/LandingPage'
 import { WaitingRoom } from './components/WaitingRoom'
-import { NotificationPanel } from './components/NotificationPanel'
-import { LeaveButton } from './components/LeaveButton'
 import io from 'socket.io-client'
 
 const socket = io('http://localhost:5000')

@@ -1,5 +1,6 @@
 @use './styles/Board.scss';
 @use './styles/Game.scss';
+@use './styles/LandingPage.scss';
 @use './styles/NotificationPanel.scss';
 @use './styles/PlayerScore.scss';
 @use './styles/PlayerStart.scss';
@@ -23,6 +24,7 @@
 html {
   margin: 0;
   height: 100%;
+  box-sizing: border-box;
 }
 
 body {

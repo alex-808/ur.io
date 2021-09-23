@@ -5,7 +5,7 @@ interface Props {
 }
 
 const NotificationPanel: React.FC<Props> = ({ notification }) => {
-  return <div className="notification-panel">{notification}</div>
+  return <div className="notification-panel centering">{notification}</div>
 }
 
 export { NotificationPanel }

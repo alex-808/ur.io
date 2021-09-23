@@ -1,7 +1,5 @@
 .playerScore {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @extends .centering;
 }
 
 .player0Score {

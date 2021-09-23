@@ -13,11 +13,24 @@ const LandingPage: React.FC<Props> = ({ createNewGame, joinGame }) => {
     console.log(inputEl.value)
   }
   return (
-    <div>
-      <button onClick={createNewGame}>New Game</button>
-      <input onChange={handleInputChange}></input>
-      <button onClick={joinGame.bind(null, joinRoomID)}>Join Game</button>
-    </div>
+    <>
+      <header className="landing-header centering">
+        Game of Ur (with friends)
+      </header>
+      <div className="session-buttons centering">
+        <div>
+          <span>Start a </span>
+          <button className="button" onClick={createNewGame}>
+            New Game
+          </button>
+        </div>
+        <div>or</div>
+        <input onChange={handleInputChange}></input>
+        <button className="button" onClick={joinGame.bind(null, joinRoomID)}>
+          Join Game
+        </button>
+      </div>
+    </>
   )
 }
 

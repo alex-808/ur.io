@@ -8,3 +8,14 @@
   grid-template-rows: 20% 60% 20%;
   grid-template-areas: 'top-left top-center top-right' 'middle-left middle-center middle-right' 'bottom-left bottom-center bottom-right';
 }
+
+.button {
+  border: none;
+  outline: none;
+}
+
+.centering {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

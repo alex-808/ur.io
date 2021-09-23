@@ -1,4 +1,4 @@
-.buttons {
+.game-buttons {
   grid-area: bottom-center;
   display: flex;
   flex-direction: column;
@@ -7,7 +7,7 @@
   font-size: 2rem;
 }
 
-.button {
+.game-button {
   border-radius: 20%/50%;
   height: 50%;
   width: 50%;
@@ -18,7 +18,7 @@
   font-size: 1rem;
 }
 
-.button:active {
+.game-button:active {
   transform: translateY(4px);
 }
 

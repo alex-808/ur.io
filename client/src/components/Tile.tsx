@@ -40,7 +40,7 @@ const Tile: React.FC<Props> = ({
   }
   return (
     <div
-      className={`${className}`}
+      className={`${className} centering`}
       onClick={handleTokenClick.bind(null, oc, token)}
     >
       {oc !== null ? <Token playerID={oc} /> : <div></div>}

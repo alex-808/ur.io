@@ -33,15 +33,19 @@ const GameComponent: React.FC<Props> = ({
       />
       <NotificationPanel notification={notification} />
       <Board tiles={gameState.board} handleTokenClick={handleTokenClick} />
-      <div className="buttons">
+      <div className="game-buttons">
         <div
-          className={gameState.phase !== 'gameOver' ? 'button' : 'invisible'}
+          className={
+            gameState.phase !== 'gameOver' ? 'game-button' : 'invisible'
+          }
           onClick={rollDice}
         >
           {gameState.phase !== 'rolling' ? gameState.rollVal : 'Roll'}
         </div>
         <div
-          className={gameState.phase !== 'gameOver' ? 'invisible' : 'button'}
+          className={
+            gameState.phase !== 'gameOver' ? 'invisible' : 'game-button'
+          }
           onClick={resetGame}
         >
           New Game
