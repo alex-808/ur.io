@@ -1,9 +1,3 @@
-$player0Color: #ffffff;
-$player1Color: #302f31;
-:root {
-  font-size: 16px;
-}
-
 .token {
   width: 3rem;
   height: 3rem;
@@ -13,12 +7,12 @@ $player1Color: #302f31;
 
 .player-0-token {
   @extend .token;
-  background-color: $player0Color;
+  background-color: var(--player0Color);
 }
 
 .player-1-token {
   @extend .token;
-  background-color: $player1Color;
+  background-color: var(--player1Color);
 }
 
 .player-null-token {

@@ -8,6 +8,14 @@
 @use './styles/WaitingRoom.scss';
 :root {
   font-size: 16px;
+  // COLOR VARS
+  --tileColor0: #78e0dc;
+  --tileColor1: #d496a7;
+  --rosetteColor: #ffd166;
+  --player0Color: #ffffff;
+  --player1Color: #302f31;
+  --backgroundColor: #9d695a;
+  --activePlayerColor: #d496a7;
 }
 #root {
   height: 100%;
