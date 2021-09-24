@@ -222,14 +222,16 @@ interface GameI extends Game {}
 
 class Player implements PlayerI {
   constructor(public id: PlayerID) {}
+  path = this.id === 0 ? constants.PLAYER_0_PATH : constants.PLAYER_1_PATH;
+
   tokens = [
     constants.PLAYER_START,
-    //constants.PLAYER_START,
-    //constants.PLAYER_START,
-    //constants.PLAYER_START,
-    //constants.PLAYER_START,
-    //constants.PLAYER_START,
-    //constants.PLAYER_START,
+    constants.PLAYER_START,
+    constants.PLAYER_START,
+    constants.PLAYER_START,
+    constants.PLAYER_START,
+    constants.PLAYER_START,
+    constants.PLAYER_START,
   ];
   score: number = 0;
   scoreGoal() {

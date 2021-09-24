@@ -4,14 +4,16 @@ import { Token } from './Token'
 
 interface Props {
   player: PlayerI
-  onClick: handleTokenClick
+  onClick: handleTokenEvent
+  onHover: handleTokenEvent
 }
 
-const PlayerStart: React.FC<Props> = ({ player, onClick }) => {
+const PlayerStart: React.FC<Props> = ({ player, onClick, onHover }) => {
   return (
     <div
       className={`player${player.id}Start`}
       onClick={onClick.bind(null, player.id, constants.PLAYER_START)}
+      onMouseEnter={onHover.bind(null, player.id, constants.PLAYER_START)}
     >
       {player.tokens
         .filter(token => token === -1)

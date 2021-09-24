@@ -36,6 +36,9 @@ io.on('connection', (client: Socket) => {
   client.on('tokenClick', (playerID, token) =>
     handleTokenClick(playerID, token)
   );
+  client.on('tokenHover', (playerID, token) =>
+    handleTokenHover(playerID, token)
+  );
   client.on('reset', () => handleReset());
   client.on('disconnect', () => handleLeaveGame());
   client.on('leaveGame', () => handleLeaveGame());
@@ -44,8 +47,10 @@ io.on('connection', (client: Socket) => {
     // create room and pass back the uuid
     const roomID = makeID(5);
     console.log(roomID);
+
     client.emit('roomID', roomID);
     clientData[`${client.id}`] = { room: roomID, playerID: 0 };
+
     state[`${roomID}`] = new Game();
     state[roomID].addPlayer();
     client.join(roomID);
@@ -55,6 +60,7 @@ io.on('connection', (client: Socket) => {
     console.log('Someone wants to join room', roomID);
     const room = io.sockets.adapter.rooms.get(roomID);
     console.log(room?.size);
+
     if (!room) {
       client.emit('noRoom');
       return;
@@ -101,6 +107,7 @@ io.on('connection', (client: Socket) => {
     if (playerNum !== activePlayerID) return;
 
     game.rollDice();
+
     if (game.AreNoMoves()) {
       game.changeTurn();
       let activePlayerNum = game.activePlayer?.id;
@@ -121,6 +128,7 @@ io.on('connection', (client: Socket) => {
       io.sockets.in(roomID).emit('updateState', game);
     }
   };
+
   const handleTokenClick = (tokenOwnerID: any, token: number) => {
     const roomID = clientData[client.id].room;
     const playerNum = clientData[client.id].playerID;
@@ -142,9 +150,12 @@ io.on('connection', (client: Socket) => {
         (tokenPos) => tokenPos === constants.PLAYER_START
       );
     }
+
     const newPos = game.activePlayer.moveToken(token, game.rollVal);
     game.checkForCaptures();
+
     if (newPos === null) return;
+
     if (newPos === constants.GOAL_TILE) {
       game.activePlayer.scoreGoal();
       if (game.activePlayer.tokens.length === 0) {
@@ -156,16 +167,40 @@ io.on('connection', (client: Socket) => {
         return;
       }
     }
+
     if (!constants.ROSETTE_TILES.includes(newPos)) {
       game.changeTurn();
     } else {
       game.phase = 'rolling';
     }
+
     game.updateBoard();
     console.log('Board updated');
 
     io.sockets.in(roomID).emit('updateState', game);
     updateGamePhaseNotification(game, roomID);
+  };
+
+  const handleTokenHover = (tokenOwnerID: PlayerID, token: number) => {
+    const roomID = clientData[client.id].room;
+    const playerNum = clientData[client.id].playerID;
+    const game = state[roomID];
+    console.log(`Player ${tokenOwnerID} is hovering token ${token}`);
+    if (!game.isMovePossible(tokenOwnerID, token)) return;
+
+    let tileID: number | undefined;
+
+    if (token == constants.PLAYER_START) {
+      tileID = game.activePlayer!.path.get(game.rollVal! - 1);
+      console.log(tileID);
+    } else {
+      const tokenPos = game.activePlayer!.tokens[token];
+      tileID = game.activePlayer!.path.get(game.rollVal! + tokenPos);
+      console.log(tileID);
+    }
+
+    client.emit('tileHighlight', tileID);
+    // emits the id of the tile that should be highlighted
   };
 
   const handleReset = () => {

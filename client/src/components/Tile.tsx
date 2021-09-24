@@ -2,18 +2,13 @@ import React from 'react'
 import { Token } from './Token'
 
 interface Props extends TileI {
-  handleTokenClick: handleTokenClick
+  handleTokenClick: handleTokenEvent
+  handleTokenHover: handleTokenEvent
   index: number
+  highlightedTile: number | null
 }
 
-// Possible states:
-// occupied player 1
-// occupied player 2
-// empty
-// isRosette
-// isFinish
-// isStart
-//
+// what is the best way to temporarily highlight something only as long as it is hovered on? onMouseExit too?
 
 const Tile: React.FC<Props> = ({
   oc,
@@ -21,27 +16,32 @@ const Tile: React.FC<Props> = ({
   type,
   index,
   handleTokenClick,
+  handleTokenHover,
+  highlightedTile,
 }) => {
-  let className = 'red'
+  let className = index === highlightedTile ? 'highlighted ' : ''
+
   switch (type) {
     case 'normal':
       if (index % 2 === 0) {
-        className = 'tile-style-1'
+        className += 'tile-style-1'
       } else {
-        className = 'tile-style-0'
+        className += 'tile-style-0'
       }
       break
     case 'rosette':
-      className = 'rosette'
+      className += 'rosette'
       break
     case 'goal':
-      className = 'goal'
+      className += 'goal'
       break
   }
   return (
     <div
       className={`${className} centering`}
       onClick={handleTokenClick.bind(null, oc, token)}
+      onMouseEnter={handleTokenHover.bind(null, oc, token)}
+      onMouseLeave={handleTokenHover.bind(null, null, null)}
     >
       {oc !== null ? <Token playerID={oc} /> : <div></div>}
     </div>

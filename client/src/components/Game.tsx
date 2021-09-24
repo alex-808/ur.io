@@ -7,7 +7,9 @@ import { LeaveButton } from './LeaveButton'
 
 interface Props {
   gameState: GameI | null
-  handleTokenClick: handleTokenClick
+  handleTokenClick: handleTokenEvent
+  handleTokenHover: handleTokenEvent
+  highlightedTile: number | null
   rollDice: () => void
   resetGame: () => void
   notification: string
@@ -17,6 +19,8 @@ interface Props {
 const GameComponent: React.FC<Props> = ({
   gameState,
   handleTokenClick,
+  handleTokenHover,
+  highlightedTile,
   rollDice,
   resetGame,
   notification,
@@ -26,13 +30,22 @@ const GameComponent: React.FC<Props> = ({
   return (
     <>
       <LeaveButton leaveGame={leaveGame} />
-      <PlayerStart player={gameState.players[0]} onClick={handleTokenClick} />
+      <PlayerStart
+        player={gameState.players[0]}
+        onClick={handleTokenClick}
+        onHover={handleTokenHover}
+      />
       <PlayerScore
         activePlayer={gameState.activePlayer}
         player={gameState.players[0]}
       />
       <NotificationPanel notification={notification} />
-      <Board tiles={gameState.board} handleTokenClick={handleTokenClick} />
+      <Board
+        tiles={gameState.board}
+        handleTokenClick={handleTokenClick}
+        handleTokenHover={handleTokenHover}
+        highlightedTile={highlightedTile}
+      />
       <div className="game-buttons">
         <button
           className={
@@ -52,7 +65,11 @@ const GameComponent: React.FC<Props> = ({
         </button>
       </div>
 
-      <PlayerStart player={gameState.players[1]} onClick={handleTokenClick} />
+      <PlayerStart
+        player={gameState.players[1]}
+        onClick={handleTokenClick}
+        onHover={handleTokenHover}
+      />
       <PlayerScore
         activePlayer={gameState.activePlayer}
         player={gameState.players[1]}

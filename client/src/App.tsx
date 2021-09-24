@@ -20,6 +20,7 @@ function App() {
   const [roomID, setRoomID] = useState('')
   //const [roomID, setRoomID] = useState('1')
   const [notification, setNotification] = useState('')
+  const [highlightedTile, setHighlightedTile] = useState<number | null>()
 
   useEffect(() => {
     socket.on('connect', () => {
@@ -51,11 +52,16 @@ function App() {
       console.log('Partner disconnected')
       setNotification('Partner Disconnected')
     })
+    socket.on('tileHighlight', tile => {
+      console.log(`Tile ${tile} highlighted`)
+      setHighlightedTile(tile)
+    })
   }, [])
 
   const updateState = (state: GameI) => {
     console.log('Updating game')
     setGameState(state)
+    setHighlightedTile(null)
   }
 
   const createNewGame = () => {
@@ -69,9 +75,17 @@ function App() {
     socket.emit('joinGame', roomID)
   }
 
-  const handleTokenClick: handleTokenClick = (playerID, token) => {
+  const handleTokenClick: handleTokenEvent = (playerID, token) => {
     socket.emit('tokenClick', playerID, token)
     console.log('token clicked')
+  }
+
+  const handleTokenHover: handleTokenEvent = (playerID, token) => {
+    if (!playerID || token) {
+      setHighlightedTile(null)
+    }
+    socket.emit('tokenHover', playerID, token)
+    console.log('token hovered')
   }
 
   const rollDice = () => {
@@ -107,6 +121,8 @@ function App() {
         notification={notification}
         gameState={gameState}
         handleTokenClick={handleTokenClick}
+        handleTokenHover={handleTokenHover}
+        highlightedTile={highlightedTile}
         rollDice={rollDice}
         resetGame={resetGame}
         leaveGame={leaveGame}

@@ -3,10 +3,18 @@ import { Tile } from './Tile'
 
 interface Props {
   tiles: TileI[]
-  handleTokenClick: handleTokenClick
+  handleTokenClick: handleTokenEvent
+  handleTokenHover: handleTokenEvent
+  highlightedTile: number | null
 }
 
-const Board: React.FC<Props> = ({ tiles, handleTokenClick }) => {
+const Board: React.FC<Props> = ({
+  tiles,
+  handleTokenClick,
+  handleTokenHover,
+  highlightedTile,
+}) => {
+  console.log(highlightedTile)
   return (
     <div className="board">
       {tiles.map((tile, i) => (
@@ -17,6 +25,8 @@ const Board: React.FC<Props> = ({ tiles, handleTokenClick }) => {
           token={tile.token}
           key={i}
           handleTokenClick={handleTokenClick}
+          handleTokenHover={handleTokenHover}
+          highlightedTile={highlightedTile}
         />
       ))}
     </div>

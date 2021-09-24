@@ -8,6 +8,7 @@ interface PlayerI {
   tokens: number[];
   score: number;
   id: PlayerID;
+  path: Map<number, number>;
 }
 
 interface GameI {
