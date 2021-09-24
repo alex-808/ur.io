@@ -111,6 +111,7 @@ class Game {
     },
   ];
   rollVal: number | null = null;
+  gameWinners: number[] = [];
   AreNoMoves() {
     if (!this.activePlayer || !this.rollVal) return;
     let immovableTokens = 0;
@@ -127,11 +128,16 @@ class Game {
     return false;
   }
   reset() {
+    const winnerID = this.activePlayer!.id;
+    this.gameWinners.push(winnerID!);
+    console.table(this.gameWinners);
     this.players[0] = new Player(0);
     this.players[1] = new Player(1);
     this.activePlayer = this.players[1];
     this.rollVal = null;
     this.phase = 'rolling';
+    if (this.gameWinners.length % 2) this.activePlayer = this.players[1];
+    else this.activePlayer = this.players[0];
   }
   addPlayer() {
     if (this.players.length < 2) {
