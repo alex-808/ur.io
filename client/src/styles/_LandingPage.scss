@@ -1,5 +1,9 @@
 .session-buttons {
   grid-area: middle-center;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-self: center;
+  align-self: center;
 }
 
 .landing-header {

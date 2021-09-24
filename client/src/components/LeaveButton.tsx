@@ -7,8 +7,9 @@ interface Props {
 const LeaveButton: React.FC<Props> = ({ leaveGame }) => {
   return (
     <div className="centering">
-      <button className="button" onClick={leaveGame}>
-        LeaveButton
+      <button className="button centering" onClick={leaveGame}>
+        <span className="material-icons">logout</span>
+        Leave Room
       </button>
     </div>
   )

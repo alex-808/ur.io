@@ -2,3 +2,17 @@
   grid-area: top-center;
   font-size: 1.25rem;
 }
+
+.notification-panel-active {
+  @extend .notification-panel;
+  animation: fadein 1s;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
