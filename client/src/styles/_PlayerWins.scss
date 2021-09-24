@@ -1,0 +1,12 @@
+.PlayerWins {
+  font-size: 1rem;
+}
+
+.Player0Wins {
+  @extend .PlayerWins;
+  grid-area: bottom-left;
+}
+.Player1Wins {
+  @extend .PlayerWins;
+  grid-area: bottom-right;
+}

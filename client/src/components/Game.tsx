@@ -38,6 +38,7 @@ const GameComponent: React.FC<Props> = ({
       <PlayerScore
         activePlayer={gameState.activePlayer}
         player={gameState.players[0]}
+        gameWinners={gameState.gameWinners}
       />
       <NotificationPanel notification={notification} />
       <Board
@@ -73,6 +74,7 @@ const GameComponent: React.FC<Props> = ({
       <PlayerScore
         activePlayer={gameState.activePlayer}
         player={gameState.players[1]}
+        gameWinners={gameState.gameWinners}
       />
     </>
   )

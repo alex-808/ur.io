@@ -43,5 +43,16 @@
 }
 
 .highlighted {
-  background-color: white;
+  animation: highlight 0.5s;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+}
+
+@keyframes highlight {
+  from {
+  }
+  to {
+    visibility: visible;
+    background-color: white;
+  }
 }

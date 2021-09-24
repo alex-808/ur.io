@@ -1,5 +1,6 @@
 .playerScore {
-  @extends .centering;
+  //@extend .centering;
+  padding: 10%;
 }
 
 .player0Score {
@@ -13,7 +14,6 @@
 }
 
 .active {
-  padding: 10%;
   border-radius: 8rem;
   background-color: var(--activePlayerColor);
 }

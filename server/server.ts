@@ -183,20 +183,16 @@ io.on('connection', (client: Socket) => {
 
   const handleTokenHover = (tokenOwnerID: PlayerID, token: number) => {
     const roomID = clientData[client.id].room;
-    const playerNum = clientData[client.id].playerID;
     const game = state[roomID];
-    console.log(`Player ${tokenOwnerID} is hovering token ${token}`);
     if (!game.isMovePossible(tokenOwnerID, token)) return;
 
     let tileID: number | undefined;
 
     if (token == constants.PLAYER_START) {
       tileID = game.activePlayer!.path.get(game.rollVal! - 1);
-      console.log(tileID);
     } else {
       const tokenPos = game.activePlayer!.tokens[token];
       tileID = game.activePlayer!.path.get(game.rollVal! + tokenPos);
-      console.log(tileID);
     }
 
     client.emit('tileHighlight', tileID);

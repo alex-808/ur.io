@@ -16,6 +16,7 @@ interface GameI {
   activePlayer: PlayerI | null
   board: TileI[]
   rollVal: number
+  gameWinners: number[]
   //TODO
 }
 
