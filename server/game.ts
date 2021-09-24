@@ -123,7 +123,6 @@ class Game {
         immovableTokens++;
       }
     });
-    console.log(immovableTokens);
     if (immovableTokens === this.activePlayer.tokens.length) return true;
     return false;
   }
@@ -133,11 +132,13 @@ class Game {
     console.table(this.gameWinners);
     this.players[0] = new Player(0);
     this.players[1] = new Player(1);
-    this.activePlayer = this.players[1];
     this.rollVal = null;
     this.phase = 'rolling';
     if (this.gameWinners.length % 2) this.activePlayer = this.players[1];
     else this.activePlayer = this.players[0];
+  }
+  setActivePlayer() {
+    //TODO
   }
   addPlayer() {
     if (this.players.length < 2) {
@@ -153,12 +154,7 @@ class Game {
     const val2 = Math.floor(Math.random() * 3);
 
     this.rollVal = val1 + val2;
-    //this.rollVal = 4;
-    if (this.rollVal !== 0 && !this.AreNoMoves()) {
-      this.phase = 'movement';
-    } else {
-      this.changeTurn();
-    }
+    //this.rollVal = 0;
     return [val1, val2];
   }
   //TODO try to get this to be used in handleTokenClick
@@ -181,7 +177,8 @@ class Game {
     }
 
     for (let player of this.players) {
-      const path = player.id === 0 ? player0Path : player1Path;
+      const path =
+        player.id === 0 ? constants.PLAYER_0_PATH : constants.PLAYER_1_PATH;
 
       for (let tokenPos of player.tokens) {
         if (tokenPos === constants.PLAYER_START) continue;
@@ -223,39 +220,6 @@ class Game {
 }
 interface GameI extends Game {}
 
-const player0Path = new Map([
-  [0, 9],
-  [1, 6],
-  [2, 3],
-  [3, 0],
-  [4, 1],
-  [5, 4],
-  [6, 7],
-  [7, 10],
-  [8, 13],
-  [9, 16],
-  [10, 19],
-  [11, 18],
-  [12, 15],
-  [13, 12],
-]);
-
-const player1Path = new Map([
-  [0, 11],
-  [1, 8],
-  [2, 5],
-  [3, 2],
-  [4, 1],
-  [5, 4],
-  [6, 7],
-  [7, 10],
-  [8, 13],
-  [9, 16],
-  [10, 19],
-  [11, 20],
-  [12, 17],
-  [13, 14],
-]);
 class Player implements PlayerI {
   constructor(public id: PlayerID) {}
   tokens = [

@@ -97,13 +97,30 @@ io.on('connection', (client: Socket) => {
     const playerNum = clientData[client.id].playerID;
     const game = state[roomID];
     let activePlayerID = game.activePlayer?.id;
-    if (playerNum === activePlayerID) {
-      game.rollDice();
+
+    if (playerNum !== activePlayerID) return;
+
+    game.rollDice();
+    if (game.AreNoMoves()) {
+      game.changeTurn();
+      let activePlayerNum = game.activePlayer?.id;
+      io.sockets.in(roomID).emit('updateState', game);
+      io.sockets.in(roomID).emit('notification', {
+        msg: `${game.rollVal} Rolled, Player ${activePlayerNum! + 1}'s Roll`,
+      });
+    } else if (game.rollVal === 0) {
+      game.changeTurn();
+      let activePlayerNum = game.activePlayer?.id;
+      io.sockets.in(roomID).emit('updateState', game);
+      io.sockets.in(roomID).emit('notification', {
+        msg: `0 Rolled, Player ${activePlayerNum! + 1}'s Roll`,
+      });
+    } else {
+      game.phase = 'movement';
+      updateGamePhaseNotification(game, roomID);
       io.sockets.in(roomID).emit('updateState', game);
     }
-    updateGamePhaseNotification(game, roomID);
   };
-
   const handleTokenClick = (tokenOwnerID: any, token: number) => {
     const roomID = clientData[client.id].room;
     const playerNum = clientData[client.id].playerID;
@@ -166,11 +183,7 @@ const updateGamePhaseNotification = (game: GameI, roomID: string) => {
   if (!game?.activePlayer) return;
   console.log(game.phase);
   const activePlayerNum = game.activePlayer.id! + 1;
-  if (game.rollVal === 0) {
-    io.sockets.in(roomID).emit('notification', {
-      msg: `0 Rolled, Player ${activePlayerNum}'s Roll`,
-    });
-  } else if (game.phase === 'movement') {
+  if (game.phase === 'movement') {
     io.sockets.in(roomID).emit('notification', {
       msg: `Player ${activePlayerNum}'s Move`,
     });
@@ -178,7 +191,6 @@ const updateGamePhaseNotification = (game: GameI, roomID: string) => {
     io.sockets.in(roomID).emit('notification', {
       msg: `Player ${activePlayerNum}'s Roll`,
     });
-    // Not working
   } else if (game.phase === 'gameOver') {
     io.sockets.in(roomID).emit('notification', {
       msg: `Player ${activePlayerNum} Wins!`,
