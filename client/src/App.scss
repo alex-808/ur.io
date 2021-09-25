@@ -15,6 +15,28 @@
   padding: 0.5rem;
   margin: 1rem;
   border-radius: 1rem;
+  background-color: var(--tileColor0);
+  position: relative;
+  z-index: 1;
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  border-radius: 1rem;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  background-color: var(--tileColor1);
+  transform: scaleX(0);
+  //transform-origin: left;
+  transition: transform 300ms ease-in-out;
+}
+
+.button:hover::before {
+  transform: scaleX(1);
 }
 
 .centering {

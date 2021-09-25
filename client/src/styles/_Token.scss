@@ -5,11 +5,6 @@
   filter: drop-shadow(6px 4px 0px rgba(0, 0, 0, 0.25));
 }
 
-//.token::before {
-//content: '';
-//padding-bottom: 100%;
-//}
-
 .player-0-token {
   @extend .token;
   background-color: var(--player0Color);
