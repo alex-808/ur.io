@@ -4,15 +4,12 @@ import { LeaveButton } from './LeaveButton'
 
 interface Props {
   roomID: string
-  notification: string
-  leaveGame: () => void
 }
 
-const WaitingRoom: React.FC<Props> = ({ roomID, notification, leaveGame }) => {
+const WaitingRoom: React.FC<Props> = ({ roomID, children }) => {
   return (
     <>
-      <NotificationPanel notification={notification} />
-      <LeaveButton leaveGame={leaveGame} />
+      {children}
       <span className="waiting-room">
         <div>Waiting Room</div>
         <span className="roomID">{roomID}</span>

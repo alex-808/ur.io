@@ -5,6 +5,8 @@ import { Game } from './game'
 import { LandingPage } from './components/LandingPage'
 import { WaitingRoom } from './components/WaitingRoom'
 import io from 'socket.io-client'
+import { LeaveButton } from './components/LeaveButton'
+import { NotificationPanel } from './components/NotificationPanel'
 
 const socket = io('http://localhost:5000')
 
@@ -20,7 +22,7 @@ function App() {
   const [roomID, setRoomID] = useState('')
   //const [roomID, setRoomID] = useState('1')
   const [notification, setNotification] = useState('')
-  const [highlightedTile, setHighlightedTile] = useState<number | null>()
+  const [highlightedTile, setHighlightedTile] = useState<number | null>(null)
 
   useEffect(() => {
     socket.on('connect', () => {
@@ -109,11 +111,10 @@ function App() {
     view = <LandingPage createNewGame={createNewGame} joinGame={joinGame} />
   } else if (!gameState && roomID) {
     view = (
-      <WaitingRoom
-        notification={notification}
-        roomID={roomID}
-        leaveGame={leaveGame}
-      />
+      <WaitingRoom roomID={roomID}>
+        <LeaveButton leaveGame={leaveGame} />
+        <NotificationPanel notification={notification} />
+      </WaitingRoom>
     )
   } else if (gameState && roomID) {
     view = (
