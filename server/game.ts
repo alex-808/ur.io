@@ -226,12 +226,12 @@ class Player implements PlayerI {
 
   tokens = [
     constants.PLAYER_START,
-    //constants.PLAYER_START,
-    //constants.PLAYER_START,
-    //constants.PLAYER_START,
-    //constants.PLAYER_START,
-    //constants.PLAYER_START,
-    //constants.PLAYER_START,
+    constants.PLAYER_START,
+    constants.PLAYER_START,
+    constants.PLAYER_START,
+    constants.PLAYER_START,
+    constants.PLAYER_START,
+    constants.PLAYER_START,
   ];
   score: number = 0;
   scoreGoal() {

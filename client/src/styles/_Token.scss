@@ -1,9 +1,14 @@
 .token {
-  width: 3rem;
-  height: 3rem;
+  width: 6vmin;
+  height: 6vmin;
   border-radius: 50%;
   filter: drop-shadow(6px 4px 0px rgba(0, 0, 0, 0.25));
 }
+
+//.token::before {
+//content: '';
+//padding-bottom: 100%;
+//}
 
 .player-0-token {
   @extend .token;

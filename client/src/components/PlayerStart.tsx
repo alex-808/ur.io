@@ -14,6 +14,7 @@ const PlayerStart: React.FC<Props> = ({ player, onClick, onHover }) => {
       className={`player${player.id}Start`}
       onClick={onClick.bind(null, player.id, constants.PLAYER_START)}
       onMouseEnter={onHover.bind(null, player.id, constants.PLAYER_START)}
+      onMouseLeave={onHover.bind(null, null, null)}
     >
       {player.tokens
         .filter(token => token === -1)
