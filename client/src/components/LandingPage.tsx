@@ -1,11 +1,17 @@
 import React, { useState } from 'react'
+import { NotificationPanel } from './NotificationPanel'
 
 interface Props {
   createNewGame: () => void
   joinGame: (roomID: string) => void
+  notification: string
 }
 
-const LandingPage: React.FC<Props> = ({ createNewGame, joinGame }) => {
+const LandingPage: React.FC<Props> = ({
+  createNewGame,
+  joinGame,
+  notification,
+}) => {
   const [joinRoomID, setJoinRoomID] = useState('')
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputEl = event.target as HTMLInputElement
@@ -18,6 +24,11 @@ const LandingPage: React.FC<Props> = ({ createNewGame, joinGame }) => {
         Game of Ur (with friends)
         <span className="material-icons">face</span>
       </header>
+
+      <NotificationPanel
+        notification={notification}
+        gridPlacement={'bottom-center'}
+      />
       <div className="session-buttons">
         <div>
           <span>Start a </span>

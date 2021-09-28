@@ -62,11 +62,11 @@ io.on('connection', (client: Socket) => {
     console.log(room?.size);
 
     if (!room) {
-      client.emit('noRoom');
+      client.emit('notification', { msg: 'This room is empty' });
       return;
     }
     if (room.size >= 2) {
-      client.emit('roomFull');
+      client.emit('notification', { msg: 'Room is already full' });
       return;
     }
 
@@ -75,6 +75,7 @@ io.on('connection', (client: Socket) => {
     console.log(room.size);
     const game = state[roomID];
     game.addPlayer();
+    client.emit('setRoomID', roomID);
 
     io.sockets.in(roomID).emit('init', state[roomID]);
     updateGamePhaseNotification(game, roomID);
@@ -94,6 +95,8 @@ io.on('connection', (client: Socket) => {
     delete clientData[client.id];
     console.log('clientData deleted');
     console.table(clientData);
+    client.emit('setRoomID', undefined);
+    client.emit('notification', { msg: '' });
     client.emit('updateState', undefined);
     io.sockets.in(roomID).emit('notification', { msg: 'Partner Left Room' });
   };
@@ -184,7 +187,10 @@ io.on('connection', (client: Socket) => {
   const handleTokenHover = (tokenOwnerID: PlayerID, token: number) => {
     const roomID = clientData[client.id].room;
     const game = state[roomID];
-    if (!game.isMovePossible(tokenOwnerID, token)) return;
+    if (!game.isMovePossible(tokenOwnerID, token)) {
+      client.emit('tileHighlight', null);
+      return;
+    }
 
     let tileID: number | undefined;
 

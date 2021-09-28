@@ -3,9 +3,13 @@ import { useState } from 'react'
 
 interface Props {
   notification: string
+  gridPlacement?: string
 }
 
-const NotificationPanel: React.FC<Props> = ({ notification }) => {
+const NotificationPanel: React.FC<Props> = ({
+  notification,
+  gridPlacement = 'top-center',
+}) => {
   const [className, setClassName] = useState('notification-panel')
   const notificationRef = useRef('')
   useEffect(() => {
@@ -19,7 +23,14 @@ const NotificationPanel: React.FC<Props> = ({ notification }) => {
       setClassName('notification-panel')
     }
   }, [notification])
-  return <div className={`${className} centering`}>{notification}</div>
+  return (
+    <div
+      className={`${className} centering`}
+      style={{ gridArea: `${gridPlacement}` }}
+    >
+      {notification}
+    </div>
+  )
 }
 
 export { NotificationPanel }
