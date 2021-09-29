@@ -2,9 +2,9 @@ import React from 'react'
 import { Token } from './Token'
 
 interface Props extends TileI {
+  index: number
   handleTokenClick: handleTokenEvent
   handleTokenHover: handleTokenEvent
-  index: number
   highlightedTile: number | null
 }
 

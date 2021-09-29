@@ -11,7 +11,7 @@ interface PlayerI {
 }
 
 interface GameI {
-  players: Player[]
+  players: PlayerI[]
   phase: GamePhase
   activePlayer: PlayerI | null
   board: TileI[]
