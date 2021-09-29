@@ -77,7 +77,6 @@ const handleLeaveGame = (client: Socket, server: Server) => {
 };
 
 const handleRollDice = (client: Socket, server: Server) => {
-  //TODO Refactor
   const roomID = clientData[client.id].room;
   const playerNum = clientData[client.id].playerID;
   const game = state[roomID];
@@ -87,21 +86,14 @@ const handleRollDice = (client: Socket, server: Server) => {
 
   game.rollDice();
 
-  if (game.AreNoMoves()) {
+  if (game.AreNoMoves() || game.rollVal === 0) {
     game.changeTurn();
-    let activePlayerNum = game.activePlayer?.id;
-    if (!activePlayerNum) return;
+
     server.sockets.in(roomID).emit('updateState', game);
     server.sockets.in(roomID).emit('notification', {
-      msg: `${game.rollVal} Rolled, Player ${activePlayerNum + 1}'s Roll`,
-    });
-  } else if (game.rollVal === 0) {
-    game.changeTurn();
-    let activePlayerNum = game.activePlayer?.id;
-    if (!activePlayerNum) return;
-    server.sockets.in(roomID).emit('updateState', game);
-    server.sockets.in(roomID).emit('notification', {
-      msg: `0 Rolled, Player ${activePlayerNum + 1}'s Roll`,
+      msg: `${game.rollVal} Rolled, Player ${
+        game.activePlayer!.id! + 1
+      }'s Roll`,
     });
   } else {
     game.phase = 'movement';
@@ -135,58 +127,31 @@ const handleTokenHover = (
 };
 
 const handleTokenClick = (
-  //TODO Refactor
   client: Socket,
   server: Server,
   tokenOwnerID: PlayerID,
   token: number
 ) => {
   const roomID = clientData[client.id].room;
-  const playerNum = clientData[client.id].playerID;
+  const playerID = clientData[client.id].playerID;
   const game = state[roomID];
-  // I'd like to clean this up a bit
-  if (
-    tokenOwnerID !== game.activePlayer?.id ||
-    playerNum !== game.activePlayer?.id ||
-    !game.rollVal ||
-    token === null ||
-    game.phase !== 'movement' ||
-    !game.activePlayer
-  ) {
-    console.log('Invalid move');
+
+  if (!game.isMovePossible(tokenOwnerID, token) || tokenOwnerID !== playerID)
     return;
-  }
+
   if (token === constants.PLAYER_START) {
-    token = game.activePlayer?.tokens.findIndex(
+    token = game.activePlayer!.tokens.findIndex(
       (tokenPos) => tokenPos === constants.PLAYER_START
     );
   }
 
-  const newPos = game.activePlayer.moveToken(token, game.rollVal);
+  const newPos = game.activePlayer!.moveToken(token, game.rollVal!);
   game.checkForCaptures();
 
   if (newPos === null) return;
 
-  if (newPos === constants.GOAL_TILE) {
-    game.activePlayer.scoreGoal();
-    if (game.activePlayer.tokens.length === 0) {
-      game.phase = 'gameOver';
-      console.log('gameOver');
-      game.updateBoard();
-      server.sockets.in(roomID).emit('updateState', game);
-      updateGamePhaseNotification(server, game, roomID);
-      return;
-    }
-  }
-
-  if (!constants.ROSETTE_TILES.includes(newPos)) {
-    game.changeTurn();
-  } else {
-    game.phase = 'rolling';
-  }
-
+  game.handleNewTokenPosition(newPos);
   game.updateBoard();
-  console.log('Board updated');
 
   server.sockets.in(roomID).emit('updateState', game);
   updateGamePhaseNotification(server, game, roomID);

@@ -144,9 +144,6 @@ class Game {
     if (this.gameWinners.length % 2) this.activePlayer = this.players[1];
     else this.activePlayer = this.players[0];
   }
-  setActivePlayer() {
-    //TODO
-  }
   addPlayer() {
     if (this.players.length < 2) {
       const player = new Player(this.players.length as PlayerID);
@@ -216,6 +213,22 @@ class Game {
       }
     }
   }
+  checkForGameOver() {
+    if (this.activePlayer?.tokens.length === 0) {
+      this.phase = 'gameOver';
+    }
+  }
+
+  handleNewTokenPosition(tokenPosition: number) {
+    if (tokenPosition === constants.GOAL_TILE) {
+      this.activePlayer!.scoreGoal();
+      this.checkForGameOver();
+    } else if (!constants.ROSETTE_TILES.includes(tokenPosition)) {
+      this.changeTurn();
+    } else {
+      this.phase = 'rolling';
+    }
+  }
 
   changeTurn() {
     console.log('turn changed');
@@ -233,12 +246,12 @@ class Player {
 
   tokens: number[] = [
     constants.PLAYER_START,
-    constants.PLAYER_START,
-    constants.PLAYER_START,
-    constants.PLAYER_START,
-    constants.PLAYER_START,
-    constants.PLAYER_START,
-    constants.PLAYER_START,
+    //constants.PLAYER_START,
+    //constants.PLAYER_START,
+    //constants.PLAYER_START,
+    //constants.PLAYER_START,
+    //constants.PLAYER_START,
+    //constants.PLAYER_START,
   ];
   score: number = 0;
   scoreGoal() {
