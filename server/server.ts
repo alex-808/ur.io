@@ -62,6 +62,7 @@ io.on('connection', (client: Socket) => {
     console.log(room?.size);
 
     if (!room) {
+      client.emit('roomID', roomID);
       client.emit('notification', { msg: 'This room is empty' });
       return;
     }
@@ -95,9 +96,9 @@ io.on('connection', (client: Socket) => {
     delete clientData[client.id];
     console.log('clientData deleted');
     console.table(clientData);
-    client.emit('setRoomID', undefined);
+    client.emit('setRoomID', null);
     client.emit('notification', { msg: '' });
-    client.emit('updateState', undefined);
+    client.emit('updateState', null);
     io.sockets.in(roomID).emit('notification', { msg: 'Partner Left Room' });
   };
 

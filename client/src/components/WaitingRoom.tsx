@@ -1,6 +1,4 @@
 import React from 'react'
-import { NotificationPanel } from './NotificationPanel'
-import { LeaveButton } from './LeaveButton'
 
 interface Props {
   roomID: string
