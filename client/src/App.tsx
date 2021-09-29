@@ -29,10 +29,6 @@ function App() {
     api.socket.on('tileHighlight', tile => {
       setHighlightedTile(tile)
     })
-
-    api.socket.on('setRoomID', (roomID: string) => {
-      setRoomID(roomID)
-    })
   }, [])
 
   const updateState = (state: GameI) => {

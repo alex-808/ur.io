@@ -28,9 +28,9 @@ const handleNewGame = (client: Socket) => {
 const handleJoinGame = (client: Socket, server: Server, roomID: string) => {
   console.log('Someone wants to join room', roomID);
   const room = server.sockets.adapter.rooms.get(roomID);
-  console.log(room?.size);
 
   if (!room) {
+    // emit roomID so they are still sent to WaitingRoom
     client.emit('roomID', roomID);
     client.emit('notification', { msg: 'This room is empty' });
     return;
@@ -41,11 +41,13 @@ const handleJoinGame = (client: Socket, server: Server, roomID: string) => {
   }
 
   client.join(roomID);
+
   clientData[`${client.id}`] = { room: roomID, playerID: 1 };
-  console.log(room.size);
+
   const game = state[roomID];
   game.addPlayer();
-  client.emit('setRoomID', roomID);
+
+  client.emit('roomID', roomID);
 
   server.sockets.in(roomID).emit('init', state[roomID]);
   updateGamePhaseNotification(server, game, roomID);
@@ -54,6 +56,7 @@ const handleJoinGame = (client: Socket, server: Server, roomID: string) => {
 const handleLeaveGame = (client: Socket, server: Server) => {
   const roomID = clientData[client.id]?.room;
   const room = server.sockets.adapter.rooms.get(roomID);
+
   client.leave(roomID);
 
   if (!room?.size) {
@@ -65,13 +68,16 @@ const handleLeaveGame = (client: Socket, server: Server) => {
   delete clientData[client.id];
   console.log('clientData deleted');
   console.table(clientData);
-  client.emit('setRoomID', null);
+
+  client.emit('roomID', null);
   client.emit('notification', { msg: '' });
   client.emit('updateState', null);
+
   server.sockets.in(roomID).emit('notification', { msg: 'Partner Left Room' });
 };
 
 const handleRollDice = (client: Socket, server: Server) => {
+  //TODO Refactor
   const roomID = clientData[client.id].room;
   const playerNum = clientData[client.id].playerID;
   const game = state[roomID];
@@ -129,6 +135,7 @@ const handleTokenHover = (
 };
 
 const handleTokenClick = (
+  //TODO Refactor
   client: Socket,
   server: Server,
   tokenOwnerID: PlayerID,
@@ -189,8 +196,10 @@ const handleReset = (client: Socket, server: Server) => {
   const roomID = clientData[client.id].room;
   const game = state[roomID];
   console.log('new game');
+
   game.reset();
   game.updateBoard();
+
   server.sockets.in(roomID).emit('updateState', game);
   updateGamePhaseNotification(server, game, roomID);
 };
@@ -200,9 +209,12 @@ const updateGamePhaseNotification = (
   game: Game,
   roomID: string
 ) => {
-  if (!game.activePlayer?.id) return;
+  console.log('Notification requested');
+  console.log(game.activePlayer);
+  if (!game.activePlayer) return;
   console.log(game.phase);
-  const activePlayerNum = game.activePlayer.id + 1;
+  const activePlayerNum = game.activePlayer.id! + 1;
+  console.log({ activePlayerNum });
   if (game.phase === 'movement') {
     server.sockets.in(roomID).emit('notification', {
       msg: `Player ${activePlayerNum}'s Move`,
