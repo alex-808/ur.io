@@ -1,4 +1,11 @@
 import * as constants from './constants';
+
+interface TileI {
+  oc: PlayerID;
+  token: number | null;
+  type: TileType;
+}
+
 class Game {
   players: Player[] = [];
   phase: GamePhase = 'rolling';
@@ -218,13 +225,13 @@ class Game {
     this.phase = 'rolling';
   }
 }
-interface GameI extends Game {}
 
-class Player implements PlayerI {
+class Player {
   constructor(public id: PlayerID) {}
-  path = this.id === 0 ? constants.PLAYER_0_PATH : constants.PLAYER_1_PATH;
+  path: Map<number, number> =
+    this.id === 0 ? constants.PLAYER_0_PATH : constants.PLAYER_1_PATH;
 
-  tokens = [
+  tokens: number[] = [
     constants.PLAYER_START,
     constants.PLAYER_START,
     constants.PLAYER_START,
@@ -249,4 +256,4 @@ class Player implements PlayerI {
   }
 }
 
-export { Game, GameI };
+export { Game };

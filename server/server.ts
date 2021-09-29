@@ -2,7 +2,7 @@ const express = require('express');
 const http = require('http');
 import { Server, Socket } from 'socket.io';
 import { makeID } from './utils';
-import { Game, GameI } from './game';
+import { Game } from './game';
 import * as constants from './constants';
 
 const port = process.env.PORT || 5000;
@@ -22,7 +22,7 @@ interface ClientData {
   playerID: number;
 }
 
-const state: { [roomID: string]: GameI } = {};
+const state: { [roomID: string]: Game } = {};
 // Map of clientID to their roomID
 const clientData: { [clientID: string]: ClientData } = {};
 
@@ -115,16 +115,18 @@ io.on('connection', (client: Socket) => {
     if (game.AreNoMoves()) {
       game.changeTurn();
       let activePlayerNum = game.activePlayer?.id;
+      if (!activePlayerNum) return;
       io.sockets.in(roomID).emit('updateState', game);
       io.sockets.in(roomID).emit('notification', {
-        msg: `${game.rollVal} Rolled, Player ${activePlayerNum! + 1}'s Roll`,
+        msg: `${game.rollVal} Rolled, Player ${activePlayerNum + 1}'s Roll`,
       });
     } else if (game.rollVal === 0) {
       game.changeTurn();
       let activePlayerNum = game.activePlayer?.id;
+      if (!activePlayerNum) return;
       io.sockets.in(roomID).emit('updateState', game);
       io.sockets.in(roomID).emit('notification', {
-        msg: `0 Rolled, Player ${activePlayerNum! + 1}'s Roll`,
+        msg: `0 Rolled, Player ${activePlayerNum + 1}'s Roll`,
       });
     } else {
       game.phase = 'movement';
@@ -133,7 +135,7 @@ io.on('connection', (client: Socket) => {
     }
   };
 
-  const handleTokenClick = (tokenOwnerID: any, token: number) => {
+  const handleTokenClick = (tokenOwnerID: PlayerID, token: number) => {
     const roomID = clientData[client.id].room;
     const playerNum = clientData[client.id].playerID;
     const game = state[roomID];
@@ -195,6 +197,8 @@ io.on('connection', (client: Socket) => {
 
     let tileID: number | undefined;
 
+    //if (!game.activePlayer || !game.rollVal) return;
+
     if (token == constants.PLAYER_START) {
       tileID = game.activePlayer!.path.get(game.rollVal! - 1);
     } else {
@@ -217,10 +221,10 @@ io.on('connection', (client: Socket) => {
   };
 });
 
-const updateGamePhaseNotification = (game: GameI, roomID: string) => {
-  if (!game?.activePlayer) return;
+const updateGamePhaseNotification = (game: Game, roomID: string) => {
+  if (!game.activePlayer?.id) return;
   console.log(game.phase);
-  const activePlayerNum = game.activePlayer.id! + 1;
+  const activePlayerNum = game.activePlayer.id + 1;
   if (game.phase === 'movement') {
     io.sockets.in(roomID).emit('notification', {
       msg: `Player ${activePlayerNum}'s Move`,
