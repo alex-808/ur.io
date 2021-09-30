@@ -1,124 +1,40 @@
 import * as constants from './constants';
 
-interface TileI {
-  oc: PlayerID;
-  token: number | null;
-  type: TileType;
+class Tile {
+  constructor(public type: TileType) {}
+  oc: PlayerID = null;
+  token: number | null = null;
 }
 
 class Game {
   players: Player[] = [];
   phase: GamePhase = 'rolling';
   activePlayer: Player | null = null;
-  board: TileI[] = [
-    {
-      oc: null,
-      token: null,
-      type: 'rosette',
-    },
-    {
-      oc: null,
-      token: null,
-      type: 'normal',
-    },
-    {
-      oc: null,
-      token: null,
-      type: 'rosette',
-    },
-    {
-      oc: null,
-      token: null,
-      type: 'normal',
-    },
-    {
-      oc: null,
-      token: null,
-      type: 'normal',
-    },
-    {
-      oc: null,
-      token: null,
-      type: 'normal',
-    },
-    {
-      oc: null,
-      token: null,
-      type: 'normal',
-    },
-    {
-      oc: null,
-      token: null,
-      type: 'normal',
-    },
-    {
-      oc: null,
-      token: null,
-      type: 'normal',
-    },
-    {
-      oc: null,
-      token: null,
-      type: 'normal',
-    },
-    {
-      oc: null,
-      token: null,
-      type: 'rosette',
-    },
-    {
-      oc: null,
-      token: null,
-      type: 'normal',
-    },
-    {
-      oc: null,
-      token: null,
-      type: 'goal',
-    },
-    {
-      oc: null,
-      token: null,
-      type: 'normal',
-    },
-    {
-      oc: null,
-      token: null,
-      type: 'goal',
-    },
-    {
-      oc: null,
-      token: null,
-      type: 'normal',
-    },
-    {
-      oc: null,
-      token: null,
-      type: 'normal',
-    },
-    {
-      oc: null,
-      token: null,
-      type: 'normal',
-    },
-    {
-      oc: null,
-      token: null,
-      type: 'rosette',
-    },
-    {
-      oc: null,
-      token: null,
-      type: 'normal',
-    },
-    {
-      oc: null,
-      token: null,
-      type: 'rosette',
-    },
-  ];
+  board: Tile[] = this.initializeBoard();
   rollVal: number | null = null;
   gameWinners: number[] = [];
+  initializeBoard() {
+    const board = [];
+    const player0Goal = constants.PLAYER_0_PATH.get(constants.GOAL_TILE);
+    const player1Goal = constants.PLAYER_1_PATH.get(constants.GOAL_TILE);
+    const player0Rosettes = constants.ROSETTE_TILES.map((val) =>
+      constants.PLAYER_0_PATH.get(val)
+    );
+    const player1Rosettes = constants.ROSETTE_TILES.map((val) =>
+      constants.PLAYER_1_PATH.get(val)
+    );
+    for (let i = 0; i < constants.BOARD_SIZE; i++) {
+      // would need to convert these to each player path first
+      if (player0Rosettes.includes(i) || player1Rosettes.includes(i)) {
+        board.push(new Tile('rosette'));
+      } else if (i === player0Goal || i === player1Goal) {
+        board.push(new Tile('goal'));
+      } else {
+        board.push(new Tile('normal'));
+      }
+    }
+    return board;
+  }
   AreNoMoves() {
     if (!this.activePlayer || !this.rollVal) return;
     let immovableTokens = 0;
