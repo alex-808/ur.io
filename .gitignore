@@ -1,6 +1,7 @@
-*/node_modules
-*/build
-*.swp
+**/node_modules
+**/build
+**.swp
+**/.env
 notes.txt
 tags
 
