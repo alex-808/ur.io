@@ -23,6 +23,7 @@ class Game {
     const player1Rosettes = constants.ROSETTE_TILES.map((val) =>
       constants.PLAYER_1_PATH.get(val)
     );
+
     for (let i = 0; i < constants.BOARD_SIZE; i++) {
       // would need to convert these to each player path first
       if (player0Rosettes.includes(i) || player1Rosettes.includes(i)) {
@@ -35,9 +36,12 @@ class Game {
     }
     return board;
   }
+
   AreNoMoves() {
     if (!this.activePlayer || !this.rollVal) return;
+
     let immovableTokens = 0;
+
     this.activePlayer.tokens.forEach((tokenPos) => {
       if (
         tokenPos + this.rollVal! > constants.GOAL_TILE ||
@@ -46,6 +50,7 @@ class Game {
         immovableTokens++;
       }
     });
+
     if (immovableTokens === this.activePlayer.tokens.length) return true;
     return false;
   }
@@ -53,10 +58,12 @@ class Game {
     const winnerID = this.activePlayer!.id;
     this.gameWinners.push(winnerID!);
     console.table(this.gameWinners);
+
     this.players[0] = new Player(0);
     this.players[1] = new Player(1);
     this.rollVal = null;
     this.phase = 'rolling';
+
     if (this.gameWinners.length % 2) this.activePlayer = this.players[1];
     else this.activePlayer = this.players[0];
   }

@@ -15,7 +15,6 @@ const clientData: { [clientID: string]: ClientData } = {};
 const handleNewGame = (client: Socket) => {
   // create room and pass back the uuid
   const roomID = makeID(5);
-  console.log(roomID);
 
   client.emit('roomID', roomID);
   clientData[`${client.id}`] = { room: roomID, playerID: 0 };
@@ -160,7 +159,6 @@ const handleTokenClick = (
 const handleReset = (client: Socket, server: Server) => {
   const roomID = clientData[client.id].room;
   const game = state[roomID];
-  console.log('new game');
 
   game.reset();
   game.updateBoard();
@@ -174,12 +172,8 @@ const updateGamePhaseNotification = (
   game: Game,
   roomID: string
 ) => {
-  console.log('Notification requested');
-  console.log(game.activePlayer);
   if (!game.activePlayer) return;
-  console.log(game.phase);
   const activePlayerNum = game.activePlayer.id! + 1;
-  console.log({ activePlayerNum });
   if (game.phase === 'movement') {
     server.sockets.in(roomID).emit('notification', {
       msg: `Player ${activePlayerNum}'s Move`,
