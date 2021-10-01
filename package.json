@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "nodemon --exec ts-node --files server.ts"
+    "start": "node build/server.js"
   },
   "dependencies": {
     "@types/express": "^4.17.13",
