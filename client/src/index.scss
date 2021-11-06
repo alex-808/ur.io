@@ -19,6 +19,11 @@
   --backgroundColor: #9d695a;
   --activePlayerColor: #d496a7;
 }
+@font-face {
+  font-family: 'Share Tech Mono';
+  src: URL('./fonts/Share_Tech_Mono/ShareTechMono-Regular.ttf')
+    format('truetype');
+}
 #root {
   height: 100%;
 }
