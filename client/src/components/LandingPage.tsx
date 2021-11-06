@@ -19,7 +19,7 @@ const LandingPage: React.FC<Props> = ({
   }
   return (
     <>
-      <header className="landing-header centering">
+      <header className="landing-header centering drop-shadow">
         Game of Ur (with friends)
       </header>
       {children}
@@ -44,7 +44,10 @@ const LandingPage: React.FC<Props> = ({
           </button>
         </div>
         <div className="bottom-right">
-          <input onChange={handleInputChange}></input>
+          <div className="input-bkground drop-shadow">
+            <h2>Enter Game Code Here</h2>
+            <input onChange={handleInputChange}></input>
+          </div>
         </div>
       </div>
     </>

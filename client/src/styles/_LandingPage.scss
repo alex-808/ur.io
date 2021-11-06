@@ -14,11 +14,16 @@
   background-color: #78e0dc;
   font-size: 3rem;
   font-family: 'Share Tech Mono';
+  border-radius: 0.5rem;
 }
 
 .landing-button {
-  padding: 3rem;
+  padding: 15%;
   border-radius: 100%;
+  font-family: 'Share Tech Mono';
+  font-size: 1.5rem;
+  height: 10vw;
+  width: 10vw;
 }
 
 .new-game-btn {
@@ -36,6 +41,12 @@
 
 .face-img {
   height: 100%;
+}
+
+.input-bkground {
+  background-color: var(--tileColor1);
+  border-radius: 0.5rem;
+  height: 80%;
 }
 
 .top-left {
