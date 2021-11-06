@@ -1,11 +1,55 @@
 .session-buttons {
   grid-area: middle-center;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
   justify-self: center;
   align-self: center;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas: 'top-left top-right' 'bottom-left bottom-right';
 }
 
 .landing-header {
   grid-area: top-center;
+  background-color: #78e0dc;
+  font-size: 3rem;
+  font-family: 'Share Tech Mono';
+}
+
+.landing-button {
+  padding: 3rem;
+  border-radius: 100%;
+}
+
+.new-game-btn {
+  background-color: var(--rosetteColor);
+}
+
+.join-game-btn {
+  grid-area: bottom-left;
+  background-color: var(--tileColor1);
+}
+
+.drop-shadow {
+  filter: drop-shadow(16px 11px 1px rgba(0, 0, 0, 0.25));
+}
+
+.face-img {
+  height: 100%;
+}
+
+.top-left {
+  grid-area: top-left;
+}
+
+.top-right {
+  grid-area: top-right;
+}
+
+.bottom-left {
+  grid-area: bottom-left;
+}
+
+.bottom-right {
+  grid-area: bottom-right;
 }
