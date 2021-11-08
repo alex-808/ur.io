@@ -7,6 +7,7 @@
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   grid-template-areas: 'top-left top-right' 'bottom-left bottom-right';
+  margin: 100%;
 }
 
 .landing-header {
@@ -18,12 +19,13 @@
 }
 
 .landing-button {
-  padding: 15%;
+  padding: 10%;
   border-radius: 100%;
   font-family: 'Share Tech Mono';
   font-size: 1.5rem;
   height: 10vw;
   width: 10vw;
+  text-align: center;
 }
 
 .new-game-btn {
@@ -41,12 +43,29 @@
 
 .face-img {
   height: 100%;
+  justify-self: start;
 }
 
 .input-bkground {
   background-color: var(--tileColor1);
   border-radius: 0.5rem;
   height: 80%;
+  padding: 10%;
+  font-family: 'Share Tech Mono';
+  font-size: 0.75rem;
+}
+
+.game-code-input {
+  border-width: 0 0 5px;
+  border-color: black;
+  background-color: var(--tileColor1);
+  font-family: 'Share Tech Mono';
+  font-size: 2rem;
+  width: 80%;
+}
+
+.game-code-input:focus {
+  outline: none;
 }
 
 .top-left {

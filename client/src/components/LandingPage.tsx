@@ -45,8 +45,11 @@ const LandingPage: React.FC<Props> = ({
         </div>
         <div className="bottom-right">
           <div className="input-bkground drop-shadow">
-            <h2>Enter Game Code Here</h2>
-            <input onChange={handleInputChange}></input>
+            <h2>Enter Game Code:</h2>
+            <input
+              className="game-code-input"
+              onChange={handleInputChange}
+            ></input>
           </div>
         </div>
       </div>
