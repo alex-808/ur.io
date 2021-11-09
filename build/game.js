@@ -195,12 +195,13 @@ var Player = /** @class */ (function () {
         this.path = this.id === 0 ? constants.PLAYER_0_PATH : constants.PLAYER_1_PATH;
         this.tokens = [
             constants.PLAYER_START,
-            //constants.PLAYER_START,
-            //constants.PLAYER_START,
-            //constants.PLAYER_START,
-            //constants.PLAYER_START,
-            //constants.PLAYER_START,
-            //constants.PLAYER_START,
+            constants.PLAYER_START,
+            constants.PLAYER_START,
+            constants.PLAYER_START,
+            constants.PLAYER_START,
+            constants.PLAYER_START,
+            constants.PLAYER_START,
+            constants.PLAYER_START,
         ];
         this.score = 0;
     }

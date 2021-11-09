@@ -138,6 +138,7 @@ class Game {
       const player = new Player(this.players.length as PlayerID)
       this.players.push(player)
       this.activePlayer = player
+      console.log(player)
     } else {
       // TODO emit 'too many players'
     }

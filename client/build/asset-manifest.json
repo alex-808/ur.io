@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/static/css/main.b1719e74.chunk.css",
-    "main.js": "/static/js/main.9281e607.chunk.js",
-    "main.js.map": "/static/js/main.9281e607.chunk.js.map",
+    "main.css": "/static/css/main.93ddb92a.chunk.css",
+    "main.js": "/static/js/main.3a340309.chunk.js",
+    "main.js.map": "/static/js/main.3a340309.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.89fb8400.js",
     "runtime-main.js.map": "/static/js/runtime-main.89fb8400.js.map",
     "static/js/2.dc3a399b.chunk.js": "/static/js/2.dc3a399b.chunk.js",
@@ -10,13 +10,15 @@
     "static/js/3.eb8ff16b.chunk.js": "/static/js/3.eb8ff16b.chunk.js",
     "static/js/3.eb8ff16b.chunk.js.map": "/static/js/3.eb8ff16b.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/main.b1719e74.chunk.css.map": "/static/css/main.b1719e74.chunk.css.map",
-    "static/js/2.dc3a399b.chunk.js.LICENSE.txt": "/static/js/2.dc3a399b.chunk.js.LICENSE.txt"
+    "static/css/main.93ddb92a.chunk.css.map": "/static/css/main.93ddb92a.chunk.css.map",
+    "static/js/2.dc3a399b.chunk.js.LICENSE.txt": "/static/js/2.dc3a399b.chunk.js.LICENSE.txt",
+    "static/media/index.scss": "/static/media/ShareTechMono-Regular.8b302ac6.ttf",
+    "static/media/face_black_24dp.286f1073.svg": "/static/media/face_black_24dp.286f1073.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.89fb8400.js",
     "static/js/2.dc3a399b.chunk.js",
-    "static/css/main.b1719e74.chunk.css",
-    "static/js/main.9281e607.chunk.js"
+    "static/css/main.93ddb92a.chunk.css",
+    "static/js/main.3a340309.chunk.js"
   ]
 }

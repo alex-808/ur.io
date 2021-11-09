@@ -23,6 +23,7 @@ exports.handleLeaveGame = exports.handleReset = exports.handleTokenHover = expor
 var game_1 = require("./game");
 var utils_1 = require("./utils");
 var constants = __importStar(require("./constants"));
+console.log('hello you');
 var state = {};
 // Map of clientID to their roomID
 var clientData = {};

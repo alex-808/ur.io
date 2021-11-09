@@ -12,19 +12,21 @@
 
 .landing-header {
   grid-area: top-center;
+}
+
+.header-text {
   background-color: #78e0dc;
   font-size: 3rem;
-  font-family: 'Share Tech Mono';
   border-radius: 0.5rem;
+  padding: 3vh;
 }
 
 .landing-button {
   padding: 10%;
   border-radius: 100%;
-  font-family: 'Share Tech Mono';
   font-size: 1.5rem;
-  height: 10vw;
-  width: 10vw;
+  height: 15vh;
+  width: 15vh;
   text-align: center;
 }
 
@@ -38,7 +40,7 @@
 }
 
 .drop-shadow {
-  filter: drop-shadow(16px 11px 1px rgba(0, 0, 0, 0.25));
+  filter: drop-shadow(5px 4px 1px rgba(0, 0, 0, 0.25));
 }
 
 .face-img {
@@ -47,21 +49,20 @@
 }
 
 .input-bkground {
-  background-color: var(--tileColor1);
+  background-color: var(--rosetteColor);
   border-radius: 0.5rem;
   height: 80%;
   padding: 10%;
-  font-family: 'Share Tech Mono';
   font-size: 0.75rem;
 }
 
 .game-code-input {
   border-width: 0 0 5px;
   border-color: black;
-  background-color: var(--tileColor1);
-  font-family: 'Share Tech Mono';
+  background-color: var(--rosetteColor);
   font-size: 2rem;
   width: 80%;
+  font-family: 'Share Tech Mono';
 }
 
 .game-code-input:focus {

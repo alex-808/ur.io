@@ -16,7 +16,6 @@ const PlayerScore: React.FC<Props> = ({
     <div
       className={`player${player.id}Score
       `}
-      style={{ color: 'black', fontSize: '30px' }}
     >
       <div className={`${player.id === activePlayer?.id ? 'active' : ''}`}>
         {player.score}
