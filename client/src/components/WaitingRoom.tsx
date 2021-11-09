@@ -8,8 +8,9 @@ const WaitingRoom: React.FC<Props> = ({ roomID, children }) => {
   return (
     <>
       {children}
+      <div className="waiting-header">Waiting for partner</div>
       <span className="waiting-room">
-        <div>Waiting Room</div>
+        <div>Game code:</div>
         <span className="roomID">{roomID}</span>
       </span>
     </>

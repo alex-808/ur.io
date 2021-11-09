@@ -1,6 +1,7 @@
 @use './styles/Board.scss';
 @use './styles/Game.scss';
 @use './styles/LandingPage.scss';
+@use './styles/LeaveButton.scss';
 @use './styles/NotificationPanel.scss';
 @use './styles/PlayerScore.scss';
 @use './styles/PlayerStart.scss';
@@ -35,12 +36,10 @@ html {
 
 body {
   margin: 0;
-  //font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-  //'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-  //sans-serif;
   font-family: 'Share Tech Mono';
   height: 100%;
   overflow: auto;
+  background-color: var(--backgroundColor);
 }
 
 button {

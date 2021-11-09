@@ -1,12 +1,19 @@
+.waiting-header {
+  grid-area: top-center;
+  margin: auto;
+  font-size: 1.5rem;
+}
+
 .waiting-room {
   grid-area: middle-center;
   display: inline-flex;
   flex-direction: column;
   justify-content: center;
+  font-size: 2rem;
 }
 
 .roomID {
-  font-size: 2.5rem;
+  font-size: 4.5rem;
   border-radius: 20% 20%;
   display: inline-block;
 }
