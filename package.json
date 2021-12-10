@@ -2,7 +2,8 @@
   "scripts": {
     "start": "node build/server.js",
     "start:dev": "nodemon --exec ts-node --files ./src/server.ts",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "@types/express": "^4.17.13",
