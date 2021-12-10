@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<WaitingRoom /> matches snapshot 1`] = `
+<div
+  data-testid="waiting-room"
+>
+  <div
+    className="waiting-header"
+  >
+    Waiting for partner
+  </div>
+  <span
+    className="waiting-room"
+  >
+    <div>
+      Game code:
+    </div>
+    <span
+      className="roomID"
+      data-testid="roomID"
+    >
+      12345
+    </span>
+  </span>
+</div>
+`;
