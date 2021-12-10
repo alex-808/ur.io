@@ -20,7 +20,10 @@ const LandingPage: React.FC<Props> = ({
   return (
     <>
       <header className="landing-header centering drop-shadow">
-        <div className="header-text">Game of Ur (with friends)</div>
+        <div className="header-text">
+          Ur.io
+          <div className="header-subtext">A game with friends</div>
+        </div>
       </header>
       {children}
       <div className="session-buttons">
