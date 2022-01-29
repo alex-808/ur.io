@@ -6,11 +6,26 @@ import * as constants from './constants';
 interface ClientData {
   room: string;
   playerID: number;
+  clear: () => void;
 }
+const clearData = function () {
+  // strips properties off data structures for testing purposes
 
-const state: { [roomID: string]: Game } = {};
+  if (typeof this !== 'object') return;
+  Object.keys(this).forEach((key) => {
+    delete this[key];
+  });
+};
+
+const ClientData = function () {};
+ClientData.prototype.clear = clearData;
+
+const State = function () {};
+State.prototype.clear = clearData;
+
+const state: { [roomID: string]: Game } = new State();
 // Map of clientID to their roomID
-const clientData: { [clientID: string]: ClientData } = {};
+const clientData: { [clientID: string]: ClientData } = new ClientData();
 
 const handleNewGame = (client: Socket) => {
   // create room and pass back the uuid
@@ -198,4 +213,5 @@ export {
   handleReset,
   handleLeaveGame,
   state,
+  clientData,
 };
