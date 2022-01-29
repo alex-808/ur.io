@@ -33,5 +33,5 @@ test('rollDice sets rollVal', () => {
   const game = new Game();
   expect(game.rollVal).toBeNull();
   game.rollDice();
-  expect(game.rollVal).toBeTruthy();
+  expect(game.rollVal).not.toBeNull();
 });

@@ -75,7 +75,6 @@ class Game {
     }
   }
   rollDice() {
-    console.log(this.phase);
     if (this.phase !== 'rolling') return;
     const val1 = Math.floor(Math.random() * 3);
     const val2 = Math.floor(Math.random() * 3);
