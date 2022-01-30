@@ -40,7 +40,7 @@ const handleNewGame = (client: Socket) => {
 };
 
 const handleJoinGame = (client: Socket, server: Server, roomID: string) => {
-  console.log('Someone wants to join room', roomID);
+  //console.log('Someone wants to join room', roomID);
   const room = server.sockets.adapter.rooms.get(roomID);
 
   if (!room) {
