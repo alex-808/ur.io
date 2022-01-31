@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Help from './Help'
 import face from '../imgs/face_black_24dp.svg'
 
 interface Props {
@@ -26,6 +27,7 @@ const LandingPage: React.FC<Props> = ({
         </div>
       </header>
       {children}
+      <Help />
       <div className="session-buttons">
         <div className="top-left">
           <button

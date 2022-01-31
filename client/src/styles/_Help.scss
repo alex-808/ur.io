@@ -1,0 +1,19 @@
+.help {
+  grid-area: top-right;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.tooltipBtn {
+  font-size: 2.5rem;
+  cursor: help;
+}
+
+.tooltipText {
+  max-width: 30%;
+  text-align: left;
+  background: red;
+  font-size: 1.25rem !important;
+}
