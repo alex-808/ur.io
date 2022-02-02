@@ -15,18 +15,29 @@ import { Server, Socket } from 'socket.io';
 import Client from 'socket.io-client';
 
 describe('Controller fns work as expected', () => {
-  let io, serverSocket: Socket, clientSocket: Socket;
+  let io,
+    serverSockets: Array<Socket> = [],
+    clientSockets: Array<Socket> = [];
+
   beforeAll((done) => {
     const httpServer = createServer();
+
+    const generateClient = (id) => {
+      const port = httpServer.address().port;
+      const client = new Client(`http://localhost:${port}`);
+      client.id = id;
+      return client;
+    };
+
     io = new Server(httpServer);
     httpServer.listen(() => {
-      const port = httpServer.address().port;
-      clientSocket = new Client(`http://localhost:${port}`);
+      clientSockets.push(generateClient());
+      clientSockets.push(generateClient());
       io.on('connection', (client: Socket) => {
         // serverSocket meaning the server-side partner of the client socket
-        serverSocket = client;
+        serverSockets.push(client);
       });
-      clientSocket.on('connect', done);
+      clientSockets.forEach((socket) => socket.on('connect', done));
     });
   });
 
@@ -40,36 +51,36 @@ describe('Controller fns work as expected', () => {
   afterEach(async () => {
     clientData.clear();
     state.clear();
-    clientSocket.removeAllListeners();
-    serverSocket.removeAllListeners();
+    clientSockets.forEach((socket) => socket.removeAllListeners());
+    serverSockets.forEach((socket) => socket.removeAllListeners());
   });
 
   test('sockets are able to send and receive messages', (done) => {
-    clientSocket.on('hello', (arg) => {
+    clientSockets[0].on('hello', (arg) => {
       expect(arg).toBe('world');
       done();
     });
-    serverSocket.emit('hello', 'world');
+    serverSockets[0].emit('hello', 'world');
   });
 
   test('newGame msg creates new room in state', (done) => {
-    clientSocket.emit('newGame', () => {
+    clientSockets[0].emit('newGame', () => {
       expect(Object.values(state).length).toBe(1);
       expect(Object.values(clientData).length).toBe(1);
       done();
     });
-    serverSocket.on('newGame', (cb) => {
-      handleNewGame(serverSocket);
+    serverSockets[0].on('newGame', (cb) => {
+      handleNewGame(serverSockets[0]);
       cb();
     });
   });
 
   test('newGame msg gets response of roomID', (done) => {
-    clientSocket.emit('newGame', () => {});
-    serverSocket.on('newGame', () => {
-      handleNewGame(serverSocket);
+    clientSockets[0].emit('newGame', () => {});
+    serverSockets[0].on('newGame', () => {
+      handleNewGame(serverSockets[0]);
     });
-    clientSocket.on('roomID', (roomID) => {
+    clientSockets[0].on('roomID', (roomID) => {
       expect(typeof roomID).toBe('string');
       expect(roomID.length).toBe(5);
       done();
@@ -81,47 +92,45 @@ describe('Controller fns work as expected', () => {
   });
 
   test('on failed join game, recieve "room is empty" notification', (done) => {
-    clientSocket.emit('joinGame', () => {});
-    serverSocket.on('joinGame', () => {
-      handleJoinGame(serverSocket, io, 'roomID456');
+    clientSockets[0].emit('joinGame', () => {});
+    serverSockets[0].on('joinGame', () => {
+      handleJoinGame(serverSockets[0], io, 'roomID456');
     });
-    clientSocket.on('notification', (notification) => {
+    clientSockets[0].on('notification', (notification) => {
       expect(notification.msg).toBe('This room is empty');
       done();
     });
   });
 
   test('on failed join game, recieve roomID back at client', (done) => {
-    clientSocket.emit('joinGame', () => {});
-    serverSocket.on('joinGame', () => {
-      handleJoinGame(serverSocket, io, 'roomID123');
+    clientSockets[0].emit('joinGame', () => {});
+    serverSockets[0].on('joinGame', () => {
+      handleJoinGame(serverSockets[0], io, 'roomID123');
     });
-    clientSocket.on('roomID', (roomID) => {
+    clientSockets[0].on('roomID', (roomID) => {
       expect(roomID).toBe('roomID123');
       done();
     });
   });
 
-  test('on successful join game, clientData grows', (done) => {
-    let roomID;
-    clientSocket.emit('newGame');
-    serverSocket.on('newGame', () => {
-      handleNewGame(serverSocket);
-    });
-    clientSocket.on('roomID', (ID) => {
-      console.log(ID);
-      roomID = ID;
-    });
-
-    clientSocket.emit('joinGame', roomID);
-    serverSocket.on('joinGame', () => {
-      //console.log(roomID);
-      handleJoinGame(serverSocket, io, roomID);
-    });
-    clientSocket.on('notification', (notification) => {
-      expect(Object.keys(clientData).length).toBe(2);
-      expect(Object.keys(state).length).toBe(1);
+  test('client leaving room of 1 deletes game from state and client from clientData', (done) => {
+    clientSockets[0].emit('newGame');
+    serverSockets[0].on('newGame', () => handleNewGame(serverSockets[0]));
+    clientSockets[0].emit('leaveGame');
+    serverSockets[0].on('leaveGame', () => {
+      handleLeaveGame(serverSockets[0], io);
+      expect(Object.keys(state).length).toBe(0);
+      expect(Object.keys(clientData).length).toBe(0);
       done();
     });
+  });
+  test('handleRollDice sets Game rollVal property', () => {
+    clientSockets[0].emit('newGame');
+    serverSockets[0].on('newGame', () => handleNewGame(serverSockets[0]));
+    serverSockets[0].on('rollDice', () => {
+      handleRollDice(serverSockets[0], io);
+      done();
+    });
+    clientSockets[0].emit('rollDice');
   });
 });
