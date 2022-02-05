@@ -133,4 +133,19 @@ describe('Controller fns work as expected', () => {
     });
     clientSockets[0].emit('rollDice');
   });
+  test('two players can join game together', (done) => {
+    serverSockets[0].on('newGame', () => handleNewGame(serverSockets[0]));
+    //serverSockets[1].on('joinGame', (roomID) =>
+    //handleJoinGame(serverSockets[1], io, roomID)
+    //);
+    clientSockets[0].on('roomID', (roomID) => {
+      // why does it fire twice?
+      console.log(roomID);
+      //clientSockets[1].emit('joinGame', roomID);
+      //expect(Object.keys(clientData).length).toBe(2);
+      done();
+    });
+    clientSockets[0].emit('newGame');
+  });
+  test.todo('add handleTokenHover test');
 });

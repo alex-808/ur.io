@@ -75,13 +75,9 @@ const handleLeaveGame = (client: Socket, server: Server) => {
 
   if (!room?.size) {
     delete state[roomID];
-    console.log('Game state deleted');
-    console.table(state);
   }
 
   delete clientData[client.id];
-  console.log('clientData deleted');
-  console.table(clientData);
 
   client.emit('roomID', null);
   client.emit('notification', { msg: '' });
