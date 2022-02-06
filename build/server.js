@@ -8,7 +8,7 @@ var path = require('path');
 var express_1 = __importDefault(require("express"));
 var socket_io_1 = require("socket.io");
 var controllers_1 = require("./controllers");
-var port = process.env.PORT || 5000;
+var port = process.env.PORT || 5001;
 var app = (0, express_1.default)();
 app.use(express_1.default.static(path.join(__dirname, '../client/build')));
 app.get('/', function (req, res) {

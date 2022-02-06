@@ -99,7 +99,6 @@ var Game = /** @class */ (function () {
         }
     };
     Game.prototype.rollDice = function () {
-        console.log(this.phase);
         if (this.phase !== 'rolling')
             return;
         var val1 = Math.floor(Math.random() * 3);

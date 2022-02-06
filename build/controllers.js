@@ -19,14 +19,28 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.handleLeaveGame = exports.handleReset = exports.handleTokenHover = exports.handleTokenClick = exports.handleRollDice = exports.handleJoinGame = exports.handleNewGame = void 0;
+exports.clientData = exports.state = exports.handleLeaveGame = exports.handleReset = exports.handleTokenHover = exports.handleTokenClick = exports.handleRollDice = exports.handleJoinGame = exports.handleNewGame = void 0;
 var game_1 = require("./game");
 var utils_1 = require("./utils");
 var constants = __importStar(require("./constants"));
-console.log('hello you');
-var state = {};
+var clearData = function () {
+    // strips properties off data structures for testing purposes
+    var _this = this;
+    if (typeof this !== 'object')
+        return;
+    Object.keys(this).forEach(function (key) {
+        delete _this[key];
+    });
+};
+var ClientData = function () { };
+ClientData.prototype.clear = clearData;
+var State = function () { };
+State.prototype.clear = clearData;
+var state = new State();
+exports.state = state;
 // Map of clientID to their roomID
-var clientData = {};
+var clientData = new ClientData();
+exports.clientData = clientData;
 var handleNewGame = function (client) {
     // create room and pass back the uuid
     var roomID = (0, utils_1.makeID)(5);
@@ -38,7 +52,7 @@ var handleNewGame = function (client) {
 };
 exports.handleNewGame = handleNewGame;
 var handleJoinGame = function (client, server, roomID) {
-    console.log('Someone wants to join room', roomID);
+    //console.log('Someone wants to join room', roomID);
     var room = server.sockets.adapter.rooms.get(roomID);
     if (!room) {
         // emit roomID so they are still sent to WaitingRoom
@@ -66,12 +80,8 @@ var handleLeaveGame = function (client, server) {
     client.leave(roomID);
     if (!(room === null || room === void 0 ? void 0 : room.size)) {
         delete state[roomID];
-        console.log('Game state deleted');
-        console.table(state);
     }
     delete clientData[client.id];
-    console.log('clientData deleted');
-    console.table(clientData);
     client.emit('roomID', null);
     client.emit('notification', { msg: '' });
     client.emit('updateState', null);
