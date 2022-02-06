@@ -13,7 +13,7 @@ import {
   handleLeaveGame,
 } from './controllers';
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5001;
 
 const app = express();
 
