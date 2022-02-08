@@ -3,6 +3,7 @@
 [![Codacy
 Badge](https://app.codacy.com/project/badge/Grade/8a81fab7c20e4f03b92f36e518c11829)](https://www.codacy.com/gh/alex-808/ur.io/dashboard?utm_source=github.com&utm_medium=referral&utm_content=alex-808/ur.io&utm_campaign=Badge_Grade)
 ![Languages shield](https://img.shields.io/github/languages/top/alex-808/ur.io)
+![License shield](https://img.shields.io/github/license/alex-808/ur.io)
 
 A modern real-time multiplayer board game based on the ancient strategy racing
 game: The Royal Game of Ur.
