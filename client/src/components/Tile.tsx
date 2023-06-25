@@ -8,8 +8,6 @@ interface Props extends TileI {
   highlightedTile: number | null
 }
 
-// what is the best way to temporarily highlight something only as long as it is hovered on? onMouseExit too?
-
 const Tile: React.FC<Props> = ({
   oc,
   token,

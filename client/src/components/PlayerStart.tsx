@@ -9,7 +9,6 @@ interface Props {
 }
 
 const PlayerStart: React.FC<Props> = ({ player, onClick, onHover }) => {
-  console.log(player)
   return (
     <div
       className={`player${player.id}Start`}

@@ -32,7 +32,6 @@ button::before {
   z-index: -1;
   background-color: var(--tileColor1);
   transform: scaleX(0);
-  //transform-origin: left;
   transition: transform 300ms ease-in-out;
 }
 

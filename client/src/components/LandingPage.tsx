@@ -16,7 +16,6 @@ const LandingPage: React.FC<Props> = ({
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputEl = event.target as HTMLInputElement
     setJoinRoomID(inputEl.value)
-    console.log(inputEl.value)
   }
   return (
     <>

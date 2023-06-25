@@ -17,7 +17,6 @@ interface GameI {
   board: TileI[]
   rollVal: number
   gameWinners: number[]
-  //TODO
 }
 
 interface TileI {

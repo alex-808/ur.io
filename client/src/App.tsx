@@ -19,7 +19,6 @@ function App() {
     })
 
     api.socket.on('updateState', (state: GameI) => {
-      console.log(state)
       updateState(state)
     })
 

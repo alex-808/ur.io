@@ -14,7 +14,6 @@ const Board: React.FC<Props> = ({
   handleTokenHover,
   highlightedTile,
 }) => {
-  console.log(highlightedTile)
   return (
     <div className="board">
       {tiles.map((tile, i) => (

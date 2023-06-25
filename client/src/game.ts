@@ -122,7 +122,6 @@ class Game {
         immovableTokens++
       }
     })
-    console.log(immovableTokens)
     if (immovableTokens === this.activePlayer.tokens.length) return true
     return false
   }
@@ -138,19 +137,16 @@ class Game {
       const player = new Player(this.players.length as PlayerID)
       this.players.push(player)
       this.activePlayer = player
-      console.log(player)
     } else {
       // TODO emit 'too many players'
     }
   }
   rollDice() {
-    console.log(this.phase)
     if (this.phase !== 'rolling') return
     const val1 = Math.floor(Math.random() * 3)
     const val2 = Math.floor(Math.random() * 3)
 
     this.rollVal = val1 + val2
-    //this.rollVal = 4
     if (this.rollVal !== 0 && !this.AreNoMoves()) {
       this.phase = 'movement'
     } else {
@@ -211,7 +207,6 @@ class Game {
   }
 
   changeTurn() {
-    console.log('turn changed')
     if (this.activePlayer === this.players[0])
       this.activePlayer = this.players[1]
     else this.activePlayer = this.players[0]
