@@ -1,26 +1,50 @@
-"use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
+'use strict';
+var __createBinding =
+    (this && this.__createBinding) ||
+    (Object.create
+        ? function (o, m, k, k2) {
+              if (k2 === undefined) k2 = k;
+              Object.defineProperty(o, k2, {
+                  enumerable: true,
+                  get: function () {
+                      return m[k];
+                  },
+              });
+          }
+        : function (o, m, k, k2) {
+              if (k2 === undefined) k2 = k;
+              o[k2] = m[k];
+          });
+var __setModuleDefault =
+    (this && this.__setModuleDefault) ||
+    (Object.create
+        ? function (o, v) {
+              Object.defineProperty(o, 'default', {
+                  enumerable: true,
+                  value: v,
+              });
+          }
+        : function (o, v) {
+              o['default'] = v;
+          });
+var __importStar =
+    (this && this.__importStar) ||
+    function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null)
+            for (var k in mod)
+                if (
+                    k !== 'default' &&
+                    Object.prototype.hasOwnProperty.call(mod, k)
+                )
+                    __createBinding(result, mod, k);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+Object.defineProperty(exports, '__esModule', { value: true });
 exports.Game = void 0;
-var constants = __importStar(require("./constants"));
+var constants = __importStar(require('./constants'));
 var Tile = /** @class */ (function () {
     function Tile(type) {
         this.type = type;
@@ -28,7 +52,7 @@ var Tile = /** @class */ (function () {
         this.token = null;
     }
     return Tile;
-}());
+})();
 var Game = /** @class */ (function () {
     function Game() {
         this.players = [];
@@ -52,11 +76,9 @@ var Game = /** @class */ (function () {
             // would need to convert these to each player path first
             if (player0Rosettes.includes(i) || player1Rosettes.includes(i)) {
                 board.push(new Tile('rosette'));
-            }
-            else if (i === player0Goal || i === player1Goal) {
+            } else if (i === player0Goal || i === player1Goal) {
                 board.push(new Tile('goal'));
-            }
-            else {
+            } else {
                 board.push(new Tile('normal'));
             }
         }
@@ -64,17 +86,17 @@ var Game = /** @class */ (function () {
     };
     Game.prototype.AreNoMoves = function () {
         var _this = this;
-        if (!this.activePlayer || !this.rollVal)
-            return;
+        if (!this.activePlayer || !this.rollVal) return;
         var immovableTokens = 0;
         this.activePlayer.tokens.forEach(function (tokenPos) {
-            if (tokenPos + _this.rollVal > constants.GOAL_TILE ||
-                _this.activePlayer.tokens.includes(tokenPos + _this.rollVal)) {
+            if (
+                tokenPos + _this.rollVal > constants.GOAL_TILE ||
+                _this.activePlayer.tokens.includes(tokenPos + _this.rollVal)
+            ) {
                 immovableTokens++;
             }
         });
-        if (immovableTokens === this.activePlayer.tokens.length)
-            return true;
+        if (immovableTokens === this.activePlayer.tokens.length) return true;
         return false;
     };
     Game.prototype.reset = function () {
@@ -85,22 +107,18 @@ var Game = /** @class */ (function () {
         this.players[1] = new Player(1);
         this.rollVal = null;
         this.phase = 'rolling';
-        if (this.gameWinners.length % 2)
-            this.activePlayer = this.players[1];
-        else
-            this.activePlayer = this.players[0];
+        if (this.gameWinners.length % 2) this.activePlayer = this.players[1];
+        else this.activePlayer = this.players[0];
     };
     Game.prototype.addPlayer = function () {
         if (this.players.length < 2) {
             var player = new Player(this.players.length);
             this.players.push(player);
-            if (player.id === 0)
-                this.activePlayer = player;
+            if (player.id === 0) this.activePlayer = player;
         }
     };
     Game.prototype.rollDice = function () {
-        if (this.phase !== 'rolling')
-            return;
+        if (this.phase !== 'rolling') return;
         var val1 = Math.floor(Math.random() * 3);
         var val2 = Math.floor(Math.random() * 3);
         this.rollVal = val1 + val2;
@@ -110,11 +128,16 @@ var Game = /** @class */ (function () {
     //TODO try to get this to be used in handleTokenClick
     Game.prototype.isMovePossible = function (playerID, token) {
         var _a;
-        if (playerID !== ((_a = this.activePlayer) === null || _a === void 0 ? void 0 : _a.id) ||
+        if (
+            playerID !==
+                ((_a = this.activePlayer) === null || _a === void 0
+                    ? void 0
+                    : _a.id) ||
             !this.rollVal ||
             token === null ||
             this.phase !== 'movement' ||
-            !this.activePlayer) {
+            !this.activePlayer
+        ) {
             return false;
         }
         return true;
@@ -127,29 +150,34 @@ var Game = /** @class */ (function () {
         }
         for (var _b = 0, _c = this.players; _b < _c.length; _b++) {
             var player = _c[_b];
-            var path = player.id === 0 ? constants.PLAYER_0_PATH : constants.PLAYER_1_PATH;
+            var path =
+                player.id === 0
+                    ? constants.PLAYER_0_PATH
+                    : constants.PLAYER_1_PATH;
             for (var _d = 0, _e = player.tokens; _d < _e.length; _d++) {
                 var tokenPos = _e[_d];
-                if (tokenPos === constants.PLAYER_START)
-                    continue;
+                if (tokenPos === constants.PLAYER_START) continue;
                 var boardVal = path.get(tokenPos);
                 if (boardVal !== undefined) {
                     this.board[boardVal].oc = player.id;
-                    this.board[boardVal].token = player.tokens.indexOf(tokenPos);
+                    this.board[boardVal].token =
+                        player.tokens.indexOf(tokenPos);
                 }
             }
         }
     };
     Game.prototype.checkForCaptures = function () {
         var _this = this;
-        if (!this.activePlayer || !this.activePlayer.tokens)
-            return;
-        var opponent = this.activePlayer.id === 0 ? this.players[1] : this.players[0];
+        if (!this.activePlayer || !this.activePlayer.tokens) return;
+        var opponent =
+            this.activePlayer.id === 0 ? this.players[1] : this.players[0];
         var _loop_1 = function (i) {
             var match = opponent.tokens.findIndex(function (tokenPos) {
-                return tokenPos >= constants.MIDLANE_START &&
+                return (
+                    tokenPos >= constants.MIDLANE_START &&
                     tokenPos <= constants.MIDLANE_END &&
-                    tokenPos === _this.activePlayer.tokens[i];
+                    tokenPos === _this.activePlayer.tokens[i]
+                );
             });
             if (match !== -1) {
                 opponent.tokens[match] = constants.PLAYER_START;
@@ -161,7 +189,11 @@ var Game = /** @class */ (function () {
     };
     Game.prototype.checkForGameOver = function () {
         var _a;
-        if (((_a = this.activePlayer) === null || _a === void 0 ? void 0 : _a.tokens.length) === 0) {
+        if (
+            ((_a = this.activePlayer) === null || _a === void 0
+                ? void 0
+                : _a.tokens.length) === 0
+        ) {
             this.phase = 'gameOver';
         }
     };
@@ -169,29 +201,26 @@ var Game = /** @class */ (function () {
         if (tokenPosition === constants.GOAL_TILE) {
             this.activePlayer.scoreGoal();
             this.checkForGameOver();
-        }
-        else if (!constants.ROSETTE_TILES.includes(tokenPosition)) {
+        } else if (!constants.ROSETTE_TILES.includes(tokenPosition)) {
             this.changeTurn();
-        }
-        else {
+        } else {
             this.phase = 'rolling';
         }
     };
     Game.prototype.changeTurn = function () {
-        console.log('turn changed');
         if (this.activePlayer === this.players[0])
             this.activePlayer = this.players[1];
-        else
-            this.activePlayer = this.players[0];
+        else this.activePlayer = this.players[0];
         this.phase = 'rolling';
     };
     return Game;
-}());
+})();
 exports.Game = Game;
 var Player = /** @class */ (function () {
     function Player(id) {
         this.id = id;
-        this.path = this.id === 0 ? constants.PLAYER_0_PATH : constants.PLAYER_1_PATH;
+        this.path =
+            this.id === 0 ? constants.PLAYER_0_PATH : constants.PLAYER_1_PATH;
         this.tokens = [
             constants.PLAYER_START,
             constants.PLAYER_START,
@@ -205,7 +234,9 @@ var Player = /** @class */ (function () {
         this.score = 0;
     }
     Player.prototype.scoreGoal = function () {
-        this.tokens = this.tokens.filter(function (tokenPos) { return tokenPos !== constants.GOAL_TILE; });
+        this.tokens = this.tokens.filter(function (tokenPos) {
+            return tokenPos !== constants.GOAL_TILE;
+        });
         this.score++;
     };
     Player.prototype.moveToken = function (tokenIndex, rollVal) {
@@ -216,4 +247,4 @@ var Player = /** @class */ (function () {
         return newPos;
     };
     return Player;
-}());
+})();
